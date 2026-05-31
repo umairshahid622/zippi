@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+/* 1. Define the font faces */
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter/Inter-VariableFont_opsz,wght.woff2") format("woff2");
+  font-weight: 100 900; /* Define the range of weights you have */
+  font-display: swap; /* CRITICAL: Prevents invisible text during load */
+}
+
+@font-face {
+  font-family: "Quicksand";
+  src: url("/fonts/Quicksand/Quicksand-VariableFont_wght.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@theme {
+  /* fonts */
+  --font-body: "Inter", sans-serif;
+  --font-heading: "Quicksand", sans-serif;
+
+  /* colors */
+  --color-blue-primary: #3b9eff;
+  --color-blue-secondary: #00d4e8;
+  --color-deep-blue: #1b6fcc;
+  --color-cyan-pop: #00d4e8;
+  --color-cyan-light: #b8f4fa;
+  --color-bubble: #daeeff;
+  --color-soft-sky: #ebf5ff;
+  --color-dark-navy: #1a2744;
+  --color-online-green: #2ddc8a;
+  --color-white: #ffffff;
+  /* gradients — use --background-image-* so Tailwind generates bg-* utilities */
+  --background-gradient-blue: linear-gradient(
+    to right,
+    var(--color-blue-primary),
+    var(--color-blue-secondary)
+  );
+
+  /* border radius */
+  --border-radius: 0.75rem;
+  /* Type scale */
+  --text-display: 2rem; /* 32px */
+
+  --text-h1: 1.5rem; /* 24px — page title, workspace name */
+  --text-h2: 1.125rem; /* 18px — section heading, modal title */
+  --text-h3: 0.9375rem; /* 15px — channel name, card title */
+  --text-h4: 0.8125rem; /* 13px — sidebar group label */
+
+  --text-body-lg: 0.9375rem; /* 15px — important paragraphs */
+  --text-body: 0.875rem; /* 14px — message content, main body */
+  --text-body-sm: 0.8125rem; /* 13px — descriptions, secondary text */
+
+  /* UI */
+  --text-label: 0.6875rem; /* 11px — uppercase labels, nav items */
+  --text-caption: 0.6875rem; /* 11px — timestamps, hints */
+  --text-btn: 0.875rem; /* 14px — button text */
+
+  /* Font Weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Line Heights */
+  --leading-tight: 1.2; /* headings */
+  --leading-snug: 1.4; /* UI labels */
+  --leading-normal: 1.6; /* body text, messages */
+  --leading-relaxed: 1.75; /* long paragraphs */
+
+  /* Line Heights */
+  --leading-tight: 1.2; /* headings */
+  --leading-snug: 1.4; /* UI labels */
+  --leading-normal: 1.6; /* body text, messages */
+  --leading-relaxed: 1.75; /* long paragraphs */
+
+  /* Letter Spacing */
+  --tracking-tight: -0.3px; /* headings — Quicksand looks better tighter */
+  --tracking-normal: 0px;
+  --tracking-wide: 0.04em; /* uppercase labels only */
+}
+
+@layer base {
+  :root {
+    --bacground-color: var(--color-dark-navy);
+    --text-color: var(--color-white);
+  }
+
+
+
+  /* style html elements here */
+  html {
+    background: var(--bacground-color);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    font-weight: var(--weight-bold); /* 700 — Quicksand's max */
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-color);
+  }
+
+  h1 {
+    font-size: var(--text-h1); /* 24px */
+  }
+  h2 {
+    font-size: var(--text-h2); /* 18px */
+  }
+  h3 {
+    font-size: var(--text-h3);
+  }
+  h4 {
+    font-size: var(--text-h4); /* 13px */
+    font-weight: var(--weight-semibold); /* 600 for small headings */
+  }
+
+  p {
+    font-family:  var(--font-body);
+    font-size:    var(--text-body);        /* 14px */
+    font-weight:  var(--weight-medium);    /* 500 — Inter 500 reads better on dark bg */
+    line-height:  var(--leading-normal);   /* 1.6 */
+    color:        var(--text-color);
+  }
+
+  a:hover { opacity: 0.8; text-decoration: underline; }
+
+  /* Button labels */
+  .text-btn {
+    font-family:  var(--font-heading);     /* Quicksand on buttons */
+    font-size:    var(--text-btn);         /* 14px */
+    font-weight:  var(--weight-bold);      /* 700 */
+    line-height:  1;
+    letter-spacing: 0.1px;
+  }
+  /* Timestamps, hints */
+  .text-caption {
+    font-family:    var(--font-body);
+    font-size:      var(--text-caption);   /* 11px */
+    font-weight:    var(--weight-regular); /* 400 */
+    color:          var(--text-color); opacity: 0.35;
+    line-height:    var(--leading-snug);
+  }
+
+  /* Sidebar section labels — CHANNELS, DIRECT etc */
+  .text-label {
+    font-family:    var(--font-body);
+    font-size:      var(--text-label);     /* 11px */
+    font-weight:    var(--weight-semibold);/* 600 */
+    color:          var(--text-color); opacity: 0.35;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);  /* 0.04em */
+    line-height:    var(--leading-snug);
+  }
+
+  /* Message text */
+  .text-message {
+    font-family: var(--font-body);
+    font-size:   var(--text-body);         /* 14px */
+    font-weight: var(--weight-medium);     /* 500 */
+    line-height: var(--leading-normal);    /* 1.6 */
+    color:       var(--text-color); opacity: 0.88;
+  }
+  /* Muted / secondary text */
+  .text-muted { color: var(--text-color); opacity: 0.45; }
+}
+
+@layer components {
+  /* Reusable primary component */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@layer utilities {
+  /* Custom typography text shadow effect */
+
+  .message-icon-bg {
+    background-image: var(--background-gradient-blue);
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+  }
+}
