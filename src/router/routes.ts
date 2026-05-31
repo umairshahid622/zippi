@@ -1,11 +1,10 @@
-import type { RouteObject } from "react-router";
+import { redirect, type RouteObject } from "react-router";
 
 const routes: RouteObject[] = [
   {
     index: true,
-    lazy: async () => {
-      const { default: Auth } = await import("../pages/auth/Auth.tsx");
-      return { Component: Auth };
+    async loader() {
+      return redirect("/auth");
     },
   },
   {
@@ -18,8 +17,17 @@ const routes: RouteObject[] = [
   {
     path: "dashboard",
     lazy: async () => {
-      const { default: Dashboard } = await import("../pages/dashboard/Dashboard.tsx");
+      const { default: Dashboard } =
+        await import("../pages/dashboard/Dashboard.tsx");
       return { Component: Dashboard };
+    },
+  },
+
+  {
+    path: "*",
+    lazy: async () => {
+      const { default: NotFound } = await import("../pages/NotFound.tsx");
+      return { Component: NotFound };
     },
   },
 ];

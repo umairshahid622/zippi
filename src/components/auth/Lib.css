@@ -1,0 +1,77 @@
+.bg-animated {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+}
+
+.blob-1 {
+  width: 500px;
+  height: 500px;
+  background: #3b9eff;
+  opacity: 0.25;
+  top: -100px;
+  left: -150px;
+  /* animation: drift1 8s ease-in-out infinite; */
+}
+.blob-2 {
+  width: 400px;
+  height: 400px;
+  background: #00d4e8;
+  opacity: 0.2;
+  bottom: -80px;
+  right: -100px;
+  /* animation: drift2 10s ease-in-out infinite; */
+}
+.blob-3 {
+  width: 300px;
+  height: 300px;
+  background: #7b5ea7;
+  opacity: 0.15;
+  top: 40%;
+  left: 60%;
+  /* animation: drift3 7s ease-in-out infinite; */
+}
+
+
+/* Stars twinkle */
+
+.stars-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  animation: twinkle var(--star-duration) ease-in-out infinite;
+  animation-delay: var(--star-delay); /* ← this was also missing entirely */
+}
+
+.floating-icon {
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  /* opacity: 0.1; */
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.3);
+  }
+}

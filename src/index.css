@@ -31,6 +31,7 @@
   --color-dark-navy: #1a2744;
   --color-online-green: #2ddc8a;
   --color-white: #ffffff;
+  --color-transparent: transparent;
   /* gradients — use --background-image-* so Tailwind generates bg-* utilities */
   --background-gradient-blue: linear-gradient(
     to right,
