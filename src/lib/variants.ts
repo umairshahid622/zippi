@@ -329,3 +329,101 @@ export const typingDotVariants: Variants = {
     },
   }),
 }
+
+
+export const blob1Animation: { scale: number[], transition: Transition }= {
+  scale: [1, 1.1, 1],
+  transition: {
+    duration: 8,
+    repeat:   Infinity,
+    ease:     'easeInOut',
+  },
+}
+
+export const blob2Animation: { x: number[], y: number[], transition: Transition } = {
+  x: [0, -25, 0],
+  y: [0,  30, 0],
+  transition: {
+    duration: 10,
+    repeat:   Infinity,
+    ease:     'easeInOut',
+  },
+}
+
+export const blob3Animation: { x: number[], y: number[], transition: Transition } = {
+  x: [0,  20, 0],
+  y: [0, -25, 0],
+  transition: {
+    duration: 7,
+    delay:    1,
+    repeat:   Infinity,
+    ease:     'easeInOut',
+  },
+}
+
+
+// ── Button animations ─────────────────────────
+
+// For your gradient primary button (CTA)
+export const buttonVariants: Variants = {
+  idle: {
+    scale:     1,
+    boxShadow: '0 6px 24px rgba(59, 158, 255, 0.35)',
+  },
+  hover: {
+    scale:     1.03,
+    boxShadow: '0 10px 32px rgba(59, 158, 255, 0.50)',
+    transition: { ...springs.bubbly },
+  },
+  tap: {
+    scale:     0.97,
+    boxShadow: '0 4px 14px rgba(59, 158, 255, 0.25)',
+    transition: { ...springs.snappy },
+  },
+  disabled: {
+    scale:     1,
+    opacity:   0.5,
+    boxShadow: 'none',
+    transition: { duration: 0.2 },
+  },
+}
+
+// For ghost / secondary buttons
+export const buttonGhostVariants: Variants = {
+  idle: {
+    scale:           1,
+    backgroundColor: 'rgba(255, 255, 255, 0.00)',
+    borderColor:     'rgba(255, 255, 255, 0.10)',
+  },
+  hover: {
+    scale:           1.02,
+    backgroundColor: 'rgba(255, 255, 255, 0.14)',
+    borderColor:     'rgba(255, 255, 255, 0.20)',
+    transition:      { ...springs.soft },
+  },
+  tap: {
+    scale:           0.97,
+    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+    transition:      { ...springs.snappy },
+  },
+}
+
+// For icon buttons (send, emoji, attach etc)
+export const iconButtonVariants: Variants = {
+  idle: {
+    scale:   1,
+    opacity: 0.6,
+  },
+  hover: {
+    scale:      1.15,
+    opacity:    1,
+    transition: { ...springs.bubbly },
+  },
+  tap: {
+    scale:      0.9,
+    transition: { ...springs.snappy },
+  },
+}
+
+
+

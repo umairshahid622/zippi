@@ -32,8 +32,9 @@
   --color-online-green: #2ddc8a;
   --color-white: #ffffff;
   --color-transparent: transparent;
+  --color-purple-primary: #7b5ea7;
   /* gradients — use --background-image-* so Tailwind generates bg-* utilities */
-  --background-gradient-blue: linear-gradient(
+  --background-image-blue-gradient: linear-gradient(
     to right,
     var(--color-blue-primary),
     var(--color-blue-secondary)
@@ -80,6 +81,23 @@
   --tracking-tight: -0.3px; /* headings — Quicksand looks better tighter */
   --tracking-normal: 0px;
   --tracking-wide: 0.04em; /* uppercase labels only */
+
+
+  /*  */
+  --animate-twinkle: twinkle var(--star-duration) ease-in-out infinite;
+
+
+  @keyframes twinkle {    
+    0%,
+    100% {
+      opacity: 0.1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.5);
+    }
+  }
 }
 
 @layer base {
@@ -87,8 +105,6 @@
     --bacground-color: var(--color-dark-navy);
     --text-color: var(--color-white);
   }
-
-
 
   /* style html elements here */
   html {
@@ -123,54 +139,77 @@
     font-weight: var(--weight-semibold); /* 600 for small headings */
   }
 
-  p {
-    font-family:  var(--font-body);
-    font-size:    var(--text-body);        /* 14px */
-    font-weight:  var(--weight-medium);    /* 500 — Inter 500 reads better on dark bg */
-    line-height:  var(--leading-normal);   /* 1.6 */
-    color:        var(--text-color);
+  p,
+  pre {
+    font-family: var(--font-body);
+    font-size: var(--text-body); /* 14px */
+    font-weight: var(
+      --weight-medium
+    ); /* 500 — Inter 500 reads better on dark bg */
+    line-height: var(--leading-normal); /* 1.6 */
+    color: var(--text-color);
   }
 
-  a:hover { opacity: 0.8; text-decoration: underline; }
+  a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+  }
+
+  button {
+    font-family: var(--font-body);
+    font-size: var(--text-body); /* 14px */
+    font-weight: var(--weight-bold);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    padding: 0.5rem 2rem;
+    color: var(--text-color);
+  }
 
   /* Button labels */
   .text-btn {
-    font-family:  var(--font-heading);     /* Quicksand on buttons */
-    font-size:    var(--text-btn);         /* 14px */
-    font-weight:  var(--weight-bold);      /* 700 */
-    line-height:  1;
+    font-family: var(--font-heading); /* Quicksand on buttons */
+    font-size: var(--text-btn); /* 14px */
+    font-weight: var(--weight-bold); /* 700 */
+    line-height: 1;
     letter-spacing: 0.1px;
   }
   /* Timestamps, hints */
   .text-caption {
-    font-family:    var(--font-body);
-    font-size:      var(--text-caption);   /* 11px */
-    font-weight:    var(--weight-regular); /* 400 */
-    color:          var(--text-color); opacity: 0.35;
-    line-height:    var(--leading-snug);
+    font-family: var(--font-body);
+    font-size: var(--text-caption); /* 11px */
+    font-weight: var(--weight-regular); /* 400 */
+    color: var(--text-color);
+    opacity: 0.35;
+    line-height: var(--leading-snug);
   }
 
   /* Sidebar section labels — CHANNELS, DIRECT etc */
   .text-label {
-    font-family:    var(--font-body);
-    font-size:      var(--text-label);     /* 11px */
-    font-weight:    var(--weight-semibold);/* 600 */
-    color:          var(--text-color); opacity: 0.35;
+    font-family: var(--font-body);
+    font-size: var(--text-label); /* 11px */
+    font-weight: var(--weight-semibold); /* 600 */
+    color: var(--text-color);
+    opacity: 0.35;
     text-transform: uppercase;
-    letter-spacing: var(--tracking-wide);  /* 0.04em */
-    line-height:    var(--leading-snug);
+    letter-spacing: var(--tracking-wide); /* 0.04em */
+    line-height: var(--leading-snug);
   }
 
   /* Message text */
   .text-message {
     font-family: var(--font-body);
-    font-size:   var(--text-body);         /* 14px */
-    font-weight: var(--weight-medium);     /* 500 */
-    line-height: var(--leading-normal);    /* 1.6 */
-    color:       var(--text-color); opacity: 0.88;
+    font-size: var(--text-body); /* 14px */
+    font-weight: var(--weight-medium); /* 500 */
+    line-height: var(--leading-normal); /* 1.6 */
+    color: var(--text-color);
+    opacity: 0.88;
   }
   /* Muted / secondary text */
-  .text-muted { color: var(--text-color); opacity: 0.45; }
+  .text-muted {
+    color: var(--text-color);
+    opacity: 0.45;
+  }
 }
 
 @layer components {
@@ -180,18 +219,22 @@
     border: 1.5px solid rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(10px);
     border-radius: var(--border-radius);
-    padding: 20px;
+    padding: 2rem;
     -webkit-backdrop-filter: blur(24px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
   }
 }
 
 @layer utilities {
   /* Custom typography text shadow effect */
-
-  .message-icon-bg {
-    background-image: var(--background-gradient-blue);
-    padding: 0.5rem;
-    border-radius: var(--border-radius);
+  .primary-gradient {
+    background-image: var(--background-image-blue-gradient);
+    box-shadow: 0 4px 16px rgba(59, 158, 255, 0.4);
   }
 }

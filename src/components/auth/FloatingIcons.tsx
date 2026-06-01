@@ -48,7 +48,7 @@ export const FloatingIcons = () => {
       {FLOATING_ICONS.map(item => (
         <motion.div
           key={item.id}
-          className="floating-icon"
+          className="fixed z-0 pointer-events-none"
           style={item.position}
           initial="initial"
           animate={floatingAnimation(item.duration, item.delay)}

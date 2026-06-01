@@ -6,7 +6,7 @@ export const floatingAnimation = (duration: number, delay: number): TargetAndTra
   rotate: [0, 12, 0],
   transition: {
     opacity: {
-      duration: 1,
+      duration: Math.abs(duration) * 0.2,
       delay: Math.abs(delay) * 0.2,
     },
     y: {
