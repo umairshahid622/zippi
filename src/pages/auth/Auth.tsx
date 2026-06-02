@@ -1,12 +1,12 @@
 import AuthHeader from "../../components/auth/AuthHeader"
-import { GoogleIcon, HandIcon } from "../../components/icons"
+import { GoogleIcon, HandIcon, GitHubIcon } from "../../components/icons"
 import { projectName } from "../../constants/constants"
 import { AnimatedBackground } from "../../components/auth/AnimatedBackground"
 import { FloatingIcons } from "../../components/auth/FloatingIcons"
 import AppButton from "../../components/common/AppButton"
-import GitHubIcon from "../../components/icons/GitHubIcon"
 import { AppInput } from "../../components/common/AppInput"
 import MailIcon from "../../components/icons/MailIcon"
+import ArrowExpandButton from "../../components/common/ArrowExpandButton"
 
 function Auth() {
   return (
@@ -28,8 +28,7 @@ function Auth() {
               <div className="grow app-divider" />
             </div>
             <AppInput placeholder="Enter your email" label="Email Address" icon={<MailIcon />} />
-            <AppButton label="Send Magic Link" />
-            
+            <ArrowExpandButton label={"Send magic link"}/>          
           </div>
 
         </div>

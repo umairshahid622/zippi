@@ -1,7 +1,7 @@
 import { defaultIconSize } from "../../constants/constants";
 import type { IconProps } from "./interface";
 
-function NuetronIcon({
+function NeutronIcon({
   className,
   size = defaultIconSize,
   color = "var(--text-color)"
@@ -44,4 +44,4 @@ function NuetronIcon({
   );
 }
 
-export default NuetronIcon;
+export default NeutronIcon;

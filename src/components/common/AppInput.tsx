@@ -87,11 +87,10 @@ export const AppInput = forwardRef<HTMLInputElement, InputProps>(({
                     variants={inputVariants}
                     initial="idle"
                     className={`
-            w-full rounded-(--border-radius) app-border py-3 pr-4 text-(--text-color) font-(--weight-medium)
-            font-heading outline-none placeholder:text-white/25 cursor-auto text-sm
+            w-full rounded-(--border-radius) app-border py-3 pr-4 text-(--text-color) font-(--weight-bold)
+            font-heading outline-none placeholder:text-muted cursor-auto text-sm
             ${icon ? 'pl-11' : 'pl-4'}
           `}
-                    style={{ fontFamily: 'Inter, sans-serif' }}
                 />
             </div>
 

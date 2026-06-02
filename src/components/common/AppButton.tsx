@@ -1,11 +1,12 @@
 import { motion } from "motion/react";
 import { buttonGhostVariants } from "../../lib/variants";
 import { useState, type JSX } from "react";
+import type { buttonType } from "../../types/buttonTypes";
 
 interface AppButtonProps {
     label: string;
     className?: string;
-    type?: "button" | "submit" | "reset";
+    type?: buttonType;
     icon?: JSX.Element;
 
     onCallBack?: () => void;

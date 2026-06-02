@@ -1,7 +1,7 @@
 import type { Transition, Variants } from 'framer-motion'
 
 // ─────────────────────────────────────────────
-// 🫧  FLOQ — Framer Motion Animation Library
+// 🫧  Zippy — Framer Motion Animation Library
 // src/lib/animations.ts
 //
 // Rules:
@@ -435,7 +435,7 @@ export const inputVariants: Variants = {
 }
 
 export const inputIconVariants: Variants = {
-  idle:  { scale: 1,    opacity: 0.35, color: 'var(--text-color)' },
+  idle:  { scale: 1,    opacity: 0.45, color: 'var(--text-color)' },
   focus: {
     color:      'var(--color-deep-blue)',
     transition: { ...springs.bubbly },

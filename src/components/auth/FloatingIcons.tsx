@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { floatingIconVariants } from '../../lib/variants'
-import { MessageIcon, RocketIcon, BubbleIcon, NuetronIcon } from '../icons'
+import { MessageIcon, RocketIcon, BubbleIcon, NeutronIcon } from '../icons'
 import { floatingAnimation } from '../../lib/animations'
 
 interface FloatingItem {
@@ -21,7 +21,7 @@ const FLOATING_ICONS: FloatingItem[] = [
   },
   {
     id: 2,
-    icon: <NuetronIcon color='var(--color-bubble)' />,
+    icon: <NeutronIcon color='var(--color-bubble)' />,
     position: { right: '8%', top: '30%' },
     duration: 8,
     delay: -2,

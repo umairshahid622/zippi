@@ -22,7 +22,6 @@
 
   /* colors */
   --color-blue-primary: #3b9eff;
-  --color-blue-secondary: #00d4e8;
   --color-deep-blue: #1b6fcc;
   --color-cyan-pop: #00d4e8;
   --color-cyan-light: #b8f4fa;
@@ -39,7 +38,13 @@
   --background-image-blue-gradient: linear-gradient(
     to right,
     var(--color-blue-primary),
-    var(--color-blue-secondary)
+    var(--color-cyan-pop)
+  );
+
+  --background-image-gradient-button: linear-gradient(
+    to right,
+    var(--color-blue-primary),
+    var(--color-purple-primary)
   );
 
   /* border radius */
@@ -167,11 +172,15 @@
   }
 
   input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px var(--background-color) inset !important;
-    box-shadow: 0 0  inset !important;
+  textarea:-webkit-autofill,
+  select:-webkit-autofill {
+    /* Stops the browser color from ever flashing or turning solid */
+    transition: background-color 5000s ease-in-out 0s;
+
+    /* Sets your desired text color over the transparent background */
+    -webkit-text-fill-color: var(--text-color) !important;    
+    font-family: var(--font-heading);
+    font-weight: var(--weight-medium);
   }
 
   /* Button labels */
