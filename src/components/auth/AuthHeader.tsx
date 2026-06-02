@@ -4,7 +4,7 @@ import { MessageIcon } from '../icons';
 function AuthHeader() {
   return (
     <nav className='flex items-center  p-6 gap-3'>
-      <div className='inline-flex items-center justify-between primary-gradient p-2 rounded-(--border-radius)'>
+      <div className='inline-flex items-center justify-between bg-blue-gradient p-2 rounded-(--border-radius) shadow-blue-glow'>
         <MessageIcon color='var(--text-color)' className='size-6' />
       </div>
       <div className='relative'>

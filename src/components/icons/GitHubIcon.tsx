@@ -1,6 +1,6 @@
 import type { IconProps } from "./interface";
 
-function GitHubIcon({ className = "size-5", color = "currentColor"}:IconProps) {
+function GitHubIcon({ className = "size-5", color = "var(--text-color)"}:IconProps) {
   return (
     <svg
       viewBox="0 0 20 20"

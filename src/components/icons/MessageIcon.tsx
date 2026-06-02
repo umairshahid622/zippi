@@ -1,7 +1,7 @@
 import { defaultIconSize } from "../../constants/constants";
 import type { IconProps } from "./interface";
 
-function MessageIcon({ className, size = defaultIconSize, color = "currentColor" }: IconProps) {
+function MessageIcon({ className, size = defaultIconSize, color = "var(--text-color)" }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} width={size} height={size}>
       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

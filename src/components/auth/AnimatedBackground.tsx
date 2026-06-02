@@ -43,7 +43,7 @@ export const AnimatedBackground = () => {
 
     const stars: Star[] = Array.from({ length: 60 }, (_, i) => {
 
-      const size = Math.random() * 3 + 2;
+      const size = Math.random() * 2 + 2;
 
       return ({
           id: i,
@@ -58,15 +58,12 @@ export const AnimatedBackground = () => {
 
     stars.forEach(star => {
       const el = document.createElement('div')
-      el.className = 'absolute rounded-full bg-[var(--color-white)] animate-twinkle!'
-      el.style.cssText = `
-        width:             ${star.width}px;
-        height:            ${star.height}px;
-        left:              ${star.left}%;
-        top:               ${star.top}%;
-        --star-duration:   ${star.duration}s;
-        --star-delay:      ${star.delay}s;
-      `
+      el.className = 'absolute rounded-full bg-white'
+      el.style.width = `${star.width}px`
+      el.style.height = `${star.height}px`
+      el.style.left = `${star.left}%`
+      el.style.top = `${star.top}%`
+      el.style.animation = `twinkle ${star.duration}s ease-in-out ${star.delay}s infinite`
       container.appendChild(el)
     })
 
@@ -81,7 +78,7 @@ export const AnimatedBackground = () => {
   return (
     <motion.div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
 
-      <div ref={starsRef} className="absolute inset-0 pointer-events-none" />
+      <div ref={starsRef} className="absolute inset-0 z-10 pointer-events-none" />
 
       {/* Blob 1 — follows mouse softly */}
       <motion.div

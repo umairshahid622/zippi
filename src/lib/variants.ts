@@ -287,21 +287,6 @@ export const taskCardVariants: Variants = {
 }
 
 
-// ── OTP input box ─────────────────────────────
-export const otpBoxVariants: Variants = {
-  idle:   { scale: 1,    borderColor: 'rgba(255,255,255,0.09)' },
-  filled: {
-    scale:       [1, 1.12, 1],
-    borderColor: 'rgba(59,158,255,0.4)',
-    transition:  { ...springs.snappy },
-  },
-  error: {
-    x:          [-6, 6, -6, 6, 0],
-    borderColor: 'rgba(239,68,68,0.6)',
-    transition:  { duration: 0.4 },
-  },
-}
-
 
 // ── Success icon pop ──────────────────────────
 export const successIconVariants: Variants = {
@@ -392,7 +377,7 @@ export const buttonVariants: Variants = {
 export const buttonGhostVariants: Variants = {
   idle: {
     scale:           1,
-    backgroundColor: 'rgba(255, 255, 255, 0.00)',
+    backgroundColor: 'rgba(255, 255, 255, 0.10)',
     borderColor:     'rgba(255, 255, 255, 0.10)',
   },
   hover: {
@@ -425,5 +410,112 @@ export const iconButtonVariants: Variants = {
   },
 }
 
+// ── Input field animations ────────────────────
+
+export const inputVariants: Variants = {
+  idle: {
+    borderColor: 'var(--border-color)',
+    boxShadow:   '0 0 0 0px rgba(59, 158, 255, 0)',    
+  },
+  focus: {
+    borderColor: 'var(--color-deep-blue)',
+    boxShadow:   '0 0 0 4px rgba(59, 158, 255, 0.12)',
+    transition:  { ...springs.soft },
+  },
+  error: {
+    borderColor: 'var(--color-error)',
+    boxShadow:   '0 0 0 4px rgba(239, 68, 68, 0.1)',
+    transition:  { duration: 0.2 },
+  },
+  success: {
+    borderColor: 'var(--color-success)',
+    boxShadow:   '0 0 0 4px rgba(45, 220, 138, 0.1)',
+    transition:  { duration: 0.2 },
+  },
+}
+
+export const inputIconVariants: Variants = {
+  idle:  { scale: 1,    opacity: 0.35, color: 'var(--text-color)' },
+  focus: {
+    color:      'var(--color-deep-blue)',
+    transition: { ...springs.bubbly },
+  },
+  error:   { scale: 1.1, color: 'var(--color-error)' },
+  success: { scale: 1.1, color: 'var(--color-success)' },
+}
+
+export const inputLabelVariants: Variants = {
+  idle: {
+    color:    'var(--text-color)',
+  },
+  focus: {
+    color:    'var(--color-bubble)',
+    transition: { ...springs.soft },
+  },
+  error: {
+    color: 'var(--color-error)',
+    transition: { duration: 0.2 },
+  },
+  success: {
+    color: 'var(--color-success)',
+    transition: { duration: 0.2 },
+  },
+}
+
+export const inputMessageVariants: Variants = {
+  hidden:  { opacity: 0, y: -4, height: 0 },
+  visible: {
+    opacity: 1,
+    y:       0,
+    height:  'auto',
+    transition: { ...springs.bubbly },
+  },
+  exit: {
+    opacity: 0,
+    y:       -4,
+    height:  0,
+    transition: { duration: 0.15 },
+  },
+}
+
+export const otpBoxVariants: Variants = {
+  idle: {
+    scale:       1,
+    borderColor: 'rgba(255, 255, 255, 0.09)',
+    backgroundColor: 'rgba(255, 255, 255, 0.07)',
+  },
+  filled: {
+    scale:           [1, 1.14, 1],
+    borderColor:     'rgba(59, 158, 255, 0.45)',
+    backgroundColor: 'rgba(59, 158, 255, 0.08)',
+    transition:      { ...springs.snappy },
+  },
+  error: {
+    x:           [-6, 6, -6, 6, 0],
+    borderColor: 'rgba(239, 68, 68, 0.7)',
+    backgroundColor: 'rgba(239, 68, 68, 0.07)',
+    transition:  { duration: 0.35 },
+  },
+  success: {
+    scale:       1,
+    borderColor: 'rgba(45, 220, 138, 0.6)',
+    backgroundColor: 'rgba(45, 220, 138, 0.08)',
+    transition:  { duration: 0.2 },
+  },
+}
+
+export const tagVariants: Variants = {
+  hidden:  { scale: 0, opacity: 0 },
+  visible: {
+    scale:   1,
+    opacity: 1,
+    transition: { ...springs.snappy },
+  },
+  exit: {
+    scale:   0,
+    opacity: 0,
+    transition: { duration: 0.15 },
+  },
+}
 
 

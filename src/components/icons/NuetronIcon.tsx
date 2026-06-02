@@ -4,7 +4,7 @@ import type { IconProps } from "./interface";
 function NuetronIcon({
   className,
   size = defaultIconSize,
-  color = "currentColor",
+  color = "var(--text-color)"
 }: IconProps) {
   return (
     <svg

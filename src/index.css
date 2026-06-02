@@ -29,10 +29,12 @@
   --color-bubble: #daeeff;
   --color-soft-sky: #ebf5ff;
   --color-dark-navy: #1a2744;
-  --color-online-green: #2ddc8a;
-  --color-white: #ffffff;
+  --color-app-white: #ffffff;
   --color-transparent: transparent;
   --color-purple-primary: #7b5ea7;
+  --color-error: #ef4444;
+  --color-success: #2ddc8a;
+  --app-border-color: rgba(255, 255, 255, 0.2);
   /* gradients — use --background-image-* so Tailwind generates bg-* utilities */
   --background-image-blue-gradient: linear-gradient(
     to right,
@@ -55,7 +57,7 @@
   --text-body-sm: 0.8125rem; /* 13px — descriptions, secondary text */
 
   /* UI */
-  --text-label: 0.6875rem; /* 11px — uppercase labels, nav items */
+  --text-label: 0.75rem; /* 16px — uppercase labels, nav items */
   --text-caption: 0.6875rem; /* 11px — timestamps, hints */
   --text-btn: 0.875rem; /* 14px — button text */
 
@@ -82,37 +84,35 @@
   --tracking-normal: 0px;
   --tracking-wide: 0.04em; /* uppercase labels only */
 
+  /* --animate-twinkle: twinkle var(--star-duration, 3s) ease-in-out var(--star-delay, 0s) infinite; */
+}
 
-  /*  */
-  --animate-twinkle: twinkle var(--star-duration) ease-in-out infinite;
-
-
-  @keyframes twinkle {    
-    0%,
-    100% {
-      opacity: 0.1;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.8;
-      transform: scale(1.5);
-    }
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.5);
   }
 }
 
 @layer base {
   :root {
-    --bacground-color: var(--color-dark-navy);
+    --background-color: var(--color-dark-navy);
     --text-color: var(--color-white);
+    --border-color: var(--app-border-color);
   }
 
   /* style html elements here */
   html {
-    background: var(--bacground-color);
-    font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    background: var(--background-color);
+    font-family: var(--font-body);
   }
   h1,
   h2,
@@ -156,14 +156,22 @@
   }
 
   button {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
     font-family: var(--font-body);
     font-size: var(--text-body); /* 14px */
     font-weight: var(--weight-bold);
     border-radius: var(--border-radius);
-    cursor: pointer;
-    border: 2px solid rgba(255, 255, 255, 0.12);
-    padding: 0.5rem 2rem;
     color: var(--text-color);
+    border: 2px solid var(--border-color);
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--background-color) inset !important;
+    box-shadow: 0 0  inset !important;
   }
 
   /* Button labels */
@@ -176,52 +184,42 @@
   }
   /* Timestamps, hints */
   .text-caption {
+    @apply font-normal leading-snug opacity-35;
     font-family: var(--font-body);
-    font-size: var(--text-caption); /* 11px */
-    font-weight: var(--weight-regular); /* 400 */
     color: var(--text-color);
-    opacity: 0.35;
-    line-height: var(--leading-snug);
   }
 
   /* Sidebar section labels — CHANNELS, DIRECT etc */
   .text-label {
-    font-family: var(--font-body);
-    font-size: var(--text-label); /* 11px */
-    font-weight: var(--weight-semibold); /* 600 */
-    color: var(--text-color);
-    opacity: 0.35;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-wide); /* 0.04em */
-    line-height: var(--leading-snug);
+    @apply uppercase leading-snug;
+    font-family: var(--font-heading);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wide);
   }
 
   /* Message text */
   .text-message {
+    @apply text-(length:--text-body) font-medium leading-normal opacity-[0.88];
     font-family: var(--font-body);
-    font-size: var(--text-body); /* 14px */
-    font-weight: var(--weight-medium); /* 500 */
-    line-height: var(--leading-normal); /* 1.6 */
     color: var(--text-color);
-    opacity: 0.88;
   }
   /* Muted / secondary text */
   .text-muted {
+    @apply opacity-45;
     color: var(--text-color);
-    opacity: 0.45;
   }
 }
 
 @layer components {
   /* Reusable primary component */
   .glass-card {
+    padding: 2rem;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background: rgba(255, 255, 255, 0.05);
-    border: 1.5px solid rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(10px);
     border-radius: var(--border-radius);
-    padding: 2rem;
     -webkit-backdrop-filter: blur(24px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
   .blob {
@@ -229,12 +227,24 @@
     border-radius: 50%;
     filter: blur(80px);
   }
+
+  .app-divider {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: var(--border-color);
+  }
 }
 
 @layer utilities {
-  /* Custom typography text shadow effect */
-  .primary-gradient {
-    background-image: var(--background-image-blue-gradient);
+  .shadow-blue-glow {
     box-shadow: 0 4px 16px rgba(59, 158, 255, 0.4);
+  }
+
+  .app-border {
+    border: 2px solid var(--border-color);
+  }
+
+  .app-border-radius {
+    border-radius: var(--border-radius);
   }
 }

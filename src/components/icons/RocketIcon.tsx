@@ -1,7 +1,7 @@
 import { defaultIconSize } from "../../constants/constants";
 import type { IconProps } from "./interface";
 
-function RocketIcon({ className, size = defaultIconSize, color = "currentColor" }: IconProps) {
+function RocketIcon({ className, size = defaultIconSize, color = "var(--text-color)" }: IconProps) {
   return (
     <svg
       viewBox="0 0 64 64"

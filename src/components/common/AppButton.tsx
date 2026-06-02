@@ -3,7 +3,7 @@ import { buttonGhostVariants } from "../../lib/variants";
 import { useState, type JSX } from "react";
 
 interface AppButtonProps {
-    lable: string;
+    label: string;
     className?: string;
     type?: "button" | "submit" | "reset";
     icon?: JSX.Element;
@@ -13,7 +13,7 @@ interface AppButtonProps {
 
 
 
-function AppButton({ lable, className, type, icon, onCallBack }: AppButtonProps) {
+function AppButton({ label, className, type, icon, onCallBack }: AppButtonProps) {
     const [isLoading, setIsLoading] = useState(false);
         
     const handleClick = () =>{
@@ -23,15 +23,15 @@ function AppButton({ lable, className, type, icon, onCallBack }: AppButtonProps)
 
     return <motion.button
         type={type}
-        className={className}
+        className='flex gap-2 items-center justify-center w-full'
         onClick={onCallBack}
         variants={buttonGhostVariants}
         initial="idle"
         whileHover="hover"
         whileTap="tap"
     >
-        {icon}
-        {lable}
+        {icon && icon}
+        {label}
     </motion.button>
 
 }

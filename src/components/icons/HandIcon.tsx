@@ -1,7 +1,7 @@
 import { defaultIconSize } from "../../constants/constants";
 import type { IconProps } from "./interface";
 
-function HandIcon({ className, size = defaultIconSize, color = "currentColor" }: IconProps) {
+function HandIcon({ className, size = defaultIconSize, color = "var(--text-color)" }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 80 80" fill={color} xmlns="http://www.w3.org/2000/svg" className={className}>
       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
