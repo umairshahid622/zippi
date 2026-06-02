@@ -1,59 +1,92 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 import { SendIcon } from '../icons'
 import type { buttonType } from '../../types/buttonTypes';
+import Loader from './Loader';
 
 
 
 interface AppArrowExpandButtonProps {
     label: string;
     type?: buttonType;
+    isLoading?: boolean;
     onCallBack?: () => void;
 }
 
 
 
-function ArrowExpandButton({ label, type, onCallBack }: AppArrowExpandButtonProps) {
+function ArrowExpandButton({ label, type, isLoading = false, onCallBack }: AppArrowExpandButtonProps) {
     const [hovered, setHovered] = useState(false)
 
     return (
         <motion.button
             onHoverStart={() => setHovered(true)}
             onHoverEnd={() => setHovered(false)}
-            onClick={onCallBack}
-            type='button'
-            className='inline-flex items-center justify-center w-full overflow-hidden border-none whitespace-nowrap bg-gradient-button'
+            onClick={isLoading ? undefined : onCallBack}
+            type={type ?? 'button'}
+            className='inline-flex relative items-center justify-center w-full overflow-hidden border-none whitespace-nowrap bg-gradient-button'
             style={{
-                boxShadow: '0 6px 20px rgba(59, 158, 255, 0.35)',
+                boxShadow: isLoading
+                    ? '0 4px 14px rgba(59, 158, 255, 0.2)'
+                    : '0 6px 20px rgba(59, 158, 255, 0.35)',
+                cursor: isLoading ? 'not-allowed' : 'pointer',
+                opacity: isLoading ? 0.85 : 1,
             }}
+            disabled={isLoading}
         >
-            {/* Text — slides left to make room for icon */}
-            <motion.span
-                animate={{ x: hovered ? -4 : 0 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 28 }}
-            >
-                {label}                
-            </motion.span>
+            <AnimatePresence mode='wait'>
+                {isLoading ? (
+                    <motion.span
+                        key="loader"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.2 }}
+                        style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                        }}
+                    >                                                
+                        <Loader variant="dots" size="md" />
+                    </motion.span>
+                ) : (
+                    <motion.span
+                        key="content"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.15 }}
+                        style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <motion.span layout="position">
+                            {label}
+                        </motion.span>
 
-            <AnimatePresence>
-                <motion.span
-                    animate={{
-                        x: hovered ? 4 : 0,
-                        opacity: hovered ? 1 : 0,
-                    }}                    
-                    transition={{ type: 'spring', stiffness: 400, damping: 28 }}
-                    style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        overflow: 'hidden',
-                    }}
-                >
-                    <SendIcon />
-                </motion.span>
+                        <AnimatePresence mode='wait'>
+                            {hovered && (
+                                <motion.span
+                                    initial={{ width: 0, opacity: 0, x: 0 }}
+                                    animate={{ width: 'auto', opacity: 1, x: 5 }}
+                                    exit={{ width: 0, opacity: 0, x: 0 }}
+                                    transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+                                    style={{
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        overflow: 'hidden',
+                                    }}
+                                >
+                                    <SendIcon />
+                                </motion.span>
+                            )}
+                        </AnimatePresence>
+                    </motion.span>
+                )}
             </AnimatePresence>
-
-
         </motion.button>
     )
 }

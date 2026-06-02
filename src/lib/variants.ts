@@ -519,3 +519,59 @@ export const tagVariants: Variants = {
 }
 
 
+// ── Loader animations ─────────────────────────
+
+// Spinner ring — continuous rotation
+export const loaderSpinnerVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.6, rotate: 0 },
+  visible: {
+    opacity: 1,
+    scale:   1,
+    rotate:  360,
+    transition: {
+      opacity: { duration: 0.2 },
+      scale:   { ...springs.bubbly },
+      rotate:  { duration: 0.8, ease: 'linear', repeat: Infinity },
+    },
+  },
+  exit: {
+    opacity: 0,
+    scale:   0.6,
+    transition: { duration: 0.15 },
+  },
+}
+
+// Pulsing dot — used with custom index for stagger
+export const loaderDotVariants: Variants = {
+  hidden: { opacity: 0, scale: 0 },
+  visible: (i: number) => ({
+    opacity: [0.35, 1, 0.35],
+    scale:   [0.8, 1.2, 0.8],
+    transition: {
+      duration: 1,
+      delay:    i * 0.15,
+      repeat:   Infinity,
+      ease:     'easeInOut',
+    },
+  }),
+  exit: {
+    opacity: 0,
+    scale:   0,
+    transition: { duration: 0.12 },
+  },
+}
+
+// Loader container fade in/out
+export const loaderContainerVariants: Variants = {
+  hidden:  { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.2 },
+  },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.15 },
+  },
+}
+
+

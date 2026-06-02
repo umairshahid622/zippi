@@ -9,6 +9,11 @@ import MailIcon from "../../components/icons/MailIcon"
 import ArrowExpandButton from "../../components/common/ArrowExpandButton"
 
 function Auth() {
+
+  const onMagicLinkClick = () => {
+    console.log("Magic link clicked");
+  }
+
   return (
     <main className="flex flex-col h-screen relative max-w-7xl mx-auto">
       <AuthHeader />
@@ -28,7 +33,7 @@ function Auth() {
               <div className="grow app-divider" />
             </div>
             <AppInput placeholder="Enter your email" label="Email Address" icon={<MailIcon />} />
-            <ArrowExpandButton label={"Send magic link"}/>          
+            <ArrowExpandButton label={"Send magic link"} onCallBack={onMagicLinkClick} />
           </div>
 
         </div>
