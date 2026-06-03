@@ -1,38 +1,29 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 import { SendIcon } from '../icons'
-import type { buttonType } from '../../types/buttonTypes';
 import Loader from './Loader';
+import type { AppArrowExpandButtonProps } from '../interface';
 
 
 
-interface AppArrowExpandButtonProps {
-    label: string;
-    type?: buttonType;
-    isLoading?: boolean;
-    onCallBack?: () => void;
-}
-
-
-
-function ArrowExpandButton({ label, type, isLoading = false, onCallBack }: AppArrowExpandButtonProps) {
+function ArrowExpandButton({ label, type, isLoading = false, isDisabled = false, onCallBack }: AppArrowExpandButtonProps) {
     const [hovered, setHovered] = useState(false)
 
     return (
         <motion.button
             onHoverStart={() => setHovered(true)}
             onHoverEnd={() => setHovered(false)}
-            onClick={isLoading ? undefined : onCallBack}
+            onClick={isLoading || isDisabled ? undefined : onCallBack}
             type={type ?? 'button'}
             className='inline-flex relative items-center justify-center w-full overflow-hidden border-none whitespace-nowrap bg-gradient-button'
             style={{
                 boxShadow: isLoading
                     ? '0 4px 14px rgba(59, 158, 255, 0.2)'
                     : '0 6px 20px rgba(59, 158, 255, 0.35)',
-                cursor: isLoading ? 'not-allowed' : 'pointer',
-                opacity: isLoading ? 0.85 : 1,
+                cursor: isLoading || isDisabled ? 'not-allowed' : 'pointer',
+                opacity: isLoading || isDisabled ? 0.85 : 1,
             }}
-            disabled={isLoading}
+            disabled={isLoading || isDisabled}
         >
             <AnimatePresence mode='wait'>
                 {isLoading ? (
@@ -48,7 +39,7 @@ function ArrowExpandButton({ label, type, isLoading = false, onCallBack }: AppAr
                             gap: '0.5rem',
                         }}
                     >                                                
-                        <Loader variant="dots" size="md" />
+                        <Loader variant="dots" size="sm" />
                     </motion.span>
                 ) : (
                     <motion.span
@@ -67,7 +58,7 @@ function ArrowExpandButton({ label, type, isLoading = false, onCallBack }: AppAr
                         </motion.span>
 
                         <AnimatePresence mode='wait'>
-                            {hovered && (
+                            {hovered && !isDisabled && (
                                 <motion.span
                                     initial={{ width: 0, opacity: 0, x: 0 }}
                                     animate={{ width: 'auto', opacity: 1, x: 5 }}

@@ -1,5 +1,5 @@
 import { defaultIconSize } from "../../constants/constants";
-import type { IconProps } from "./interface";
+import type { IconProps } from "../interface";
 
 function NeutronIcon({
   className,
@@ -16,11 +16,11 @@ function NeutronIcon({
       xmlns="http://www.w3.org/2000/svg"
       fill={color}
     >
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></g>
       <g id="SVGRepo_iconCarrier">
         <path

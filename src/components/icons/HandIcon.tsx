@@ -1,14 +1,14 @@
 import { defaultIconSize } from "../../constants/constants";
-import type { IconProps } from "./interface";
+import type { IconProps } from "../interface";
 
 function HandIcon({ className, size = defaultIconSize, color = "var(--text-color)" }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 80 80" fill={color} xmlns="http://www.w3.org/2000/svg" className={className}>
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></g>
       <g id="SVGRepo_iconCarrier">
         {" "}
@@ -119,8 +119,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientUnits="userSpaceOnUse"
           >
             {" "}
-            <stop offset="0.00132565" stop-color="#FFCB4B"></stop>{" "}
-            <stop offset="1" stop-color="#FFD748"></stop>{" "}
+            <stop offset="0.00132565" stopColor="#FFCB4B"></stop>{" "}
+            <stop offset="1" stopColor="#FFD748"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint1_linear"
@@ -131,8 +131,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientUnits="userSpaceOnUse"
           >
             {" "}
-            <stop offset="0.00132565" stop-color="#FFCB4B"></stop>{" "}
-            <stop offset="1" stop-color="#FFD748"></stop>{" "}
+            <stop offset="0.00132565" stopColor="#FFCB4B"></stop>{" "}
+            <stop offset="1" stopColor="#FFD748"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint2_linear"
@@ -143,8 +143,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientUnits="userSpaceOnUse"
           >
             {" "}
-            <stop offset="0.00132565" stop-color="#FFCB4B"></stop>{" "}
-            <stop offset="1" stop-color="#FFD748"></stop>{" "}
+            <stop offset="0.00132565" stopColor="#FFCB4B"></stop>{" "}
+            <stop offset="1" stopColor="#FFD748"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint3_linear"
@@ -155,8 +155,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientUnits="userSpaceOnUse"
           >
             {" "}
-            <stop offset="0.00132565" stop-color="#FFCB4B"></stop>{" "}
-            <stop offset="1" stop-color="#FFD748"></stop>{" "}
+            <stop offset="0.00132565" stopColor="#FFCB4B"></stop>{" "}
+            <stop offset="1" stopColor="#FFD748"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint4_linear"
@@ -167,8 +167,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientUnits="userSpaceOnUse"
           >
             {" "}
-            <stop stop-color="#FFBC47" stop-opacity="0"></stop>{" "}
-            <stop offset="1" stop-color="#FFA754"></stop>{" "}
+            <stop stopColor="#FFBC47" stopOpacity="0"></stop>{" "}
+            <stop offset="1" stopColor="#FFA754"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint5_linear"
@@ -179,8 +179,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientUnits="userSpaceOnUse"
           >
             {" "}
-            <stop offset="0.00132565" stop-color="#FFCB4B"></stop>{" "}
-            <stop offset="1" stop-color="#FFD748"></stop>{" "}
+            <stop offset="0.00132565" stopColor="#FFCB4B"></stop>{" "}
+            <stop offset="1" stopColor="#FFD748"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint6_linear"
@@ -191,8 +191,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientUnits="userSpaceOnUse"
           >
             {" "}
-            <stop offset="0.00132565" stop-color="#FFCB4B"></stop>{" "}
-            <stop offset="1" stop-color="#FFD748"></stop>{" "}
+            <stop offset="0.00132565" stopColor="#FFCB4B"></stop>{" "}
+            <stop offset="1" stopColor="#FFD748"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint7_linear"
@@ -203,8 +203,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientUnits="userSpaceOnUse"
           >
             {" "}
-            <stop stop-color="#FFBC47" stop-opacity="0"></stop>{" "}
-            <stop offset="1" stop-color="#FFA754"></stop>{" "}
+            <stop stopColor="#FFBC47" stopOpacity="0"></stop>{" "}
+            <stop offset="1" stopColor="#FFA754"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint8_linear"
@@ -215,8 +215,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientUnits="userSpaceOnUse"
           >
             {" "}
-            <stop stop-color="#FFBC47" stop-opacity="0"></stop>{" "}
-            <stop offset="1" stop-color="#FFA754"></stop>{" "}
+            <stop stopColor="#FFBC47" stopOpacity="0"></stop>{" "}
+            <stop offset="1" stopColor="#FFA754"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint9_linear"
@@ -227,8 +227,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientUnits="userSpaceOnUse"
           >
             {" "}
-            <stop stop-color="#FFBC47" stop-opacity="0"></stop>{" "}
-            <stop offset="1" stop-color="#FFA754"></stop>{" "}
+            <stop stopColor="#FFBC47" stopOpacity="0"></stop>{" "}
+            <stop offset="1" stopColor="#FFA754"></stop>{" "}
           </linearGradient>{" "}
           <radialGradient
             id="paint10_radial"
@@ -239,8 +239,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientTransform="translate(59.5133 29.9083) scale(13.6681)"
           >
             {" "}
-            <stop stop-color="#FFBC47" stop-opacity="0"></stop>{" "}
-            <stop offset="1" stop-color="#FFA754"></stop>{" "}
+            <stop stopColor="#FFBC47" stopOpacity="0"></stop>{" "}
+            <stop offset="1" stopColor="#FFA754"></stop>{" "}
           </radialGradient>{" "}
           <linearGradient
             id="paint11_linear"
@@ -253,10 +253,10 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             {" "}
             <stop
               offset="0.3118"
-              stop-color="#FFBC47"
-              stop-opacity="0"
+              stopColor="#FFBC47"
+              stopOpacity="0"
             ></stop>{" "}
-            <stop offset="1" stop-color="#FF8900"></stop>{" "}
+            <stop offset="1" stopColor="#FF8900"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint12_linear"
@@ -269,10 +269,10 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             {" "}
             <stop
               offset="0.3118"
-              stop-color="#FFBC47"
-              stop-opacity="0"
+              stopColor="#FFBC47"
+              stopOpacity="0"
             ></stop>{" "}
-            <stop offset="1" stop-color="#FF8900"></stop>{" "}
+            <stop offset="1" stopColor="#FF8900"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint13_linear"
@@ -285,10 +285,10 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             {" "}
             <stop
               offset="0.3118"
-              stop-color="#FFBC47"
-              stop-opacity="0"
+              stopColor="#FFBC47"
+              stopOpacity="0"
             ></stop>{" "}
-            <stop offset="1" stop-color="#FF8900"></stop>{" "}
+            <stop offset="1" stopColor="#FF8900"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint14_linear"
@@ -299,8 +299,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientUnits="userSpaceOnUse"
           >
             {" "}
-            <stop stop-color="#FFBC47" stop-opacity="0"></stop>{" "}
-            <stop offset="1" stop-color="#FFBC47"></stop>{" "}
+            <stop stopColor="#FFBC47" stopOpacity="0"></stop>{" "}
+            <stop offset="1" stopColor="#FFBC47"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint15_linear"
@@ -311,8 +311,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientUnits="userSpaceOnUse"
           >
             {" "}
-            <stop stop-color="#FFBC47" stop-opacity="0"></stop>{" "}
-            <stop offset="1" stop-color="#FFBC47"></stop>{" "}
+            <stop stopColor="#FFBC47" stopOpacity="0"></stop>{" "}
+            <stop offset="1" stopColor="#FFBC47"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint16_linear"
@@ -323,8 +323,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientUnits="userSpaceOnUse"
           >
             {" "}
-            <stop stop-color="#FFBC47" stop-opacity="0"></stop>{" "}
-            <stop offset="1" stop-color="#FFA754"></stop>{" "}
+            <stop stopColor="#FFBC47" stopOpacity="0"></stop>{" "}
+            <stop offset="1" stopColor="#FFA754"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint17_linear"
@@ -335,8 +335,8 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             gradientUnits="userSpaceOnUse"
           >
             {" "}
-            <stop stop-color="#FFBC47" stop-opacity="0"></stop>{" "}
-            <stop offset="1" stop-color="#FFBC47"></stop>{" "}
+            <stop stopColor="#FFBC47" stopOpacity="0"></stop>{" "}
+            <stop offset="1" stopColor="#FFBC47"></stop>{" "}
           </linearGradient>{" "}
           <linearGradient
             id="paint18_linear"
@@ -349,10 +349,10 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             {" "}
             <stop
               offset="0.3118"
-              stop-color="#FFBC47"
-              stop-opacity="0"
+              stopColor="#FFBC47"
+              stopOpacity="0"
             ></stop>{" "}
-            <stop offset="1" stop-color="#FF8900"></stop>{" "}
+            <stop offset="1" stopColor="#FF8900"></stop>{" "}
           </linearGradient>{" "}
           <radialGradient
             id="paint19_radial"
@@ -365,10 +365,10 @@ function HandIcon({ className, size = defaultIconSize, color = "var(--text-color
             {" "}
             <stop
               offset="0.6134"
-              stop-color="#FFBC47"
-              stop-opacity="0"
+              stopColor="#FFBC47"
+              stopOpacity="0"
             ></stop>{" "}
-            <stop offset="1" stop-color="#FF8900"></stop>{" "}
+            <stop offset="1" stopColor="#FF8900"></stop>{" "}
           </radialGradient>{" "}
         </defs>{" "}
       </g>

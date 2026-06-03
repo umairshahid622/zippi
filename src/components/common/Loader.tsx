@@ -1,5 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { loaderContainerVariants } from '../../lib/variants'
+import type { LoaderSize } from '../../types/types'
+import type { LoaderProps } from '../interface'
 
 // ─────────────────────────────────────────────
 // Loader — Creative Framer Motion Loader
@@ -24,20 +26,12 @@ import { loaderContainerVariants } from '../../lib/variants'
 // Sizes:  'sm' (16px)  |  'md' (24px)  |  'lg' (48px)
 // ─────────────────────────────────────────────
 
-type LoaderVariant = 'spinner' | 'dots' | 'pulse'
-type LoaderSize = 'sm' | 'md' | 'lg'
 
-interface LoaderProps {
-  variant?: LoaderVariant
-  size?: LoaderSize
-  color?: string
-  label?: string
-  className?: string
-}
+
 
 const sizePx: Record<LoaderSize, number> = {
-  sm: 16,
-  md: 24,
+  sm: 22,
+  md: 28,
   lg: 48,
 }
 

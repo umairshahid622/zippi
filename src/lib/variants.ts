@@ -418,18 +418,18 @@ export const inputVariants: Variants = {
     boxShadow:   '0 0 0 0px rgba(59, 158, 255, 0)',    
   },
   focus: {
-    borderColor: 'var(--color-deep-blue)',
-    boxShadow:   '0 0 0 4px rgba(59, 158, 255, 0.12)',
+    borderColor: 'var(--color-bubble)',
+    boxShadow:   '0 0 0 4px var(--color-box-shadow-bubble)',
     transition:  { ...springs.soft },
   },
   error: {
     borderColor: 'var(--color-error)',
-    boxShadow:   '0 0 0 4px rgba(239, 68, 68, 0.1)',
+    boxShadow:   '0 0 0 4px var(--color-box-shadow-error)',
     transition:  { duration: 0.2 },
   },
   success: {
     borderColor: 'var(--color-success)',
-    boxShadow:   '0 0 0 4px rgba(45, 220, 138, 0.1)',
+    boxShadow:   '0 0 0 4px var(--color-box-shadow-success)',
     transition:  { duration: 0.2 },
   },
 }
@@ -437,7 +437,7 @@ export const inputVariants: Variants = {
 export const inputIconVariants: Variants = {
   idle:  { scale: 1,    opacity: 0.45, color: 'var(--text-color)' },
   focus: {
-    color:      'var(--color-deep-blue)',
+    color:      'var(--color-bubble)',
     transition: { ...springs.bubbly },
   },
   error:   { scale: 1.1, color: 'var(--color-error)' },

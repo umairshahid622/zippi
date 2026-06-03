@@ -1,4 +1,4 @@
-import type { IconProps } from "./interface";
+import type { IconProps } from "../interface";
 
 function GitHubIcon({ className = "size-5", color = "var(--text-color)"}:IconProps) {
   return (
@@ -9,11 +9,11 @@ function GitHubIcon({ className = "size-5", color = "var(--text-color)"}:IconPro
       className={className}
       fill={color}
     >
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></g>
       <g id="SVGRepo_iconCarrier">
         {" "}
@@ -22,9 +22,9 @@ function GitHubIcon({ className = "size-5", color = "var(--text-color)"}:IconPro
         <g
           id="Page-1"
           stroke="none"
-          stroke-width="1"
+          strokeWidth="1"
           fill="none"
-          fill-rule="evenodd"
+          fillRule="evenodd"
         >
           {" "}
           <g

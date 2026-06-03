@@ -7,21 +7,8 @@ import {
   inputVariants,
 } from "../../lib/variants";
 import { inputIconSize } from "../../constants/constants";
+import type { InputProps } from "../interface";
 
-interface InputProps {
-  label?: string;
-  placeholder?: string;
-  type?: string;
-  value?: string;
-  icon?: React.ReactNode;
-  message?: string;
-  status?: "idle" | "focus" | "error" | "success";
-  maxLength?: number;
-  iconSize?: number;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onFocus?: () => void;
-  onBlur?: () => void;
-}
 
 export const AppInput = forwardRef<HTMLInputElement, InputProps>(
   (

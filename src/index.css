@@ -34,6 +34,13 @@
   --color-error: #ef4444;
   --color-success: #2ddc8a;
   --app-border-color: rgba(255, 255, 255, 0.2);
+
+  /* app colors for box shadow */
+  --color-box-shadow-bubble: rgba(218, 238, 255, 0.12);
+  --color-box-shadow-success: rgba(45, 220, 138, 0.12);
+  --color-box-shadow-error: rgba(239, 68, 68, 0.12);
+
+
   /* gradients — use --background-image-* so Tailwind generates bg-* utilities */
   --background-image-blue-gradient: linear-gradient(
     to right,
@@ -161,8 +168,8 @@
   }
 
   button {
-    padding: 0.75rem 1rem;
-    min-height: 3rem;
+    padding: 0.01rem 1rem;
+    height: 3rem;
     cursor: pointer;
     font-family: var(--font-body);
     font-size: var(--text-body); /* 14px */

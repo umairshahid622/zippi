@@ -1,5 +1,5 @@
 import { defaultIconSize } from "../../constants/constants";
-import type { IconProps } from "./interface";
+import type { IconProps } from "../interface";
 
 function RocketIcon({ className, size = defaultIconSize, color = "var(--text-color)" }: IconProps) {
   return (
@@ -14,11 +14,11 @@ function RocketIcon({ className, size = defaultIconSize, color = "var(--text-col
       width={size}
       height={size}
     >
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></g>
       <g id="SVGRepo_iconCarrier">
         {" "}

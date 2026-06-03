@@ -1,4 +1,4 @@
-import type { IconProps } from "./interface";
+import type { IconProps } from "../interface";
 
 function GoogleIcon({className = "size-5" }:IconProps) {
   return (
@@ -9,11 +9,11 @@ function GoogleIcon({className = "size-5" }:IconProps) {
       fill="#000000"
       className={className}
     >
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></g>
       <g id="SVGRepo_iconCarrier">
         {" "}
@@ -22,9 +22,9 @@ function GoogleIcon({className = "size-5" }:IconProps) {
         <g
           id="Icons"
           stroke="none"
-          stroke-width="1"
+          strokeWidth="1"
           fill="none"
-          fill-rule="evenodd"
+          fillRule="evenodd"
         >
           {" "}
           <g id="Color-" transform="translate(-401.000000, -860.000000)">
