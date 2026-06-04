@@ -1,5 +1,5 @@
 import type { JSX } from "react/jsx-runtime";
-import type { ButtonType, LoaderSize, LoaderVariant } from "../types/types";
+import type { ButtonType, InputStatus, LoaderSize, LoaderVariant } from "../types/types";
 
 export interface IconProps {
   className?: string;
@@ -15,7 +15,7 @@ export interface InputProps {
   value?: string;
   icon?: React.ReactNode;
   message?: string;
-  status?: "idle" | "focus" | "error" | "success";
+  status?: InputStatus;
   maxLength?: number;
   iconSize?: number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;

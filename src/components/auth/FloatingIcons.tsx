@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { floatingIconVariants } from '../../lib/variants'
 import { MessageIcon, RocketIcon, BubbleIcon, NeutronIcon } from '../icons'
 import { floatingAnimation } from '../../lib/animations'
+import { memo } from 'react'
 
 interface FloatingItem {
   id: number
@@ -42,7 +43,7 @@ const FLOATING_ICONS: FloatingItem[] = [
   },
 ]
 
-export const FloatingIcons = () => {
+export const FloatingIcons = memo(() => {
   return (
     <>
       {FLOATING_ICONS.map(item => (
@@ -59,4 +60,4 @@ export const FloatingIcons = () => {
       ))}
     </>
   )
-}
+});

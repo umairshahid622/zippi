@@ -481,25 +481,25 @@ export const inputMessageVariants: Variants = {
 export const otpBoxVariants: Variants = {
   idle: {
     scale:       1,
-    borderColor: 'rgba(255, 255, 255, 0.09)',
+    borderColor: 'var(--border-color)',
     backgroundColor: 'rgba(255, 255, 255, 0.07)',
   },
   filled: {
     scale:           [1, 1.14, 1],
-    borderColor:     'rgba(59, 158, 255, 0.45)',
-    backgroundColor: 'rgba(59, 158, 255, 0.08)',
+    borderColor:     'var(--color-bubble)',
+    backgroundColor: 'var(--color-box-shadow-bubble)',
     transition:      { ...springs.snappy },
   },
   error: {
     x:           [-6, 6, -6, 6, 0],
-    borderColor: 'rgba(239, 68, 68, 0.7)',
-    backgroundColor: 'rgba(239, 68, 68, 0.07)',
+    borderColor: 'var(--color-error)',
+    backgroundColor: 'var(--color-box-shadow-error)',
     transition:  { duration: 0.35 },
   },
   success: {
     scale:       1,
-    borderColor: 'rgba(45, 220, 138, 0.6)',
-    backgroundColor: 'rgba(45, 220, 138, 0.08)',
+    borderColor: 'var(--color-success)',
+    backgroundColor: 'var(--color-box-shadow-success)',
     transition:  { duration: 0.2 },
   },
 }

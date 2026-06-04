@@ -201,9 +201,11 @@
   }
   /* Timestamps, hints */
   .text-caption {
-    @apply font-normal leading-snug opacity-35;
     font-family: var(--font-body);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--leading-snug);
     color: var(--text-color);
+    opacity: 35%;
   }
 
   /* Sidebar section labels — CHANNELS, DIRECT etc */

@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import { useEffect, useRef } from 'react'
+import { memo, useEffect, useRef } from 'react'
 
 interface Star {
   id: number
@@ -11,7 +11,9 @@ interface Star {
   delay: number
 }
 
-export const AnimatedBackground = () => {
+export const AnimatedBackground = memo(() => {
+  console.warn("AnimatedBackground Reloaded");
+
   const starsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -65,4 +67,4 @@ export const AnimatedBackground = () => {
       />
     </motion.div>
   )
-}
+});
