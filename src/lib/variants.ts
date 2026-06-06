@@ -575,3 +575,35 @@ export const loaderContainerVariants: Variants = {
 }
 
 
+// ── Auth screen transitions ───────────────────
+export const authScreenSlideVariants: Variants = {
+  hidden:  { opacity: 0, x: 30,  filter: 'blur(4px)' },
+  visible: {
+    opacity: 1,
+    x:       0,
+    filter:  'blur(0px)',
+    transition: { ...springs.soft, duration: 0.35 },
+  },
+  exit: {
+    opacity: 0,
+    x:       -30,
+    filter:  'blur(4px)',
+    transition: { duration: 0.2 },
+  },
+}
+
+export const authItemVariants: Variants = {
+  hidden:  { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y:       0,
+    transition: { ...springs.soft, delay: i * 0.06 },
+  }),
+  exit: {
+    opacity: 0,
+    y:       -8,
+    transition: { duration: 0.15 },
+  },
+}
+
+

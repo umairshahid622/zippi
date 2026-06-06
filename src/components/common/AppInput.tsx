@@ -20,6 +20,7 @@ export const AppInput = forwardRef<HTMLInputElement, InputProps>(
       icon,
       message,
       status = "idle",
+      disabled = false,
       iconSize = inputIconSize,
       maxLength,
       onChange,
@@ -72,6 +73,7 @@ export const AppInput = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             type={type}
             value={value}
+            disabled = {disabled}
             placeholder={placeholder}
             maxLength={maxLength}
             onChange={onChange}

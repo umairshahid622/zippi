@@ -6,13 +6,15 @@ import { otpBoxVariants } from '../../lib/variants'
 interface OTPInputProps {
   length?:   number
   onComplete: (otp: string) => void
-  status?:   'idle' | 'error' | 'success'
+  status?:   'idle' | 'error' | 'success',
+  disable: boolean
 }
 
 export const OTPInput = ({
   length     = 6,
   onComplete,
   status     = 'idle',
+  disable = false
 }: OTPInputProps) => {
   const [values, setValues] = useState<string[]>(Array(length).fill(''))
   const refs = useRef<(HTMLInputElement | null)[]>([])
@@ -53,7 +55,7 @@ export const OTPInput = ({
       {values.map((val, i) => (
         <motion.input
           key={i}
-          ref={refs[i]}
+          ref={el => { refs.current[i] = el; }}
           type="text"
           inputMode="numeric"
           maxLength={1}
@@ -64,12 +66,12 @@ export const OTPInput = ({
           animate={getBoxState(i)}
           variants={otpBoxVariants}
           initial="idle"
+          disabled={disable}
           className="
             w-12 h-14 rounded-2xl border-2 text-xl font-bold
             text-white text-center outline-none
-            font-display
+            font-heading
           "
-          style={{ fontFamily: 'Quicksand, sans-serif' }}
         />
       ))}
     </div>

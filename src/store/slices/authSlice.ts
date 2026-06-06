@@ -25,6 +25,8 @@ interface AuthState {
   emailStatus: InputStatus;
   statusMessage: string | null;
   lastSentTimestamp: number | null;
+  pendingEmail: string | null;
+  isOtpScreen: boolean;
 }
 
 // ── Initial state ─────────────────────────────
@@ -37,6 +39,8 @@ const initialState: AuthState = {
   emailStatus: "idle",
   statusMessage: null,
   lastSentTimestamp: null,
+  isOtpScreen: false,
+  pendingEmail: null,
 };
 
 // ── Async thunks ──────────────────────────────
@@ -107,17 +111,33 @@ const authSlice = createSlice({
       state.statusMessage = null;
     },
 
-    setStatusMessage: (state, action: PayloadAction<AuthState["statusMessage"]>) => {
+    setStatusMessage: (
+      state,
+      action: PayloadAction<AuthState["statusMessage"]>,
+    ) => {
       state.statusMessage = action.payload;
     },
 
-    setEmailStatus: (state, action: PayloadAction<AuthState["emailStatus"]>) => {
+    setEmailStatus: (
+      state,
+      action: PayloadAction<AuthState["emailStatus"]>,
+    ) => {
       state.emailStatus = action.payload;
     },
 
-
-    clearMagicLinkState: (state) => {      
+    clearMagicLinkState: (state) => {
       state.lastSentTimestamp = null;
+      state.emailStatus = "idle";
+      state.statusMessage = null;
+      state.pendingEmail = null;
+    },
+
+    setPendingEmail: (state, action: PayloadAction<string | null>) => {
+      state.pendingEmail = action.payload;
+    },
+
+    backToSignIn: (state) => {
+      state.isOtpScreen = false;
       state.emailStatus = "idle";
       state.statusMessage = null;
     },
@@ -134,11 +154,12 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     // ── sendMagicLink ──
     builder
-      .addCase(sendMagicLink.pending, (state) => {
+      .addCase(sendMagicLink.pending, (state, action) => {
         state.isLoading = true;
         state.loadingProvider = "magic-link";
         state.emailStatus = "focus";
         state.statusMessage = "Sending Magic Link";
+        state.pendingEmail = action.meta.arg;
       })
       .addCase(sendMagicLink.fulfilled, (state) => {
         state.isLoading = false;
@@ -146,29 +167,37 @@ const authSlice = createSlice({
         state.emailStatus = "success";
         state.statusMessage = "Magic link sent! Check your inbox.";
         state.lastSentTimestamp = Date.now();
+        state.isOtpScreen = true;
       })
       .addCase(sendMagicLink.rejected, (state, action) => {
         state.isLoading = false;
         state.emailStatus = "error";
         state.statusMessage = action.payload as string;
         state.loadingProvider = null;
+        state.isOtpScreen = false;
       });
 
     // ── verifyOTP ──
     builder
       .addCase(verifyOTP.pending, (state) => {
         state.isLoading = true;
-        state.statusMessage = "Sending OTP";
+        state.emailStatus = "focus";
+        state.statusMessage = null;
       })
       .addCase(verifyOTP.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
+        state.isOtpScreen = false;
+        state.pendingEmail = null;
+        state.emailStatus = "idle";
+        state.statusMessage = null;
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.isLoading = false;
         state.statusMessage = action.payload as string;
+        state.emailStatus = "error";
       });
 
     // ── updateProfile ──
@@ -192,8 +221,16 @@ const authSlice = createSlice({
   },
 });
 
-export const { setCredentials, resetAuth, setLoadingProvider, setStatusMessage, clearMagicLinkState, setEmailStatus } =
-  authSlice.actions;
+export const {
+  setCredentials,
+  resetAuth,
+  setLoadingProvider,
+  setStatusMessage,
+  clearMagicLinkState,
+  setEmailStatus,
+  setPendingEmail,
+  backToSignIn,
+} = authSlice.actions;
 export default authSlice.reducer;
 
 // ── Selectors ─────────────────────────────────
@@ -208,8 +245,8 @@ export const selectEmailStatus = (state: RootState) => state.auth.emailStatus;
 export const selectAuthStatusMessage = (state: RootState) =>
   state.auth.statusMessage;
 
-export const selectIsNewUser = (state: RootState) =>
-  state.auth.isAuthenticated && !state.auth.user?.fullName;
-export const selectLoadingProvider = (state: RootState) =>
-  state.auth.loadingProvider;
+export const selectIsNewUser = (state: RootState) => state.auth.isAuthenticated && !state.auth.user?.fullName;
+export const selectLoadingProvider = (state: RootState) => state.auth.loadingProvider;
 export const selectMagicLinkTimestamp = (state: RootState) => state.auth.lastSentTimestamp;
+export const selectIsOtpScreen = (state: RootState) => state.auth.isOtpScreen;
+export const selectPendingEmail    = (state: RootState) => state.auth.pendingEmail

@@ -11,7 +11,7 @@ function AppButton({ label, type, icon, isLoading = false, isDisabled = false, o
 
     return <motion.button
         type={type}
-        className={`flex gap-2 items-center justify-center w-full`}
+        className={`flex gap-2 items-center justify-center w-full h-12 p-1`}
         onClick={isLoading || isDisabled ? undefined : onCallBack}
         variants={isDisabled ? undefined : buttonGhostVariants}
         initial="idle"
