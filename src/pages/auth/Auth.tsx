@@ -23,7 +23,8 @@ import {
   selectIsOtpScreen,
   selectPendingEmail,
   setPendingEmail,
-  backToSignIn,
+  selectOtpStatus,
+  resetAuth,
 } from '../../store/slices/authSlice'
 import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -44,6 +45,7 @@ function Auth() {
   const authStatusMessage = useAppSelector(selectAuthStatusMessage)
   const isOtpScreen = useAppSelector(selectIsOtpScreen)
   const pendingEmail = useAppSelector(selectPendingEmail)
+  const otpStatus = useAppSelector(selectOtpStatus)
 
   const isAnyLoading = isLoading || loadingProvider !== null
   const emailRef = useRef<HTMLInputElement>(null)
@@ -140,7 +142,7 @@ function Auth() {
   }
 
   const handleBackToSignIn = () => {
-    dispatch(backToSignIn())
+    dispatch(resetAuth())
   }
 
   return (
@@ -184,7 +186,7 @@ function Auth() {
                     animate="visible"
                   >
                     <OTPInput
-                      status={emailStatus === 'error' ? 'error' : 'idle'}
+                      status={otpStatus}
                       onComplete={handleVerifyOtp} disable={isLoading}
 
                     />
@@ -201,7 +203,7 @@ function Auth() {
                         transition={{ duration: 0.2 }}
                         style={{
                           fontSize: 12,
-                          color: emailStatus === 'error'
+                          color: otpStatus === 'error'
                             ? 'var(--color-error)'
                             : 'var(--color-success)',
                         }}
@@ -212,20 +214,28 @@ function Auth() {
                   </AnimatePresence>
 
                   {/* Resend link */}
-                  <motion.button
-                    custom={2}
-                    variants={authItemVariants}
-                    initial="hidden"
-                    animate="visible"
-                    onClick={handleResend}
-                    style={{
-                      fontSize: 12,
-                      background: 'none',
-                      border: 'none',
-                    }}
-                  >
-                    Didn't get it? Resend code →
-                  </motion.button>
+                  {
+                    otpStatus !== "success" && (
+
+                      <>
+                        <motion.button
+                          custom={2}
+                          variants={authItemVariants}
+                          initial="hidden"
+                          animate="visible"
+                          onClick={handleResend}
+                          style={{
+                            fontSize: 12,
+                            background: 'none',
+                            border: 'none',
+                          }}
+                        >
+                          Didn't get it? Resend code →
+                        </motion.button>
+
+                      </>
+                    )
+                  }
                   <motion.button
                     custom={2}
                     variants={authItemVariants}
@@ -240,6 +250,7 @@ function Auth() {
                   >
                     ← Wrong email?
                   </motion.button>
+
 
                 </motion.div>
 

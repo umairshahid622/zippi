@@ -23,6 +23,7 @@ interface AuthState {
   isLoading: boolean;
   loadingProvider: authLoadingProvider;
   emailStatus: InputStatus;
+  otpStatus: Omit<InputStatus, 'focus'>;
   statusMessage: string | null;
   lastSentTimestamp: number | null;
   pendingEmail: string | null;
@@ -37,6 +38,7 @@ const initialState: AuthState = {
   isLoading: false,
   loadingProvider: null,
   emailStatus: "idle",
+  otpStatus: "idle",
   statusMessage: null,
   lastSentTimestamp: null,
   isOtpScreen: false,
@@ -136,12 +138,6 @@ const authSlice = createSlice({
       state.pendingEmail = action.payload;
     },
 
-    backToSignIn: (state) => {
-      state.isOtpScreen = false;
-      state.emailStatus = "idle";
-      state.statusMessage = null;
-    },
-
     // Hard reset — called on logout
     resetAuth: () => initialState,
     setLoadingProvider: (
@@ -181,23 +177,23 @@ const authSlice = createSlice({
     builder
       .addCase(verifyOTP.pending, (state) => {
         state.isLoading = true;
-        state.emailStatus = "focus";
-        state.statusMessage = null;
+        state.otpStatus = "focus";
+        state.statusMessage = "Otp verification Pending"
       })
       .addCase(verifyOTP.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
-        state.isOtpScreen = false;
         state.pendingEmail = null;
         state.emailStatus = "idle";
-        state.statusMessage = null;
+        state.otpStatus = "success";
+        state.statusMessage = "Otp verified successfully"
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.isLoading = false;
         state.statusMessage = action.payload as string;
-        state.emailStatus = "error";
+        state.otpStatus = "error";
       });
 
     // ── updateProfile ──
@@ -207,7 +203,7 @@ const authSlice = createSlice({
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.user;
+        state.user = action.payload.user;        
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.isLoading = false;
@@ -229,7 +225,6 @@ export const {
   clearMagicLinkState,
   setEmailStatus,
   setPendingEmail,
-  backToSignIn,
 } = authSlice.actions;
 export default authSlice.reducer;
 
@@ -249,4 +244,6 @@ export const selectIsNewUser = (state: RootState) => state.auth.isAuthenticated 
 export const selectLoadingProvider = (state: RootState) => state.auth.loadingProvider;
 export const selectMagicLinkTimestamp = (state: RootState) => state.auth.lastSentTimestamp;
 export const selectIsOtpScreen = (state: RootState) => state.auth.isOtpScreen;
-export const selectPendingEmail    = (state: RootState) => state.auth.pendingEmail
+export const selectPendingEmail    = (state: RootState) => state.auth.pendingEmail;
+export const selectOtpStatus    = (state: RootState) => state.auth.otpStatus;
+

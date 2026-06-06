@@ -499,7 +499,7 @@ export const otpBoxVariants: Variants = {
   success: {
     scale:       1,
     borderColor: 'var(--color-success)',
-    backgroundColor: 'var(--color-box-shadow-success)',
+    boxShadow:   '0 0 0 6px var(--color-box-shadow-success)',
     transition:  { duration: 0.2 },
   },
 }

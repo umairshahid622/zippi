@@ -40,6 +40,9 @@
   --color-box-shadow-success: rgba(45, 220, 138, 0.12);
   --color-box-shadow-error: rgba(239, 68, 68, 0.12);
 
+  /* shadow */
+  --shadow-app-success: 0 0 0 4px var(--color-box-shadow-success)
+
 
   /* gradients — use --background-image-* so Tailwind generates bg-* utilities */
   --background-image-blue-gradient: linear-gradient(
