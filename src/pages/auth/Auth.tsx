@@ -14,20 +14,37 @@ import {
   selectLoadingProvider,
   sendMagicLink,
   setLoadingProvider,
+
+
+  //email
+
   selectEmailStatus,
-  selectAuthStatusMessage,
-  setStatusMessage,
-  selectMagicLinkTimestamp,
+  selectEmailStatusMessage,
+  setEmailStatusMessage,
   setEmailStatus,
+
+  // otp
+  selectOtpStatusMessage,
+  setOtpStatusMessage,
+  selectOtpStatus,
+
+
+  // usernames
+  selectUserNameStatusMessage,
+  setUserNameStatusMessage,
+  selectUserNameStatus,
+  setUserNameStatus,
+
+  selectMagicLinkTimestamp,
   verifyOTP,
   selectIsOtpScreen,
   selectPendingEmail,
-  setPendingEmail,
-  selectOtpStatus,
+  setPendingEmail,  
   resetAuth,
   selectIsOtpDisabled,
-  setCredentials,
-  selectIsOnBoarding
+  selectIsNewUser,
+  updateProfile,
+  selectIsAuthenticated,  
 } from '../../store/slices/authSlice'
 import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -37,6 +54,7 @@ import {
   authItemVariants,
 } from '../../lib/variants'
 import AppTextButton from '../../components/common/AppTextButton'
+import type { AuthLoadingProvider } from '../../types/types'
 
 const MAGIC_LINK_COOLDOWN_MS = 60 * 1000
 
@@ -44,28 +62,24 @@ function Auth() {
   const dispatch = useAppDispatch()
   const isLoading = useAppSelector(selectAuthLoading)
   const loadingProvider = useAppSelector(selectLoadingProvider)
-  const magicLinkTimestamp = useAppSelector(selectMagicLinkTimestamp)
-  const emailStatus = useAppSelector(selectEmailStatus)
-  const authStatusMessage = useAppSelector(selectAuthStatusMessage)
   const isOtpScreen = useAppSelector(selectIsOtpScreen)
-  const pendingEmail = useAppSelector(selectPendingEmail)
-  const otpStatus = useAppSelector(selectOtpStatus)
-  const isOtpDisabled = useAppSelector(selectIsOtpDisabled)
-  const isOnboarding = useAppSelector(selectIsOnBoarding)
+  const isAuthenticated = useAppSelector(selectIsAuthenticated)
+
+  const magicLinkTimestamp = useAppSelector(selectMagicLinkTimestamp)
+
+
+
   const emailRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    if (pendingEmail && emailRef.current) {
-      emailRef.current.value = pendingEmail
-    }
-  }, [pendingEmail])
+  const isNewUser = useAppSelector(selectIsNewUser)
+
 
   useEffect(() => {
     dispatch(setLoadingProvider(null))
   }, [dispatch])
 
 
-  const handleResendingTimer = (): [number, boolean] => {
+  const handleResendingTimer = (): [number | null, boolean] => {
     if (
       magicLinkTimestamp &&
       Date.now() - magicLinkTimestamp < MAGIC_LINK_COOLDOWN_MS
@@ -81,7 +95,13 @@ function Auth() {
 
 
   console.log("AUTH BUILDING");
+  const currentScreen = isAuthenticated && isNewUser
+    ? 'onboarding'
+    : isOtpScreen
+      ? 'otp'
+      : 'signin'
 
+      
 
   return (
     <main className="flex flex-col h-screen relative max-w-7xl mx-auto">
@@ -97,21 +117,44 @@ function Auth() {
             <p className="text-muted">
               Your team is waiting for you — let's go 🚀
             </p>
+
+            {/* <h1>{currentScreen}</h1> */}
           </div>
 
           {/* ── Animated screen content ── */}
           <div className="w-full flex flex-col items-center gap-3">
             <AnimatePresence mode="wait">
-              {/* ── OTP screen ── */}
-              {isOtpScreen ? (
-                <OTPContent pendingEmail={pendingEmail} emailRef={emailRef} handleResendingTimer={handleResendingTimer} otpStatus={otpStatus} isOtpDisabled={isOtpDisabled} authStatusMessage={authStatusMessage} />
-              ) : (
-                <OAuthContent isLoading={isLoading} loadingProvider={loadingProvider} />
+              {currentScreen === 'onboarding' && (
+                <OnboardingContent key="onboarding-screen" />
               )}
+``
+              {currentScreen === 'otp' && (
+                <OTPContent
+                  key="otp-screen"
+                  emailRef={emailRef as React.RefObject<HTMLInputElement>}
+                  handleResendingTimer={handleResendingTimer}                  
+                />
+              )}
+
+              {currentScreen === 'signin' && (
+                <OAuthContent
+                  key="signin-screen"
+                  isLoading={isLoading}
+                  loadingProvider={loadingProvider}
+                />
+              )}
+
             </AnimatePresence>
-
-            <MagicLinkContent emailRef={emailRef} handleResendingTimer={handleResendingTimer} isOtpScreen={isOtpScreen} emailStatus={emailStatus} authStatusMessage={authStatusMessage} isLoading={isLoading} loadingProvider={loadingProvider}/>
-
+            {currentScreen !== 'onboarding' && (
+              <MagicLinkContent
+                emailRef={emailRef as React.RefObject<HTMLInputElement>}
+                handleResendingTimer={handleResendingTimer}
+                isOtpScreen={isOtpScreen}
+                isLoading={isLoading}
+                loadingProvider={loadingProvider}
+              />
+            )}
+            {/* <MagicLinkContent emailRef={emailRef} handleResendingTimer={handleResendingTimer} isOtpScreen={isOtpScreen} authStatusMessage={authStatusMessage} isLoading={isLoading} loadingProvider={loadingProvider} /> */}
 
           </div>
         </div>
@@ -124,15 +167,25 @@ function Auth() {
 }
 
 
-const OTPContent = ({ pendingEmail, emailRef, handleResendingTimer, otpStatus, isOtpDisabled, authStatusMessage }) => {
+const OTPContent = ({ emailRef, handleResendingTimer }: { emailRef: React.RefObject<HTMLInputElement>; handleResendingTimer: () => [number | null, boolean] }) => {
   const dispatch = useAppDispatch()
+  const isOtpDisabled = useAppSelector(selectIsOtpDisabled)
+  const otpStatus = useAppSelector(selectOtpStatus)
+  const pendingEmail = useAppSelector(selectPendingEmail)
+  const otpStatusMessage = useAppSelector(selectOtpStatusMessage)
+
+  useEffect(() => {
+    if (pendingEmail && emailRef.current) {
+      emailRef.current.value = pendingEmail
+    }
+  }, [pendingEmail])
 
   const handleResend = async () => {
     const email = pendingEmail || emailRef.current?.value.trim()
     if (!email) return
     const [secondsLeft, check] = handleResendingTimer()
     if (secondsLeft !== null && check) {
-      dispatch(setStatusMessage(`Please wait ${secondsLeft}s before resending`))
+      dispatch(setOtpStatusMessage(`Please wait ${secondsLeft}s before resending`))
       return;
     }
     await dispatch(sendMagicLink(email))
@@ -171,9 +224,9 @@ const OTPContent = ({ pendingEmail, emailRef, handleResendingTimer, otpStatus, i
 
     {/* Status message */}
     <AnimatePresence mode="wait">
-      {authStatusMessage && (
+      {otpStatusMessage && (
         <motion.p
-          key={authStatusMessage}
+          key={otpStatusMessage}
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -6 }}
@@ -187,7 +240,7 @@ const OTPContent = ({ pendingEmail, emailRef, handleResendingTimer, otpStatus, i
                 : "var(--color-bubble)",
           }}
         >
-          {authStatusMessage}
+          {otpStatusMessage}
         </motion.p>
       )}
     </AnimatePresence>
@@ -216,7 +269,7 @@ const OTPContent = ({ pendingEmail, emailRef, handleResendingTimer, otpStatus, i
 }
 
 
-const OAuthContent = ({ isLoading, loadingProvider }) => {
+const OAuthContent = ({ isLoading, loadingProvider }:{ isLoading: boolean; loadingProvider: AuthLoadingProvider }) => {
   const dispatch = useAppDispatch()
   const isAnyLoading = isLoading || loadingProvider !== null
   const handleOAuthLogin = (provider: 'google' | 'github') => {
@@ -284,42 +337,44 @@ const OAuthContent = ({ isLoading, loadingProvider }) => {
   )
 }
 
-const MagicLinkContent = ({emailRef, handleResendingTimer, isOtpScreen, emailStatus, authStatusMessage, isLoading, loadingProvider}) => {
+const MagicLinkContent = ({ emailRef, handleResendingTimer, isOtpScreen, isLoading, loadingProvider }: { emailRef: React.RefObject<HTMLInputElement>; handleResendingTimer: () => [number | null, boolean]; isOtpScreen: boolean; isLoading: boolean; loadingProvider: string | null }) => {
   const dispatch = useAppDispatch()
+  const emailStatus = useAppSelector(selectEmailStatus)
+  const emailStatusMessage = useAppSelector(selectEmailStatusMessage)
   useEffect(() => {
     const inputEl = emailRef.current
     if (!inputEl) return
 
     const handleNativeInput = () => {
-      if (emailStatus !== 'idle' || authStatusMessage) {
+      if (emailStatus !== 'idle' || emailStatusMessage) {
         dispatch(setEmailStatus('idle'))
-        dispatch(setStatusMessage(null))
+        dispatch(setEmailStatusMessage(null))
       }
       inputEl.removeEventListener('input', handleNativeInput)
     }
 
     inputEl.addEventListener('input', handleNativeInput)
     return () => inputEl.removeEventListener('input', handleNativeInput)
-  }, [emailStatus, authStatusMessage, dispatch])
+  }, [emailStatus, emailStatusMessage, dispatch])
 
   const handleMagicLink = async () => {
     const val = emailRef.current?.value.trim()
 
     if (!val) {
       dispatch(setEmailStatus('error'))
-      dispatch(setStatusMessage('Email is required'))
+      dispatch(setEmailStatusMessage('Email is required'))
       return
     }
 
     if (!validator.isEmail(val)) {
       dispatch(setEmailStatus('error'))
-      dispatch(setStatusMessage('Please enter a valid email'))
+      dispatch(setEmailStatusMessage('Please enter a valid email'))
       return
     }
     const [secondsLeft, check] = handleResendingTimer()
     if (secondsLeft !== null && check) {
       dispatch(setEmailStatus('error'))
-      dispatch(setStatusMessage(`Please wait ${secondsLeft}s before trying again`))
+      dispatch(setEmailStatusMessage(`Please wait ${secondsLeft}s before trying again`))
       return;
     }
 
@@ -335,7 +390,7 @@ const MagicLinkContent = ({emailRef, handleResendingTimer, isOtpScreen, emailSta
       label="Email Address"
       disabled={isOtpScreen}
       icon={<MailIcon />}
-      message={!isOtpScreen ? authStatusMessage : null}
+      message={emailStatusMessage ?? ""}
     />
     {/* ── CTA button — always visible ── */}
     <motion.div
@@ -361,8 +416,110 @@ const MagicLinkContent = ({emailRef, handleResendingTimer, isOtpScreen, emailSta
 }
 
 
-const OnBoardingContent = () => {
-  return <></>
+const OnboardingContent = () => {
+  const dispatch = useAppDispatch()
+  const isLoading = useAppSelector(selectAuthLoading)
+  const nameRef = useRef<HTMLInputElement>(null)
+  // const authStatusMessage = useAppSelector(selectAuthStatusMessage)
+  const usernameStatusMessage = useAppSelector(selectUserNameStatusMessage)
+  const userNameStatus = useAppSelector(selectUserNameStatus)
+
+  const handleSaveProfile = async () => {
+    const name = nameRef.current?.value.trim()
+
+    if (!name || name.length < 2) {
+      dispatch(setUserNameStatus('error'))
+      dispatch(setUserNameStatusMessage('Please enter your name'))
+      return
+    }
+
+    await dispatch(updateProfile({ fullName: name }))
+    // After updateProfile.fulfilled:
+    // user.fullName is set → selectIsNewUser returns false
+    // useEffect in Auth detects isAuthenticated && !isNewUser
+    // → navigate('/workspace')
+  }
+
+  const handleSkip = () => {
+    dispatch(updateProfile({ fullName: 'User Name' }))
+  }
+
+  return (
+    <motion.div
+      key="onboarding-screen"
+      className="w-full flex flex-col items-center gap-4"
+      variants={authScreenSlideVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
+      {/* Avatar picker placeholder */}
+      <motion.div
+        custom={0}
+        variants={authItemVariants}
+        initial="hidden"
+        animate="visible"
+        className="w-full flex flex-col items-center gap-2"
+      >
+        {/* Avatar circle — just initials for now */}
+        <div
+          className='h-20 w-20 rounded-full bg-blue-gradient shadow-blue-glow flex items-center justify-center text-display font-heading text-(--text-color) font-bold'        
+        >
+          ?
+        </div>
+        <p className="text-muted text-xs">
+          You can add a photo later
+        </p>
+      </motion.div>
+
+      {/* Name input */}
+      <motion.div
+        custom={1}
+        variants={authItemVariants}
+        initial="hidden"
+        animate="visible"
+        className="w-full"
+      >
+        <AppInput
+          ref={nameRef}
+          status={userNameStatus}
+          placeholder="User Name"
+          label="Your display name"
+          message={ usernameStatusMessage ??""}
+        />
+      </motion.div>
+
+      {/* Save button */}
+      <motion.div
+        custom={2}
+        variants={authItemVariants}
+        initial="hidden"
+        animate="visible"
+        className="w-full"
+      >
+        <ArrowExpandButton
+          isLoading={isLoading}
+          isDisabled={isLoading}
+          label="Let's go"
+          onCallBack={handleSaveProfile}
+        />
+      </motion.div>
+
+      {/* Skip */}
+      <motion.div
+        custom={3}
+        variants={authItemVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <AppTextButton
+          label="Skip for now"
+          onCallBack={handleSkip}
+        />
+      </motion.div>
+
+    </motion.div>
+  )
 }
 
 

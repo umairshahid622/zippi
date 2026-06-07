@@ -4,4 +4,4 @@ export type LoaderSize = 'sm' | 'md' | 'lg'
 
 export type InputStatus = "idle" | "focus" | "error" | "success";
 
-export type authLoadingProvider =  "google" | "github" | "magic-link" | null
+export type AuthLoadingProvider =  "google" | "github" | "magic-link" | null
