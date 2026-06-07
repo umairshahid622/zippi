@@ -23,11 +23,12 @@ interface AuthState {
   isLoading: boolean;
   loadingProvider: authLoadingProvider;
   emailStatus: InputStatus;
-  otpStatus: Omit<InputStatus, 'focus'>;
+  otpStatus: Omit<InputStatus, "focus">;
   statusMessage: string | null;
   lastSentTimestamp: number | null;
   pendingEmail: string | null;
   isOtpScreen: boolean;
+  isOtpDisabled: boolean;
 }
 
 // ── Initial state ─────────────────────────────
@@ -41,8 +42,9 @@ const initialState: AuthState = {
   otpStatus: "idle",
   statusMessage: null,
   lastSentTimestamp: null,
-  isOtpScreen: false,
   pendingEmail: null,
+  isOtpScreen: false,
+  isOtpDisabled: false,
 };
 
 // ── Async thunks ──────────────────────────────
@@ -178,7 +180,8 @@ const authSlice = createSlice({
       .addCase(verifyOTP.pending, (state) => {
         state.isLoading = true;
         state.otpStatus = "focus";
-        state.statusMessage = "Otp verification Pending"
+        state.isOtpDisabled = true;
+        state.statusMessage = "Verifying Otp";
       })
       .addCase(verifyOTP.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -188,11 +191,13 @@ const authSlice = createSlice({
         state.pendingEmail = null;
         state.emailStatus = "idle";
         state.otpStatus = "success";
-        state.statusMessage = "Otp verified successfully"
+        state.isOtpDisabled = true;
+        state.statusMessage = "Otp verified successfully";
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.isLoading = false;
         state.statusMessage = action.payload as string;
+        state.isOtpDisabled = false;
         state.otpStatus = "error";
       });
 
@@ -203,7 +208,7 @@ const authSlice = createSlice({
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.user;        
+        state.user = action.payload.user;
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.isLoading = false;
@@ -240,10 +245,13 @@ export const selectEmailStatus = (state: RootState) => state.auth.emailStatus;
 export const selectAuthStatusMessage = (state: RootState) =>
   state.auth.statusMessage;
 
-export const selectIsNewUser = (state: RootState) => state.auth.isAuthenticated && !state.auth.user?.fullName;
-export const selectLoadingProvider = (state: RootState) => state.auth.loadingProvider;
-export const selectMagicLinkTimestamp = (state: RootState) => state.auth.lastSentTimestamp;
+export const selectIsNewUser = (state: RootState) =>
+  state.auth.isAuthenticated && !state.auth.user?.fullName;
+export const selectLoadingProvider = (state: RootState) =>
+  state.auth.loadingProvider;
+export const selectMagicLinkTimestamp = (state: RootState) =>
+  state.auth.lastSentTimestamp;
 export const selectIsOtpScreen = (state: RootState) => state.auth.isOtpScreen;
-export const selectPendingEmail    = (state: RootState) => state.auth.pendingEmail;
-export const selectOtpStatus    = (state: RootState) => state.auth.otpStatus;
-
+export const selectPendingEmail = (state: RootState) => state.auth.pendingEmail;
+export const selectOtpStatus = (state: RootState) => state.auth.otpStatus;
+export const selectIsOtpDisabled = (state: RootState) => state.auth.isOtpDisabled;

@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { otpBoxVariants } from '../../lib/variants'
 import TickIcon from '../icons/TickIcon'
 import type { InputStatus } from '../../types/types'
@@ -19,6 +19,8 @@ export const OTPInput = ({
   disable = false
 }: OTPInputProps) => {
   const [values, setValues] = useState<string[]>(Array(length).fill(''))
+  const [isMerging, setIsMerging] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
   const refs = useRef<(HTMLInputElement | null)[]>([])
 
   const handleChange = (index: number, val: string) => {
@@ -52,42 +54,99 @@ export const OTPInput = ({
     return values[index] ? 'filled' : 'idle'
   }
 
+  useEffect(() => {
+    if (status === 'success') {
+      setIsMerging(true)
+
+      const timer = setTimeout(() => {
+        setShowSuccess(true)
+      }, 500)
+
+      return () => clearTimeout(timer)
+    }
+
+    setIsMerging(false)
+    setShowSuccess(false)
+  }, [status])
+
+  const center = (length - 1) / 2
   return (
     <div className="flex gap-2 justify-center">
-      <AnimatePresence mode='wait'>
-        {
-          status == "success" ? <>
-            <motion.div className='border-2 border-success rounded-2xl w-12 h-14 flex items-center justify-center'
-              animate='success'
-              variants={otpBoxVariants}
-            >
-              <TickIcon />
-            </motion.div>
-          </> : <>
-            {values.map((val, i) => (
-              <motion.input
-                key={i}
-                ref={el => { refs.current[i] = el; }}
-                type="text"
-                inputMode="numeric"
-                maxLength={1}
-                value={val}
-                onChange={e => handleChange(i, e.target.value)}
-                onKeyDown={e => handleKeyDown(i, e)}
-                onPaste={handlePaste}
-                animate={getBoxState(i)}
-                variants={otpBoxVariants}
-                initial="idle"
-                disabled={disable}
-                className="
-            w-12 h-14 rounded-2xl border-2 text-xl font-bold
-            text-white text-center outline-none
-            font-heading
-          "
-              />
-            ))}
+      <AnimatePresence mode="wait">
+        {showSuccess ? (
+          <motion.div
+            key="success"
+            variants={otpBoxVariants}
+            initial={{
+              scale: 0.5,
+              opacity: 0,
+            }}
+            animate = "success"
+            exit={{
+              scale: 0.5,
+              opacity: 0,
+            }}
+            transition={{
+              type: 'spring',
+              stiffness: 350,
+              damping: 20,
+            }}
+            className="border-2 border-success rounded-2xl w-12 h-14 flex items-center justify-center"
+          >
+            <TickIcon />
+          </motion.div>
+        ) : (
+          <>
+            {values.map((val, i) => {
+              const offset = (center - i) * 56
+
+              return (
+                <motion.div
+                  key={i}
+                  animate={
+                    isMerging
+                      ? {
+                        x: offset,
+                        scale: 0.9,
+                        opacity: [1, 1, 1, 0],
+                      }
+                      : {
+                        x: 0,
+                        scale: 1,
+                        opacity: 1,
+                      }
+                  }
+                  transition={{
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  <motion.input
+                    ref={el => {
+                      refs.current[i] = el
+                    }}
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={1}
+                    value={val}
+                    onChange={e => handleChange(i, e.target.value)}
+                    onKeyDown={e => handleKeyDown(i, e)}
+                    onPaste={handlePaste}
+                    animate={getBoxState(i)}
+                    variants={otpBoxVariants}
+                    initial="idle"
+                    disabled={disable}
+                    className="
+                w-12 h-14 rounded-2xl border-2 text-xl font-bold
+                text-white text-center outline-none
+                font-heading
+              "
+                  />
+                </motion.div>
+              )
+            })}
           </>
-        }
+        )}
       </AnimatePresence>
 
 

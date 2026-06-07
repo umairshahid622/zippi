@@ -35,7 +35,13 @@ export const AppInput = forwardRef<HTMLInputElement, InputProps>(
       status !== "idle" ? status : isFocused ? "focus" : "idle";
 
     return (
-      <div className="flex flex-col gap-1.5 w-full">
+      <motion.div
+        animate={{
+          opacity: disabled ? 0.5 : 1,
+          scale: disabled ? 0.98 : 1,
+        }}
+        transition={{ duration: 0.25 }}
+        className="flex flex-col gap-1.5 w-full">
         {/* Label */}
         {label && (
           <motion.label
@@ -73,7 +79,7 @@ export const AppInput = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             type={type}
             value={value}
-            disabled = {disabled}
+            disabled={disabled}
             placeholder={placeholder}
             maxLength={maxLength}
             onChange={onChange}
@@ -119,7 +125,7 @@ export const AppInput = forwardRef<HTMLInputElement, InputProps>(
             </motion.p>
           )}
         </AnimatePresence>
-      </div>
+      </motion.div>
     );
   },
 );

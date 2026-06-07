@@ -25,6 +25,7 @@ import {
   setPendingEmail,
   selectOtpStatus,
   resetAuth,
+  selectIsOtpDisabled,
 } from '../../store/slices/authSlice'
 import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -46,6 +47,7 @@ function Auth() {
   const isOtpScreen = useAppSelector(selectIsOtpScreen)
   const pendingEmail = useAppSelector(selectPendingEmail)
   const otpStatus = useAppSelector(selectOtpStatus)
+  const isOtpDisabled = useAppSelector(selectIsOtpDisabled)
 
   const isAnyLoading = isLoading || loadingProvider !== null
   const emailRef = useRef<HTMLInputElement>(null)
@@ -99,18 +101,12 @@ function Auth() {
       dispatch(setStatusMessage('Please enter a valid email'))
       return
     }
-
-    // if (
-    //   magicLinkTimestamp &&
-    //   Date.now() - magicLinkTimestamp < MAGIC_LINK_COOLDOWN_MS
-    // ) {
-    //   const secondsLeft = Math.ceil(
-    //     (MAGIC_LINK_COOLDOWN_MS - (Date.now() - magicLinkTimestamp)) / 1000
-    //   )
-    //   dispatch(setEmailStatus('error'))
-    //   dispatch(setStatusMessage(`Please wait ${secondsLeft}s before trying again`))
-    //   return
-    // }
+    const [secondsLeft, check] = handleResendingTimer()
+    if (secondsLeft !== null && check) {
+      dispatch(setEmailStatus('error'))
+      dispatch(setStatusMessage(`Please wait ${secondsLeft}s before trying again`))
+      return;
+    }
 
     // ✅ Save email to Redux before dispatching
     dispatch(setPendingEmail(val))
@@ -120,7 +116,15 @@ function Auth() {
   const handleResend = async () => {
     const email = pendingEmail || emailRef.current?.value.trim()
     if (!email) return
+    const [secondsLeft, check] = handleResendingTimer()
+    if (secondsLeft !== null && check) {
+      dispatch(setStatusMessage(`Please wait ${secondsLeft}s before resending`))
+      return;
+    }
+    await dispatch(sendMagicLink(email))
+  }
 
+  const handleResendingTimer = (): [number, boolean] => {
     if (
       magicLinkTimestamp &&
       Date.now() - magicLinkTimestamp < MAGIC_LINK_COOLDOWN_MS
@@ -128,11 +132,10 @@ function Auth() {
       const secondsLeft = Math.ceil(
         (MAGIC_LINK_COOLDOWN_MS - (Date.now() - magicLinkTimestamp)) / 1000
       )
-      dispatch(setStatusMessage(`Please wait ${secondsLeft}s before resending`))
-      return
-    }
 
-    await dispatch(sendMagicLink(email))
+      return [secondsLeft, true]
+    }
+    return [null, false];
   }
 
   const handleVerifyOtp = async (otp: string) => {
@@ -144,6 +147,9 @@ function Auth() {
   const handleBackToSignIn = () => {
     dispatch(resetAuth())
   }
+
+  console.log("AUTH BUILDING");
+
 
   return (
     <main className="flex flex-col h-screen relative max-w-7xl mx-auto">
@@ -187,7 +193,7 @@ function Auth() {
                   >
                     <OTPInput
                       status={otpStatus}
-                      onComplete={handleVerifyOtp} disable={isLoading}
+                      onComplete={handleVerifyOtp} disable={isOtpDisabled}
 
                     />
                   </motion.div>
@@ -203,9 +209,11 @@ function Auth() {
                         transition={{ duration: 0.2 }}
                         style={{
                           fontSize: 12,
-                          color: otpStatus === 'error'
-                            ? 'var(--color-error)'
-                            : 'var(--color-success)',
+                          color: otpStatus === "error"
+                            ? "var(--color-error)"
+                            : otpStatus === "success"
+                              ? "var(--color-success)"
+                              : "var(--color-bubble)",
                         }}
                       >
                         {authStatusMessage}
@@ -314,25 +322,16 @@ function Auth() {
               )}
             </AnimatePresence>
 
-            {/* ── Email input — always visible, disabled on OTP screen ── */}
-            <motion.div
-              className="w-full"
-              animate={{
-                opacity: isOtpScreen ? 0.5 : 1,
-                scale: isOtpScreen ? 0.98 : 1,
-              }}
-              transition={{ duration: 0.25 }}
-            >
-              <AppInput
-                ref={emailRef}
-                status={emailStatus}
-                placeholder="Enter your email"
-                label="Email Address"
-                disabled={isOtpScreen}
-                icon={<MailIcon />}
-                message={!isOtpScreen ? authStatusMessage : null}
-              />
-            </motion.div>
+            <AppInput
+              ref={emailRef}
+              status={emailStatus}
+              placeholder="Enter your email"
+              label="Email Address"
+              disabled={isOtpScreen}
+              icon={<MailIcon />}
+              message={!isOtpScreen ? authStatusMessage : null}
+            />
+
 
             {/* ── CTA button — always visible ── */}
             <motion.div
