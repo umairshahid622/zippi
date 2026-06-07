@@ -29,6 +29,7 @@ interface AuthState {
   pendingEmail: string | null;
   isOtpScreen: boolean;
   isOtpDisabled: boolean;
+  isOnBoarding:boolean;
 }
 
 // ── Initial state ─────────────────────────────
@@ -45,6 +46,7 @@ const initialState: AuthState = {
   pendingEmail: null,
   isOtpScreen: false,
   isOtpDisabled: false,
+  isOnBoarding: false,
 };
 
 // ── Async thunks ──────────────────────────────
@@ -156,15 +158,16 @@ const authSlice = createSlice({
         state.isLoading = true;
         state.loadingProvider = "magic-link";
         state.emailStatus = "focus";
-        state.statusMessage = "Sending Magic Link";
+        state.statusMessage = "Sending OTP";
         state.pendingEmail = action.meta.arg;
       })
       .addCase(sendMagicLink.fulfilled, (state) => {
         state.isLoading = false;
         state.loadingProvider = null;
         state.emailStatus = "success";
-        state.statusMessage = "Magic link sent! Check your inbox.";
+        state.statusMessage = "OTP sent! Check your inbox.";
         state.lastSentTimestamp = Date.now();
+        state.isOnBoarding = true
         state.isOtpScreen = true;
       })
       .addCase(sendMagicLink.rejected, (state, action) => {
@@ -192,7 +195,7 @@ const authSlice = createSlice({
         state.emailStatus = "idle";
         state.otpStatus = "success";
         state.isOtpDisabled = true;
-        state.statusMessage = "Otp verified successfully";
+        state.statusMessage = "Otp verified!";
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.isLoading = false;
@@ -255,3 +258,4 @@ export const selectIsOtpScreen = (state: RootState) => state.auth.isOtpScreen;
 export const selectPendingEmail = (state: RootState) => state.auth.pendingEmail;
 export const selectOtpStatus = (state: RootState) => state.auth.otpStatus;
 export const selectIsOtpDisabled = (state: RootState) => state.auth.isOtpDisabled;
+export const selectIsOnBoarding = (state: RootState) => state.auth.isOnBoarding;

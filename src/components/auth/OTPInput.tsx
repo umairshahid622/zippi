@@ -81,7 +81,7 @@ export const OTPInput = ({
               scale: 0.5,
               opacity: 0,
             }}
-            animate = "success"
+            animate="success"
             exit={{
               scale: 0.5,
               opacity: 0,
@@ -122,6 +122,7 @@ export const OTPInput = ({
                   }}
                 >
                   <motion.input
+                    autoComplete='off'
                     ref={el => {
                       refs.current[i] = el
                     }}

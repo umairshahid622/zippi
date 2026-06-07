@@ -18,12 +18,12 @@ const routes: RouteObject[] = [
     },
   },
   {
-    path: "dashboard",
+    path: "workspace",
     errorElement: createElement(SmartErrorBoundary),
     lazy: async () => {
-      const { default: Dashboard } =
-        await import("../pages/dashboard/Dashboard.tsx");
-      return { Component: Dashboard };
+      const { default: WorkSpace } =
+        await import("../pages/workspace/Workspace.tsx");
+      return { Component: WorkSpace };
     },
   },
 

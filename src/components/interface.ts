@@ -1,5 +1,10 @@
 import type { JSX } from "react/jsx-runtime";
-import type { ButtonType, InputStatus, LoaderSize, LoaderVariant } from "../types/types";
+import type {
+  ButtonType,
+  InputStatus,
+  LoaderSize,
+  LoaderVariant,
+} from "../types/types";
 
 export interface IconProps {
   className?: string;
@@ -18,7 +23,7 @@ export interface InputProps {
   status?: InputStatus;
   maxLength?: number;
   iconSize?: number;
-  disabled?:boolean;
+  disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus?: () => void;
   onBlur?: () => void;
@@ -45,3 +50,7 @@ export interface AppButtonProps extends ButtonProps {
 }
 
 export interface AppArrowExpandButtonProps extends ButtonProps {}
+
+export interface TextButtonProps extends ButtonProps {
+  iconDirection?: "left" | "right"
+}
