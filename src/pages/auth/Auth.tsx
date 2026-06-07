@@ -118,7 +118,7 @@ function Auth() {
               Your team is waiting for you — let's go 🚀
             </p>
 
-            {/* <h1>{currentScreen}</h1> */}
+            <p>{currentScreen} | {isAuthenticated ? 'Authenticated' : 'Not Authenticated'} | {isNewUser ? 'New User' : 'Existing User'}</p>
           </div>
 
           {/* ── Animated screen content ── */}

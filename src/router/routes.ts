@@ -2,26 +2,9 @@ import { redirect, type RouteObject } from "react-router";
 import SmartErrorBoundary from "../components/common/ErrorBoundary.tsx";
 import { createElement } from "react";
 import { store } from "../store/index.ts";
-
-const requireAuth = () => {
-  const isAuthenticated = store.getState().auth.isAuthenticated;
-  const token = store.getState().auth.token;
-
-  if (!isAuthenticated || !token) {
-    return redirect("/auth");
-  }
-  return null;
-};
-
-const requireGuest = () => {
-  const isAuthenticated = store.getState().auth.isAuthenticated;
-  const token = store.getState().auth.token;
-
-  if (isAuthenticated && token) {
-    return redirect("/workspace");
-  }
-  return null;
-};
+import { PublicOnlyRoute } from "../components/auth/PublicOnlyRoute.tsx";
+import { ProtectedRoute } from "../components/auth/ProtectedRoute.tsx";
+    
 
 const routes: RouteObject[] = [
   {
@@ -31,23 +14,25 @@ const routes: RouteObject[] = [
       return redirect(isAuthenticated ? "/workspace" : "/auth");
     },
   },
-  {
+{
     path: "auth",
     errorElement: createElement(SmartErrorBoundary),
-    loader: requireGuest,
     lazy: async () => {
       const { default: Auth } = await import("../pages/auth/Auth.tsx");
-      return { Component: Auth };
+
+      return {
+        Component: () =>
+          createElement(PublicOnlyRoute, null, createElement(Auth)),
+      };
     },
   },
   {
     path: "workspace",
     errorElement: createElement(SmartErrorBoundary),
-    loader: requireAuth, 
     lazy: async () => {
       const { default: WorkSpace } =
         await import("../pages/workspace/Workspace.tsx");
-      return { Component: WorkSpace };
+      return { Component: ()=> createElement(ProtectedRoute, null, createElement(WorkSpace)),};
     },
   },
 

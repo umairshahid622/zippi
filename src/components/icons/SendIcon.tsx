@@ -1,7 +1,6 @@
 import type { IconProps } from "../interface";
 
 const SendIcon = ({
-  className,
   color = "currentColor",
   size = 18,
   strokeWidth = 1,
