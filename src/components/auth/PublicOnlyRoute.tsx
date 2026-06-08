@@ -2,11 +2,14 @@
 import { Navigate } from "react-router";
 import { useSelector } from "react-redux";
 import type { ReactNode } from "react";
+import type { RootState } from "../../store";
+import { selectIsNewUser } from "../../store/slices/authSlice";
 
 export const PublicOnlyRoute = ({ children }: { children: ReactNode }) => {
-  const { isAuthenticated, token } = useSelector((state: any) => state.auth);
+  const { isAuthenticated, token } = useSelector((state: RootState) => state.auth);
+  const isNewUser = useSelector((state: RootState) => selectIsNewUser(state));
 
-  if (isAuthenticated && token) {
+  if (isAuthenticated && token && !isNewUser) {
     return <Navigate to="/workspace" replace />;
   }
 

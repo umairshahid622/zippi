@@ -441,7 +441,8 @@ const OnboardingContent = () => {
   }
 
   const handleSkip = () => {
-    dispatch(updateProfile({ fullName: 'User Name' }))
+    // dispatch(updateProfile({ fullName: 'User Name' }))
+    dispatch(resetAuth())
   }
 
   return (
@@ -516,6 +517,7 @@ const OnboardingContent = () => {
           label="Skip for now"
           onCallBack={handleSkip}
         />
+        
       </motion.div>
 
     </motion.div>
