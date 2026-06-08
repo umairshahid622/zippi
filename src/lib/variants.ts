@@ -428,6 +428,7 @@ export const inputIconVariants: Variants = {
   focus: {
     color: "var(--color-bubble)",
     transition: { ...springs.bubbly },
+    scale: 1.1,
   },
   error: { scale: 1.1, color: "var(--color-error)" },
   success: { scale: 1.1, color: "var(--color-success)" },

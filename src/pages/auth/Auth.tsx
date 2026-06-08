@@ -44,9 +44,11 @@ import {
   selectIsOtpDisabled,
   selectIsNewUser,
   updateProfile,
-  selectIsAuthenticated,  
+  selectIsAuthenticated,
+  setShowOnBoardingScreen,
+  selectShowOnboardingScreen,  
 } from '../../store/slices/authSlice'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef} from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import validator from 'validator'
 import {
@@ -64,6 +66,7 @@ function Auth() {
   const loadingProvider = useAppSelector(selectLoadingProvider)
   const isOtpScreen = useAppSelector(selectIsOtpScreen)
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
+  const showOnboardingScreen = useAppSelector(selectShowOnboardingScreen)
 
   const magicLinkTimestamp = useAppSelector(selectMagicLinkTimestamp)
 
@@ -95,7 +98,7 @@ function Auth() {
 
 
   console.log("AUTH BUILDING");
-  const currentScreen = isAuthenticated && isNewUser
+  const currentScreen = showOnboardingScreen
     ? 'onboarding'
     : isOtpScreen
       ? 'otp'
@@ -118,7 +121,7 @@ function Auth() {
               Your team is waiting for you — let's go 🚀
             </p>
 
-            <p>{currentScreen} | {isAuthenticated ? 'Authenticated' : 'Not Authenticated'} | {isNewUser ? 'New User' : 'Existing User'}</p>
+            {/* <p>{currentScreen} | {isAuthenticated ? 'Authenticated' : 'Not Authenticated'} | {isNewUser ? 'New User' : 'Existing User'}</p> */}
           </div>
 
           {/* ── Animated screen content ── */}
@@ -132,7 +135,12 @@ function Auth() {
                 <OTPContent
                   key="otp-screen"
                   emailRef={emailRef as React.RefObject<HTMLInputElement>}
-                  handleResendingTimer={handleResendingTimer}                  
+                  handleResendingTimer={handleResendingTimer}
+                  onSuccessAnimationComplete={() => {
+                    if (isAuthenticated && isNewUser) {
+                        dispatch(setShowOnBoardingScreen(true))
+                    }
+                  }}
                 />
               )}
 
@@ -167,7 +175,7 @@ function Auth() {
 }
 
 
-const OTPContent = ({ emailRef, handleResendingTimer }: { emailRef: React.RefObject<HTMLInputElement>; handleResendingTimer: () => [number | null, boolean] }) => {
+const OTPContent = ({ emailRef, handleResendingTimer, onSuccessAnimationComplete }: { emailRef: React.RefObject<HTMLInputElement>; handleResendingTimer: () => [number | null, boolean]; onSuccessAnimationComplete: () => void }) => {
   const dispatch = useAppDispatch()
   const isOtpDisabled = useAppSelector(selectIsOtpDisabled)
   const otpStatus = useAppSelector(selectOtpStatus)
@@ -218,7 +226,7 @@ const OTPContent = ({ emailRef, handleResendingTimer }: { emailRef: React.RefObj
       <OTPInput
         status={otpStatus}
         onComplete={handleVerifyOtp} disable={isOtpDisabled}
-
+        onSuccessAnimationComplete={onSuccessAnimationComplete}
       />
     </motion.div>
 
@@ -423,6 +431,11 @@ const OnboardingContent = () => {
   // const authStatusMessage = useAppSelector(selectAuthStatusMessage)
   const usernameStatusMessage = useAppSelector(selectUserNameStatusMessage)
   const userNameStatus = useAppSelector(selectUserNameStatus)
+  const pendingEmail = useAppSelector(selectPendingEmail)
+
+  const getEmailInitials = (email: string, numberOfInitials: number) => {
+    return email.split('@')[0].substring(0, numberOfInitials).toUpperCase()
+  }
 
   const handleSaveProfile = async () => {
     const name = nameRef.current?.value.trim()
@@ -433,16 +446,11 @@ const OnboardingContent = () => {
       return
     }
 
-    await dispatch(updateProfile({ fullName: name }))
-    // After updateProfile.fulfilled:
-    // user.fullName is set → selectIsNewUser returns false
-    // useEffect in Auth detects isAuthenticated && !isNewUser
-    // → navigate('/workspace')
+    await dispatch(updateProfile({ fullName: name })) 
   }
 
   const handleSkip = () => {
-    // dispatch(updateProfile({ fullName: 'User Name' }))
-    dispatch(resetAuth())
+    dispatch(updateProfile({ fullName: pendingEmail?.split('@')[0].substring(0, 5) || 'User' }))
   }
 
   return (
@@ -464,9 +472,9 @@ const OnboardingContent = () => {
       >
         {/* Avatar circle — just initials for now */}
         <div
-          className='h-20 w-20 rounded-full bg-blue-gradient shadow-blue-glow flex items-center justify-center text-display font-heading text-(--text-color) font-bold'        
+          className='size-17 rounded-full bg-blue-gradient shadow-blue-glow flex items-center justify-center text-h1 font-heading text-(--text-color) font-bold'        
         >
-          ?
+          {getEmailInitials(pendingEmail ?? "", 2)}
         </div>
         <p className="text-muted text-xs">
           You can add a photo later

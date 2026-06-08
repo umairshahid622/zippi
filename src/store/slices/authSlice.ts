@@ -33,6 +33,8 @@ interface AuthState {
   emailStatusMessage: string | null;
   otpStatusMessage: string | null;
   userNameStatusMessage:string | null;
+
+  showOnBoardingScreen: boolean;
 }
 
 // ── Initial state ─────────────────────────────
@@ -54,7 +56,8 @@ const initialState: AuthState = {
 
   emailStatusMessage: null,
   otpStatusMessage: null,
-  userNameStatusMessage: null
+  userNameStatusMessage: null,
+  showOnBoardingScreen: false,
 };
 
 // ── Async thunks ──────────────────────────────
@@ -156,6 +159,13 @@ const authSlice = createSlice({
       state.userNameStatus = action.payload;
     },
 
+    setShowOnBoardingScreen: (
+      state,
+      action: PayloadAction<AuthState["showOnBoardingScreen"]>,
+    ) => {
+      state.showOnBoardingScreen = action.payload;
+    },
+
     clearMagicLinkState: (state) => {
       state.lastSentTimestamp = null;
       state.emailStatus = "idle";
@@ -216,7 +226,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
-        state.pendingEmail = null;
+        state.pendingEmail = action.meta.arg.email;
         state.emailStatus = "idle";
         state.otpStatus = "success";
         state.isOtpDisabled = true;
@@ -265,7 +275,8 @@ export const {
   clearMagicLinkState,
   setEmailStatus,
   setPendingEmail,
-  setUserNameStatus
+  setUserNameStatus,
+  setShowOnBoardingScreen,
   
 } = authSlice.actions;
 export default authSlice.reducer;
@@ -295,3 +306,4 @@ export const selectIsOtpScreen = (state: RootState) => state.auth.isOtpScreen;
 export const selectPendingEmail = (state: RootState) => state.auth.pendingEmail;
 
 export const selectIsOtpDisabled = (state: RootState) => state.auth.isOtpDisabled;
+export const selectShowOnboardingScreen = (state: RootState) => state.auth.showOnBoardingScreen;

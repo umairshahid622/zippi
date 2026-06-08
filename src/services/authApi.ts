@@ -28,11 +28,11 @@ interface UpdateProfileResponse {
 
 export const authAPI = {
   sendMagicLink: async (email: string): Promise<MagicLinkResponse> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({ message: "Success! Magic link sent to your inbox." });
-      }, 1000);
-    });
+    // return new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     resolve({ message: "Success! Magic link sent to your inbox." });
+    //   }, 1000);
+    // });
     // throw { response: { data: { message: 'Too many login attempts. Try again in an hour.' } } };
     const res = await api.post("/auth/magic-link", { email });
     console.log(res);
@@ -41,22 +41,22 @@ export const authAPI = {
   },
 
   verifyOTP: async (email: string, otp: string): Promise<VerifyOTPResponse> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          isNewUser: true,
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30",
-          user: {
-            id: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
-            email: "Testmail@gmail.com",
-            fullName: "",
-            avatarUrl: "",
-            createdAt: "",
-          },
-        });
-      }, 2000);
-    });
+    // return new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     resolve({
+    //       isNewUser: true,
+    //       token:
+    //         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30",
+    //       user: {
+    //         id: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+    //         email: "Testmail@gmail.com",
+    //         fullName: "",
+    //         avatarUrl: "",
+    //         createdAt: "",
+    //       },
+    //     });
+    //   }, 2000);
+    // });
     const res = await api.post("/auth/verify", { email, otp });
     return res.data;
   },
@@ -65,19 +65,19 @@ export const authAPI = {
     fullName: string;
     avatarUrl?: string;
   }): Promise<UpdateProfileResponse> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          user: {
-            id: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
-            email: "Testmail@gmail.com",
-            fullName: payload.fullName,
-            avatarUrl: "",
-            createdAt: "",
-          },
-        });
-      }, 2000);
-    });
+    // return new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     resolve({
+    //       user: {
+    //         id: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+    //         email: "Testmail@gmail.com",
+    //         fullName: payload.fullName,
+    //         avatarUrl: "",
+    //         createdAt: "",
+    //       },
+    //     });
+    //   }, 2000);
+    // });
     const res = await api.patch("/auth/profile", payload);
     return res.data;
   },

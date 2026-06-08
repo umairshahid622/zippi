@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, delay } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { otpBoxVariants } from '../../lib/variants'
 import TickIcon from '../icons/TickIcon'
@@ -10,13 +10,15 @@ interface OTPInputProps {
   onComplete: (otp: string) => void
   status?: Omit<InputStatus, 'focus'>,
   disable?: boolean
+  onSuccessAnimationComplete?: () => void
 }
 
 export const OTPInput = ({
   length = 6,
   onComplete,
   status = 'idle',
-  disable = false
+  disable = false,
+  onSuccessAnimationComplete,
 }: OTPInputProps) => {
   const [values, setValues] = useState<string[]>(Array(length).fill(''))
   const [isMerging, setIsMerging] = useState(false)
@@ -57,12 +59,8 @@ export const OTPInput = ({
   useEffect(() => {
     if (status === 'success') {
       setIsMerging(true)
-
-      const timer = setTimeout(() => {
-        setShowSuccess(true)
-      }, 500)
-
-      return () => clearTimeout(timer)
+      setShowSuccess(false)
+      return
     }
 
     setIsMerging(false)
@@ -92,6 +90,10 @@ export const OTPInput = ({
               damping: 20,
             }}
             className="border-2 border-success rounded-2xl w-12 h-14 flex items-center justify-center"
+
+            onAnimationComplete={() => delay(()=>{
+              onSuccessAnimationComplete?.()
+            },1000)}
           >
             <TickIcon />
           </motion.div>
@@ -103,6 +105,11 @@ export const OTPInput = ({
               return (
                 <motion.div
                   key={i}
+                  onAnimationComplete={() => {
+                    if (status === 'success' && isMerging) {
+                      setShowSuccess(true)
+                    }
+                  }}
                   animate={
                     isMerging
                       ? {
