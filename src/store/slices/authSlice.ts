@@ -35,6 +35,7 @@ interface AuthState {
   userNameStatusMessage:string | null;
 
   showOnBoardingScreen: boolean;
+  awaitingOtpAnimation: boolean;
 }
 
 // ── Initial state ─────────────────────────────
@@ -58,6 +59,7 @@ const initialState: AuthState = {
   otpStatusMessage: null,
   userNameStatusMessage: null,
   showOnBoardingScreen: false,
+  awaitingOtpAnimation: false,
 };
 
 // ── Async thunks ──────────────────────────────
@@ -166,6 +168,10 @@ const authSlice = createSlice({
       state.showOnBoardingScreen = action.payload;
     },
 
+    clearAwaitingOtpAnimation: (state) => {
+      state.awaitingOtpAnimation = false;
+    },
+
     clearMagicLinkState: (state) => {
       state.lastSentTimestamp = null;
       state.emailStatus = "idle";
@@ -231,6 +237,7 @@ const authSlice = createSlice({
         state.otpStatus = "success";
         state.isOtpDisabled = true;
         state.otpStatusMessage = "Otp verified!";
+        state.awaitingOtpAnimation = true;
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.isLoading = false;
@@ -251,6 +258,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.userNameStatus = "success"
         state.user = action.payload.user;
+        state.awaitingOtpAnimation = false;
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.isLoading = false;
@@ -277,7 +285,7 @@ export const {
   setPendingEmail,
   setUserNameStatus,
   setShowOnBoardingScreen,
-  
+  clearAwaitingOtpAnimation,
 } = authSlice.actions;
 export default authSlice.reducer;
 
@@ -307,3 +315,4 @@ export const selectPendingEmail = (state: RootState) => state.auth.pendingEmail;
 
 export const selectIsOtpDisabled = (state: RootState) => state.auth.isOtpDisabled;
 export const selectShowOnboardingScreen = (state: RootState) => state.auth.showOnBoardingScreen;
+export const selectAwaitingOtpAnimation = (state: RootState) => state.auth.awaitingOtpAnimation;

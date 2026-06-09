@@ -46,7 +46,8 @@ import {
   updateProfile,
   selectIsAuthenticated,
   setShowOnBoardingScreen,
-  selectShowOnboardingScreen,  
+  selectShowOnboardingScreen,
+  clearAwaitingOtpAnimation,
 } from '../../store/slices/authSlice'
 import { useEffect, useRef} from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -139,6 +140,8 @@ function Auth() {
                   onSuccessAnimationComplete={() => {
                     if (isAuthenticated && isNewUser) {
                         dispatch(setShowOnBoardingScreen(true))
+                    } else if (isAuthenticated && !isNewUser) {
+                        dispatch(clearAwaitingOtpAnimation())
                     }
                   }}
                 />
