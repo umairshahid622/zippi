@@ -2,16 +2,8 @@ import { motion, AnimatePresence, delay } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { otpBoxVariants } from '../../lib/variants'
 import TickIcon from '../icons/TickIcon'
-import type { InputStatus } from '../../types/types'
+import type { OTPInputProps } from '../interface'
 
-
-interface OTPInputProps {
-  length?: number
-  onComplete: (otp: string) => void
-  status?: Omit<InputStatus, 'focus'>,
-  disable?: boolean
-  onSuccessAnimationComplete?: () => void
-}
 
 export const OTPInput = ({
   length = 6,
@@ -93,7 +85,7 @@ export const OTPInput = ({
 
             onAnimationComplete={() => delay(()=>{
               onSuccessAnimationComplete?.()
-            },1000)}
+            },1500)}
           >
             <TickIcon />
           </motion.div>

@@ -8,7 +8,7 @@ import { AppInput } from '../../components/common/AppInput'
 import MailIcon from '../../components/icons/MailIcon'
 import ArrowExpandButton from '../../components/common/ArrowExpandButton'
 import { OTPInput } from '../../components/auth/OTPInput'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import {
   selectAuthLoading,
   selectLoadingProvider,
@@ -108,7 +108,7 @@ function Auth() {
       
 
   return (
-    <main className="flex flex-col h-screen relative max-w-7xl mx-auto">
+    <main className="flex flex-col h-screen relative max-w-7xl mx-auto overflow-x-hidden">
       <AuthHeader />
 
       <section className="flex items-center justify-center flex-1 px-6">

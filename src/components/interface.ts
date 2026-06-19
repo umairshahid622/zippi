@@ -52,5 +52,31 @@ export interface AppButtonProps extends ButtonProps {
 export interface AppArrowExpandButtonProps extends ButtonProps {}
 
 export interface TextButtonProps extends ButtonProps {
-  iconDirection?: "left" | "right"
+  iconDirection?: "left" | "right";
+}
+
+export interface Star {
+  id: number;
+  width: number;
+  height: number;
+  left: number;
+  top: number;
+  duration: number;
+  delay: number;
+}
+
+export interface FloatingItem {
+  id: number;
+  icon: React.ReactNode;
+  position: React.CSSProperties;
+  duration: number;
+  delay: number;
+}
+
+export interface OTPInputProps {
+  length?: number;
+  onComplete: (otp: string) => void;
+  status?: Omit<InputStatus, "focus">;
+  disable?: boolean;
+  onSuccessAnimationComplete?: () => void;
 }

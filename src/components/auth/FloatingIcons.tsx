@@ -3,14 +3,7 @@ import { floatingIconVariants } from '../../lib/variants'
 import { MessageIcon, RocketIcon, BubbleIcon, NeutronIcon } from '../icons'
 import { floatingAnimation } from '../../lib/animations'
 import { memo } from 'react'
-
-interface FloatingItem {
-  id: number
-  icon: React.ReactNode
-  position: React.CSSProperties
-  duration: number
-  delay: number
-}
+import type { FloatingItem } from '../interface'
 
 const FLOATING_ICONS: FloatingItem[] = [
   {
