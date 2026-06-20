@@ -20,6 +20,12 @@ interface AuthState {
   user: User | null;
   token: string | null;
   refreshToken: string | null;
+
+  pendingCredentials: {
+    user: User;
+    token: string;
+    refreshToken: string;
+  } | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   loadingProvider: AuthLoadingProvider;
@@ -34,9 +40,6 @@ interface AuthState {
   emailStatusMessage: string | null;
   otpStatusMessage: string | null;
   userNameStatusMessage: string | null;
-
-  showOnBoardingScreen: boolean;
-  awaitingOtpAnimation: boolean;
 }
 
 // ── Initial state ─────────────────────────────
@@ -44,6 +47,8 @@ const initialState: AuthState = {
   user: null,
   token: null,
   refreshToken: null,
+
+  pendingCredentials: null,
   isAuthenticated: false,
   isLoading: false,
   loadingProvider: null,
@@ -60,8 +65,6 @@ const initialState: AuthState = {
   emailStatusMessage: null,
   otpStatusMessage: null,
   userNameStatusMessage: null,
-  showOnBoardingScreen: false,
-  awaitingOtpAnimation: false,
 };
 
 // ── Async thunks ──────────────────────────────
@@ -132,6 +135,7 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.refreshToken = action.payload.refreshToken;
       state.isAuthenticated = true;
+      state.pendingCredentials = null;
     },
 
     setEmailStatusMessage: (
@@ -166,17 +170,6 @@ const authSlice = createSlice({
       action: PayloadAction<AuthState["userNameStatus"]>,
     ) => {
       state.userNameStatus = action.payload;
-    },
-
-    setShowOnBoardingScreen: (
-      state,
-      action: PayloadAction<AuthState["showOnBoardingScreen"]>,
-    ) => {
-      state.showOnBoardingScreen = action.payload;
-    },
-
-    clearAwaitingOtpAnimation: (state) => {
-      state.awaitingOtpAnimation = false;
     },
 
     clearMagicLinkState: (state) => {
@@ -238,17 +231,20 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
-        console.log(state.token);
-        console.log(action.payload.refreshToken);
-
         state.refreshToken = action.payload.refreshToken;
-        state.isAuthenticated = true;
+
+        state.pendingCredentials = {
+          user: action.payload.user,
+          token: action.payload.token,
+          refreshToken: action.payload.refreshToken,
+        };
+
         state.pendingEmail = action.meta.arg.email;
+
         state.emailStatus = "idle";
         state.otpStatus = "success";
         state.isOtpDisabled = true;
         state.otpStatusMessage = "Otp verified!";
-        state.awaitingOtpAnimation = true;
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.isLoading = false;
@@ -268,18 +264,30 @@ const authSlice = createSlice({
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.isLoading = false;
         state.userNameStatus = "success";
-        state.user = action.payload.user;
-        state.awaitingOtpAnimation = false;
+        state.userNameStatusMessage = "Saved successfully";
+
+        if (action.payload?.user) {
+          state.user = action.payload.user;
+          if (state.pendingCredentials) {
+            state.pendingCredentials = {
+              ...state.pendingCredentials,
+              user: action.payload.user,
+            };
+          }
+        }
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.isLoading = false;
-        state.userNameStatusMessage = action.payload as string;
         state.userNameStatus = "error";
+        state.userNameStatusMessage =
+          (action.payload as string) ||
+          action.error.message ||
+          "Failed to update";
       });
 
     // ── logout ──
     builder
-      .addCase(logout.pending, (state) => {})
+      .addCase(logout.pending, () => {})
       .addCase(logout.fulfilled, () => initialState)
       .addCase(logout.rejected, () => {});
   },
@@ -296,15 +304,13 @@ export const {
   setEmailStatus,
   setPendingEmail,
   setUserNameStatus,
-  setShowOnBoardingScreen,
-  clearAwaitingOtpAnimation,
 } = authSlice.actions;
 export default authSlice.reducer;
 
 // ── Selectors ─────────────────────────────────
 // Define once here — import in components
-export const selectUser = (state: RootState) => state.auth.user;
-export const selectToken = (state: RootState) => state.auth.token;
+// export const selectUser = (state: RootState) => state.auth.user;
+// export const selectToken = (state: RootState) => state.auth.token;
 export const selectIsAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated;
 export const selectAuthLoading = (state: RootState) => state.auth.isLoading;
@@ -322,7 +328,8 @@ export const selectUserNameStatus = (state: RootState) =>
 export const selectEmailStatus = (state: RootState) => state.auth.emailStatus;
 
 export const selectIsNewUser = (state: RootState) =>
-  state.auth.isAuthenticated && !state.auth.user?.fullName;
+  !!state.auth.pendingCredentials &&
+  !state.auth.pendingCredentials.user.fullName;
 export const selectLoadingProvider = (state: RootState) =>
   state.auth.loadingProvider;
 export const selectMagicLinkTimestamp = (state: RootState) =>
@@ -332,7 +339,6 @@ export const selectPendingEmail = (state: RootState) => state.auth.pendingEmail;
 
 export const selectIsOtpDisabled = (state: RootState) =>
   state.auth.isOtpDisabled;
-export const selectShowOnboardingScreen = (state: RootState) =>
-  state.auth.showOnBoardingScreen;
-export const selectAwaitingOtpAnimation = (state: RootState) =>
-  state.auth.awaitingOtpAnimation;
+
+export const selectPendingCredentials = (state: RootState) =>
+  state.auth.pendingCredentials;

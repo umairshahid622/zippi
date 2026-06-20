@@ -39,17 +39,15 @@ import {
   verifyOTP,
   selectIsOtpScreen,
   selectPendingEmail,
-  setPendingEmail,  
+  setPendingEmail,
   resetAuth,
   selectIsOtpDisabled,
   selectIsNewUser,
   updateProfile,
-  selectIsAuthenticated,
-  setShowOnBoardingScreen,
-  selectShowOnboardingScreen,
-  clearAwaitingOtpAnimation,
+  selectPendingCredentials,
+  setCredentials,
 } from '../../store/slices/authSlice'
-import { useEffect, useRef} from 'react'
+import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import validator from 'validator'
 import {
@@ -66,8 +64,6 @@ function Auth() {
   const isLoading = useAppSelector(selectAuthLoading)
   const loadingProvider = useAppSelector(selectLoadingProvider)
   const isOtpScreen = useAppSelector(selectIsOtpScreen)
-  const isAuthenticated = useAppSelector(selectIsAuthenticated)
-  const showOnboardingScreen = useAppSelector(selectShowOnboardingScreen)
 
   const magicLinkTimestamp = useAppSelector(selectMagicLinkTimestamp)
 
@@ -99,17 +95,17 @@ function Auth() {
 
 
   console.log("AUTH BUILDING");
-  const currentScreen = showOnboardingScreen
+  const currentScreen = isNewUser
     ? 'onboarding'
     : isOtpScreen
       ? 'otp'
       : 'signin'
 
-      
+
 
   return (
     <main className="flex flex-col h-screen relative max-w-7xl mx-auto overflow-x-hidden">
-      <AuthHeader/>
+      <AuthHeader />
 
       <section className="flex items-center justify-center flex-1 px-6">
         <div className="glass-card w-full max-w-md mx-auto flex flex-col items-center justify-center gap-6">
@@ -119,31 +115,23 @@ function Auth() {
             <HandIcon size={80} />
             <h1>Welcome to {projectName}!</h1>
             <p className="text-muted flex items-center gap-2">
-              Your team is waiting for you — let's go <span><RocketIcon size={18}/> </span>
+              Your team is waiting for you — let's go <span><RocketIcon size={18} /> </span>
             </p>
 
             {/* <p>{currentScreen} | {isAuthenticated ? 'Authenticated' : 'Not Authenticated'} | {isNewUser ? 'New User' : 'Existing User'}</p> */}
           </div>
 
           {/* ── Animated screen content ── */}
-          <div className="w-full flex flex-col items-center gap-3">
+          <motion.div className="w-full flex flex-col items-center gap-3">
             <AnimatePresence mode="wait">
               {currentScreen === 'onboarding' && (
                 <OnboardingContent key="onboarding-screen" />
               )}
-``
               {currentScreen === 'otp' && (
                 <OTPContent
                   key="otp-screen"
                   emailRef={emailRef as React.RefObject<HTMLInputElement>}
                   handleResendingTimer={handleResendingTimer}
-                  onSuccessAnimationComplete={() => {
-                    if (isAuthenticated && isNewUser) {
-                        dispatch(setShowOnBoardingScreen(true))
-                    } else if (isAuthenticated && !isNewUser) {
-                        dispatch(clearAwaitingOtpAnimation())
-                    }
-                  }}
                 />
               )}
 
@@ -164,9 +152,9 @@ function Auth() {
                 isLoading={isLoading}
                 loadingProvider={loadingProvider}
               />
-            )}            
+            )}
 
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -176,12 +164,13 @@ function Auth() {
   )
 }
 
-const OTPContent = ({ emailRef, handleResendingTimer, onSuccessAnimationComplete }: OTPContentProps) => {
+const OTPContent = ({ emailRef, handleResendingTimer }: OTPContentProps) => {
   const dispatch = useAppDispatch()
   const isOtpDisabled = useAppSelector(selectIsOtpDisabled)
   const otpStatus = useAppSelector(selectOtpStatus)
   const pendingEmail = useAppSelector(selectPendingEmail)
   const otpStatusMessage = useAppSelector(selectOtpStatusMessage)
+  const pendingCredentials = useAppSelector(selectPendingCredentials);
 
   useEffect(() => {
     if (pendingEmail && emailRef.current) {
@@ -206,6 +195,14 @@ const OTPContent = ({ emailRef, handleResendingTimer, onSuccessAnimationComplete
     await dispatch(verifyOTP({ email, otp }))
   }
 
+  const setUserCredentials = () => {
+    // This function can be used to set user credentials in the Redux store after successful OTP verification
+    if (!pendingCredentials) return;
+    dispatch(
+      setCredentials(pendingCredentials)
+    );
+  }
+
   const handleBackToSignIn = () => {
     dispatch(resetAuth())
   }
@@ -227,7 +224,7 @@ const OTPContent = ({ emailRef, handleResendingTimer, onSuccessAnimationComplete
       <OTPInput
         status={otpStatus}
         onComplete={handleVerifyOtp} disable={isOtpDisabled}
-        onSuccessAnimationComplete={onSuccessAnimationComplete}
+        onSuccessAnimationComplete={setUserCredentials}
       />
     </motion.div>
 
@@ -448,7 +445,7 @@ const OnboardingContent = () => {
       return
     }
 
-    await dispatch(updateProfile({ fullName: name })) 
+    await dispatch(updateProfile({ fullName: name }))
   }
 
   const handleSkip = () => {
@@ -474,7 +471,7 @@ const OnboardingContent = () => {
       >
         {/* Avatar circle — just initials for now */}
         <div
-          className='size-17 rounded-full bg-blue-gradient shadow-blue-glow flex items-center justify-center text-h1 font-heading text-(--text-color) font-bold'        
+          className='size-17 rounded-full bg-blue-gradient shadow-blue-glow flex items-center justify-center text-h1 font-heading text-(--text-color) font-bold'
         >
           {getEmailInitials(pendingEmail ?? "", 2)}
         </div>
@@ -496,7 +493,7 @@ const OnboardingContent = () => {
           status={userNameStatus}
           placeholder="User Name"
           label="Your display name"
-          message={ usernameStatusMessage ??""}
+          message={usernameStatusMessage ?? ""}
         />
       </motion.div>
 
@@ -525,9 +522,10 @@ const OnboardingContent = () => {
       >
         <AppTextButton
           label="Skip for now"
+          isDisabled={isLoading}
           onCallBack={handleSkip}
         />
-        
+
       </motion.div>
 
     </motion.div>

@@ -87,7 +87,6 @@ export interface OTPInputProps {
 export interface OTPContentProps {
   emailRef: React.RefObject<HTMLInputElement>;
   handleResendingTimer: () => [number | null, boolean];
-  onSuccessAnimationComplete: () => void;
 }
 
 export interface OAuthContentProps {
