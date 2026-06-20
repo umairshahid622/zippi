@@ -7,7 +7,7 @@ import {
   inputVariants,
 } from "../../lib/variants";
 import { inputIconSize } from "../../constants/constants";
-import type { InputProps } from "../interface";
+import type { InputProps } from "../../types/interface";
 
 
 export const AppInput = forwardRef<HTMLInputElement, InputProps>(

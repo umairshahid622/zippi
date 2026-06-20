@@ -1,4 +1,4 @@
-import type { IconProps } from "../interface";
+import type { IconProps } from "../../types/interface";
 
 function GitHubIcon({ className = "size-5", color = "var(--text-color)"}:IconProps) {
   return (

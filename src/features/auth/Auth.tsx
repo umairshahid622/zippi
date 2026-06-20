@@ -1,5 +1,5 @@
 import AuthHeader from '../../components/auth/AuthHeader'
-import { GoogleIcon, HandIcon, GitHubIcon } from '../../components/icons'
+import { GoogleIcon, HandIcon, GitHubIcon, RocketIcon } from '../../components/icons'
 import { projectName } from '../../constants/constants'
 import { AnimatedBackground } from '../../components/auth/AnimatedBackground'
 import { FloatingIcons } from '../../components/auth/FloatingIcons'
@@ -57,7 +57,7 @@ import {
   authItemVariants,
 } from '../../lib/variants'
 import AppTextButton from '../../components/common/AppTextButton'
-import type { AuthLoadingProvider } from '../../types/types'
+import type { MagicLinkContentProps, OAuthContentProps, OTPContentProps } from '../../types/interface'
 
 const MAGIC_LINK_COOLDOWN_MS = 60 * 1000
 
@@ -109,7 +109,7 @@ function Auth() {
 
   return (
     <main className="flex flex-col h-screen relative max-w-7xl mx-auto overflow-x-hidden">
-      <AuthHeader />
+      <AuthHeader/>
 
       <section className="flex items-center justify-center flex-1 px-6">
         <div className="glass-card w-full max-w-md mx-auto flex flex-col items-center justify-center gap-6">
@@ -118,8 +118,8 @@ function Auth() {
           <div className="w-full flex flex-col items-center gap-2">
             <HandIcon size={80} />
             <h1>Welcome to {projectName}!</h1>
-            <p className="text-muted">
-              Your team is waiting for you — let's go 🚀
+            <p className="text-muted flex items-center gap-2">
+              Your team is waiting for you — let's go <span><RocketIcon size={18}/> </span>
             </p>
 
             {/* <p>{currentScreen} | {isAuthenticated ? 'Authenticated' : 'Not Authenticated'} | {isNewUser ? 'New User' : 'Existing User'}</p> */}
@@ -164,8 +164,7 @@ function Auth() {
                 isLoading={isLoading}
                 loadingProvider={loadingProvider}
               />
-            )}
-            {/* <MagicLinkContent emailRef={emailRef} handleResendingTimer={handleResendingTimer} isOtpScreen={isOtpScreen} authStatusMessage={authStatusMessage} isLoading={isLoading} loadingProvider={loadingProvider} /> */}
+            )}            
 
           </div>
         </div>
@@ -177,8 +176,7 @@ function Auth() {
   )
 }
 
-
-const OTPContent = ({ emailRef, handleResendingTimer, onSuccessAnimationComplete }: { emailRef: React.RefObject<HTMLInputElement>; handleResendingTimer: () => [number | null, boolean]; onSuccessAnimationComplete: () => void }) => {
+const OTPContent = ({ emailRef, handleResendingTimer, onSuccessAnimationComplete }: OTPContentProps) => {
   const dispatch = useAppDispatch()
   const isOtpDisabled = useAppSelector(selectIsOtpDisabled)
   const otpStatus = useAppSelector(selectOtpStatus)
@@ -280,7 +278,8 @@ const OTPContent = ({ emailRef, handleResendingTimer, onSuccessAnimationComplete
 }
 
 
-const OAuthContent = ({ isLoading, loadingProvider }:{ isLoading: boolean; loadingProvider: AuthLoadingProvider }) => {
+
+const OAuthContent = ({ isLoading, loadingProvider }: OAuthContentProps) => {
   const dispatch = useAppDispatch()
   const isAnyLoading = isLoading || loadingProvider !== null
   const handleOAuthLogin = (provider: 'google' | 'github') => {
@@ -348,7 +347,7 @@ const OAuthContent = ({ isLoading, loadingProvider }:{ isLoading: boolean; loadi
   )
 }
 
-const MagicLinkContent = ({ emailRef, handleResendingTimer, isOtpScreen, isLoading, loadingProvider }: { emailRef: React.RefObject<HTMLInputElement>; handleResendingTimer: () => [number | null, boolean]; isOtpScreen: boolean; isLoading: boolean; loadingProvider: string | null }) => {
+const MagicLinkContent = ({ emailRef, handleResendingTimer, isOtpScreen, isLoading, loadingProvider }: MagicLinkContentProps) => {
   const dispatch = useAppDispatch()
   const emailStatus = useAppSelector(selectEmailStatus)
   const emailStatusMessage = useAppSelector(selectEmailStatusMessage)

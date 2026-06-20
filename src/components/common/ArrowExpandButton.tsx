@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 import { SendIcon } from '../icons'
 import Loader from './Loader';
-import type { AppArrowExpandButtonProps } from '../interface';
+import type { AppArrowExpandButtonProps } from '../../types/interface';
 
 
 
@@ -15,7 +15,7 @@ function ArrowExpandButton({ label, type, isLoading = false, isDisabled = false,
             onHoverEnd={() => setHovered(false)}
             onClick={isLoading || isDisabled ? undefined : onCallBack}
             type={type ?? 'button'}
-            className='inline-flex relative items-center justify-center w-full overflow-hidden border-none whitespace-nowrap bg-gradient-button h-12 p-1'
+            className='inline-flex relative items-center justify-center w-full overflow-hidden border-none whitespace-nowrap bg-gradient-button h-12 p-1  outline-(var(--purple-primary))'
             style={{
                 boxShadow: isLoading
                     ? '0 4px 14px rgba(59, 158, 255, 0.2)'

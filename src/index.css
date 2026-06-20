@@ -1,4 +1,4 @@
-  @import "tailwindcss";
+@import "tailwindcss";
 
 /* 1. Define the font faces */
 @font-face {
@@ -32,6 +32,7 @@
   --color-transparent: transparent;
   --color-purple-primary: #7b5ea7;
   --color-error: #ef4444;
+  --color-black-pearl: #071020;
   --color-success: #2ddc8a;
   --app-border-color: rgba(255, 255, 255, 0.2);
 
@@ -42,7 +43,6 @@
 
   /* shadow */
   --shadow-app-success: 0 0 0 4px var(--color-box-shadow-success);
-
 
   /* gradients — use --background-image-* so Tailwind generates bg-* utilities */
   --background-image-blue-gradient: linear-gradient(
@@ -170,7 +170,7 @@
     text-decoration: underline;
   }
 
-  button {    
+  button {
     cursor: pointer;
     font-family: var(--font-body);
     font-size: var(--text-body); /* 14px */
@@ -187,7 +187,7 @@
     transition: background-color 5000s ease-in-out 0s;
 
     /* Sets your desired text color over the transparent background */
-    -webkit-text-fill-color: var(--text-color) !important;    
+    -webkit-text-fill-color: var(--text-color) !important;
     font-family: var(--font-heading);
     font-weight: var(--weight-medium);
   }
@@ -232,7 +232,7 @@
 
 @layer components {
   /* Reusable primary component */
-  .glass-card {
+  /* .glass-card {
     padding: 2rem;
     border: 2px solid var(--border-color);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -240,6 +240,54 @@
     backdrop-filter: blur(24px);
     border-radius: var(--border-radius);
     -webkit-backdrop-filter: blur(24px);
+  } */
+
+  
+
+  .glass-card {
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 0 0px 0px rgba(255, 255, 255, 0);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+  }
+
+  .glass-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.25),
+      transparent,
+      rgba(255, 255, 255, 0.3)
+    );
   }
 
   .blob {

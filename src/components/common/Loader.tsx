@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { loaderContainerVariants } from '../../lib/variants'
 import type { LoaderSize } from '../../types/types'
-import type { LoaderProps } from '../interface'
+import type { LoaderProps } from '../../types/interface'
 
 // ─────────────────────────────────────────────
 // Loader — Creative Framer Motion Loader

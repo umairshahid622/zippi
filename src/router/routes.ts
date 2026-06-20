@@ -18,7 +18,7 @@ const routes: RouteObject[] = [
     path: "auth",
     errorElement: createElement(SmartErrorBoundary),
     lazy: async () => {
-      const { default: Auth } = await import("../pages/auth/Auth.tsx");
+      const { default: Auth } = await import("../features/auth/Auth.tsx");
 
       return {
         Component: () =>
@@ -31,7 +31,7 @@ const routes: RouteObject[] = [
     errorElement: createElement(SmartErrorBoundary),
     lazy: async () => {
       const { default: WorkSpace } =
-        await import("../pages/workspace/Workspace.tsx");
+        await import("../features/workspace/Workspace.tsx");
       return { Component: ()=> createElement(ProtectedRoute, null, createElement(WorkSpace)),};
     },
   },
@@ -40,7 +40,7 @@ const routes: RouteObject[] = [
     path: "*",
     errorElement: createElement(SmartErrorBoundary),
     lazy: async () => {
-      const { default: NotFound } = await import("../pages/NotFound.tsx");
+      const { default: NotFound } = await import("../features/NotFound.tsx");
       return { Component: NotFound };
     },
   },

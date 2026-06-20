@@ -1,5 +1,6 @@
 import type { JSX } from "react/jsx-runtime";
 import type {
+  AuthLoadingProvider,
   ButtonType,
   InputStatus,
   LoaderSize,
@@ -79,4 +80,25 @@ export interface OTPInputProps {
   status?: Omit<InputStatus, "focus">;
   disable?: boolean;
   onSuccessAnimationComplete?: () => void;
+}
+
+
+
+export interface OTPContentProps {
+  emailRef: React.RefObject<HTMLInputElement>;
+  handleResendingTimer: () => [number | null, boolean];
+  onSuccessAnimationComplete: () => void;
+}
+
+export interface OAuthContentProps {
+  isLoading: boolean;
+  loadingProvider: AuthLoadingProvider;
+}
+
+export interface MagicLinkContentProps {
+  emailRef: React.RefObject<HTMLInputElement>;
+  handleResendingTimer: () => [number | null, boolean];
+  isOtpScreen: boolean;
+  isLoading: boolean;
+  loadingProvider: AuthLoadingProvider;
 }

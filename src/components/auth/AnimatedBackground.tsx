@@ -1,6 +1,6 @@
 import { motion } from 'motion/react'
 import { memo, useEffect, useRef } from 'react'
-import type { Star } from '../interface';
+import type { Star } from '../../types/interface';
 
 export const AnimatedBackground = memo(() => {
   console.warn("AnimatedBackground Reloaded");

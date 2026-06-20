@@ -1,5 +1,5 @@
 import { defaultIconSize } from "../../constants/constants";
-import type { IconProps } from "../interface";
+import type { IconProps } from "../../types/interface";
 
 const TickIcon = ({
   color = "var(--color-success)",

@@ -1,4 +1,5 @@
-import type { IconProps } from "../interface";
+import type { IconProps } from "../../types/interface";
+
 
 const ArrowRight = ({size = 14, color = 'var(--color-bubble)'}:IconProps) => {
   return (

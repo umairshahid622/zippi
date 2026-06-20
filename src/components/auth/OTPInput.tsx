@@ -2,7 +2,7 @@ import { motion, AnimatePresence, delay } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { otpBoxVariants } from '../../lib/variants'
 import TickIcon from '../icons/TickIcon'
-import type { OTPInputProps } from '../interface'
+import type { OTPInputProps } from '../../types/interface'
 
 
 export const OTPInput = ({

@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { buttonGhostVariants } from "../../lib/variants";
 import Loader from "./Loader";
-import type { AppButtonProps } from "../interface";
+import type { AppButtonProps } from "../../types/interface";
 
 
 

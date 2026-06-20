@@ -19,7 +19,7 @@ interface User {
 interface AuthState {
   user: User | null;
   token: string | null;
-  refreshToken: string | null 
+  refreshToken: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   loadingProvider: AuthLoadingProvider;
@@ -33,7 +33,7 @@ interface AuthState {
 
   emailStatusMessage: string | null;
   otpStatusMessage: string | null;
-  userNameStatusMessage:string | null;
+  userNameStatusMessage: string | null;
 
   showOnBoardingScreen: boolean;
   awaitingOtpAnimation: boolean;
@@ -122,13 +122,17 @@ const authSlice = createSlice({
     // Set credentials directly (used after OAuth redirect)
     setCredentials: (
       state,
-      action: PayloadAction<{ user: User; token: string; refreshToken: string }>,
+      action: PayloadAction<{
+        user: User;
+        token: string;
+        refreshToken: string;
+      }>,
     ) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.refreshToken = action.payload.refreshToken;
       state.isAuthenticated = true;
-    },    
+    },
 
     setEmailStatusMessage: (
       state,
@@ -236,7 +240,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         console.log(state.token);
         console.log(action.payload.refreshToken);
-        
+
         state.refreshToken = action.payload.refreshToken;
         state.isAuthenticated = true;
         state.pendingEmail = action.meta.arg.email;
@@ -258,25 +262,26 @@ const authSlice = createSlice({
       .addCase(updateProfile.pending, (state) => {
         state.otpStatusMessage = null;
         state.isLoading = true;
-        state.userNameStatusMessage = "Saving"
-        state.userNameStatus = "idle"
+        state.userNameStatusMessage = "Saving";
+        state.userNameStatus = "idle";
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.userNameStatus = "success"
+        state.userNameStatus = "success";
         state.user = action.payload.user;
         state.awaitingOtpAnimation = false;
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.userNameStatusMessage = action.payload as string;
-        state.userNameStatus = "error"
+        state.userNameStatus = "error";
       });
 
     // ── logout ──
     builder
+      .addCase(logout.pending, (state) => {})
       .addCase(logout.fulfilled, () => initialState)
-      .addCase(logout.rejected, () => initialState); // reset even if API fails
+      .addCase(logout.rejected, () => {});
   },
 });
 
@@ -300,26 +305,34 @@ export default authSlice.reducer;
 // Define once here — import in components
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectToken = (state: RootState) => state.auth.token;
-export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
+export const selectIsAuthenticated = (state: RootState) =>
+  state.auth.isAuthenticated;
 export const selectAuthLoading = (state: RootState) => state.auth.isLoading;
 
-
-
-export const selectEmailStatusMessage = (state: RootState) =>  state.auth.emailStatusMessage;
-export const selectOtpStatusMessage = (state: RootState) =>  state.auth.otpStatusMessage;
-export const selectUserNameStatusMessage = (state: RootState) =>  state.auth.userNameStatusMessage;
+export const selectEmailStatusMessage = (state: RootState) =>
+  state.auth.emailStatusMessage;
+export const selectOtpStatusMessage = (state: RootState) =>
+  state.auth.otpStatusMessage;
+export const selectUserNameStatusMessage = (state: RootState) =>
+  state.auth.userNameStatusMessage;
 
 export const selectOtpStatus = (state: RootState) => state.auth.otpStatus;
-export const selectUserNameStatus = (state: RootState) => state.auth.userNameStatus;
+export const selectUserNameStatus = (state: RootState) =>
+  state.auth.userNameStatus;
 export const selectEmailStatus = (state: RootState) => state.auth.emailStatus;
 
-
-export const selectIsNewUser = (state: RootState) => state.auth.isAuthenticated && !state.auth.user?.fullName;
-export const selectLoadingProvider = (state: RootState) =>  state.auth.loadingProvider;
-export const selectMagicLinkTimestamp = (state: RootState) =>state.auth.lastSentTimestamp;
+export const selectIsNewUser = (state: RootState) =>
+  state.auth.isAuthenticated && !state.auth.user?.fullName;
+export const selectLoadingProvider = (state: RootState) =>
+  state.auth.loadingProvider;
+export const selectMagicLinkTimestamp = (state: RootState) =>
+  state.auth.lastSentTimestamp;
 export const selectIsOtpScreen = (state: RootState) => state.auth.isOtpScreen;
 export const selectPendingEmail = (state: RootState) => state.auth.pendingEmail;
 
-export const selectIsOtpDisabled = (state: RootState) => state.auth.isOtpDisabled;
-export const selectShowOnboardingScreen = (state: RootState) => state.auth.showOnBoardingScreen;
-export const selectAwaitingOtpAnimation = (state: RootState) => state.auth.awaitingOtpAnimation;
+export const selectIsOtpDisabled = (state: RootState) =>
+  state.auth.isOtpDisabled;
+export const selectShowOnboardingScreen = (state: RootState) =>
+  state.auth.showOnBoardingScreen;
+export const selectAwaitingOtpAnimation = (state: RootState) =>
+  state.auth.awaitingOtpAnimation;
