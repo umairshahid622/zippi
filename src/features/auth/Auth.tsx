@@ -427,7 +427,6 @@ const OnboardingContent = () => {
   const dispatch = useAppDispatch()
   const isLoading = useAppSelector(selectAuthLoading)
   const nameRef = useRef<HTMLInputElement>(null)
-  // const authStatusMessage = useAppSelector(selectAuthStatusMessage)
   const usernameStatusMessage = useAppSelector(selectUserNameStatusMessage)
   const userNameStatus = useAppSelector(selectUserNameStatus)
   const pendingEmail = useAppSelector(selectPendingEmail)
@@ -527,7 +526,6 @@ const OnboardingContent = () => {
         />
 
       </motion.div>
-
     </motion.div>
   )
 }

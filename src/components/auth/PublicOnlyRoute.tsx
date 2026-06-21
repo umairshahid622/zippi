@@ -6,11 +6,11 @@ import type { RootState } from "../../store";
 import { selectIsNewUser } from "../../store/slices/authSlice";
 
 export const PublicOnlyRoute = ({ children }: { children: ReactNode }) => {
-  const { isAuthenticated, token } = useSelector((state: RootState) => state.auth);
+  const { token } = useSelector((state: RootState) => state.auth);
   const isNewUser = useSelector((state: RootState) => selectIsNewUser(state));
 
   // Don't redirect while the OTP success animation is still playing
-  if (isAuthenticated && token && !isNewUser) {
+  if (token && !isNewUser) {
     return <Navigate to="/workspace" replace />;
   }
 

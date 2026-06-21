@@ -10,7 +10,7 @@ const routes: RouteObject[] = [
   {
     index: true,
     async loader() {
-      const isAuthenticated = store.getState().auth.isAuthenticated;
+      const isAuthenticated = !!store.getState().auth.token;
       return redirect(isAuthenticated ? "/workspace" : "/auth");
     },
   },

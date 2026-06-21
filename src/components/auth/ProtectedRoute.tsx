@@ -6,12 +6,12 @@ import { type RootState } from "../../store";
 import { useAppSelector } from "../../hooks/hooks";
 import { selectIsNewUser } from "../../store/slices/authSlice";
 
-export const ProtectedRoute = ({ children }: {children:ReactNode}) => {
-  const { isAuthenticated, token } = useSelector((state: RootState) => state.auth);
+export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+  const { token } = useSelector((state: RootState) => state.auth);
   const isNewUser = useAppSelector(selectIsNewUser)
   const location = useLocation();
 
-  if (!isAuthenticated || !token || isNewUser) {
+  if (!token || isNewUser) {
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 

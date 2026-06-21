@@ -26,7 +26,6 @@ interface AuthState {
     token: string;
     refreshToken: string;
   } | null;
-  isAuthenticated: boolean;
   isLoading: boolean;
   loadingProvider: AuthLoadingProvider;
   emailStatus: InputStatus;
@@ -49,7 +48,6 @@ const initialState: AuthState = {
   refreshToken: null,
 
   pendingCredentials: null,
-  isAuthenticated: false,
   isLoading: false,
   loadingProvider: null,
 
@@ -134,7 +132,6 @@ const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.refreshToken = action.payload.refreshToken;
-      state.isAuthenticated = true;
       state.pendingCredentials = null;
     },
 
@@ -229,10 +226,6 @@ const authSlice = createSlice({
       })
       .addCase(verifyOTP.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.refreshToken = action.payload.refreshToken;
-
         state.pendingCredentials = {
           user: action.payload.user,
           token: action.payload.token,
@@ -268,12 +261,6 @@ const authSlice = createSlice({
 
         if (action.payload?.user) {
           state.user = action.payload.user;
-          if (state.pendingCredentials) {
-            state.pendingCredentials = {
-              ...state.pendingCredentials,
-              user: action.payload.user,
-            };
-          }
         }
       })
       .addCase(updateProfile.rejected, (state, action) => {
@@ -312,7 +299,7 @@ export default authSlice.reducer;
 // export const selectUser = (state: RootState) => state.auth.user;
 // export const selectToken = (state: RootState) => state.auth.token;
 export const selectIsAuthenticated = (state: RootState) =>
-  state.auth.isAuthenticated;
+  state.auth.token !== null;
 export const selectAuthLoading = (state: RootState) => state.auth.isLoading;
 
 export const selectEmailStatusMessage = (state: RootState) =>
@@ -328,8 +315,8 @@ export const selectUserNameStatus = (state: RootState) =>
 export const selectEmailStatus = (state: RootState) => state.auth.emailStatus;
 
 export const selectIsNewUser = (state: RootState) =>
-  !!state.auth.pendingCredentials &&
-  !state.auth.pendingCredentials.user.fullName;
+  !!state.auth.token && !!state.auth.user && !state.auth.user.fullName;
+
 export const selectLoadingProvider = (state: RootState) =>
   state.auth.loadingProvider;
 export const selectMagicLinkTimestamp = (state: RootState) =>
@@ -342,3 +329,5 @@ export const selectIsOtpDisabled = (state: RootState) =>
 
 export const selectPendingCredentials = (state: RootState) =>
   state.auth.pendingCredentials;
+
+export const selectUser = (state:RootState) => state.auth.user;
