@@ -5,6 +5,7 @@ import axios, {
 } from "axios";
 import { store } from "../store/index";
 import { resetAuth, setCredentials } from "../store/slices/authSlice";
+import { API_ENDPOINTS } from "../constants/api";
 
 // ── Create instance ───────────────────────────
 const api: AxiosInstance = axios.create({
@@ -76,7 +77,7 @@ api.interceptors.response.use(
 
     try {
       const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/refresh`,
+        `${import.meta.env.VITE_API_URL}/${API_ENDPOINTS.AUTH.REFRESH_TOKEN}`,
         { refreshToken },
       );
 

@@ -6,6 +6,7 @@ import {
 import { authAPI } from "../../services/authApi";
 import type { RootState } from "..";
 import type { AuthLoadingProvider, InputStatus } from "../../types/types";
+import { API_ENDPOINTS } from "../../constants/api";
 
 // ── Types ─────────────────────────────────────
 interface User {
@@ -67,7 +68,7 @@ const initialState: AuthState = {
 
 // ── Async thunks ──────────────────────────────
 export const sendMagicLink = createAsyncThunk(
-  "auth/sendMagicLink",
+  API_ENDPOINTS.AUTH.MAGIC_LINK,
   async (email: string, { rejectWithValue }) => {
     try {
       return await authAPI.sendMagicLink(email);
@@ -80,7 +81,7 @@ export const sendMagicLink = createAsyncThunk(
 );
 
 export const verifyOTP = createAsyncThunk(
-  "auth/verifyOTP",
+  API_ENDPOINTS.AUTH.VERIFY_OTP,
   async (payload: { email: string; otp: string }, { rejectWithValue }) => {
     try {
       return await authAPI.verifyOTP(payload.email, payload.otp);
@@ -91,7 +92,7 @@ export const verifyOTP = createAsyncThunk(
 );
 
 export const updateProfile = createAsyncThunk(
-  "auth/updateProfile",
+  API_ENDPOINTS.WORK_SPACE.UPDATE_PROFILE,
   async (
     payload: { fullName: string; avatarUrl?: string },
     { rejectWithValue },
@@ -105,7 +106,7 @@ export const updateProfile = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk(
-  "auth/logout",
+  API_ENDPOINTS.AUTH.LOGOUT,
   async (_, { rejectWithValue }) => {
     try {
       await authAPI.logout();
@@ -114,6 +115,7 @@ export const logout = createAsyncThunk(
     }
   },
 );
+
 
 // ── Slice ─────────────────────────────────────
 const authSlice = createSlice({
@@ -330,4 +332,4 @@ export const selectIsOtpDisabled = (state: RootState) =>
 export const selectPendingCredentials = (state: RootState) =>
   state.auth.pendingCredentials;
 
-export const selectUser = (state:RootState) => state.auth.user;
+export const selectUser = (state: RootState) => state.auth.user;

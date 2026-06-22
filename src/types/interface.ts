@@ -82,8 +82,6 @@ export interface OTPInputProps {
   onSuccessAnimationComplete?: () => void;
 }
 
-
-
 export interface OTPContentProps {
   emailRef: React.RefObject<HTMLInputElement>;
   handleResendingTimer: () => [number | null, boolean];
@@ -100,4 +98,27 @@ export interface MagicLinkContentProps {
   isOtpScreen: boolean;
   isLoading: boolean;
   loadingProvider: AuthLoadingProvider;
+}
+
+export interface MagicLinkResponse {
+  message: string;
+}
+
+export interface User {
+  id: string;
+  email: string;
+  fullName: string | null;
+  avatarUrl: string | null;
+  createdAt: string;
+}
+
+export interface VerifyOTPResponse {
+  token: string;
+  refreshToken: string;
+  isNewUser: boolean;
+  user: User;
+}
+
+export interface UpdateProfileResponse {
+  user: User;
 }

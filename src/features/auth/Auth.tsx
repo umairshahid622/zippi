@@ -282,7 +282,8 @@ const OAuthContent = ({ isLoading, loadingProvider }: OAuthContentProps) => {
   const handleOAuthLogin = (provider: 'google' | 'github') => {
     if (isAnyLoading) return
     dispatch(setLoadingProvider(provider))
-    window.location.href = `${import.meta.env.VITE_API_URL}/auth/${provider}`
+    const link = `${import.meta.env.VITE_API_URL}/auth/${provider}`
+    window.open(link, '_blank');
   }
   return (
 
