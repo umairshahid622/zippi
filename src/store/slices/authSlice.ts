@@ -116,7 +116,6 @@ export const logout = createAsyncThunk(
   },
 );
 
-
 // ── Slice ─────────────────────────────────────
 const authSlice = createSlice({
   name: "auth",
@@ -276,9 +275,13 @@ const authSlice = createSlice({
 
     // ── logout ──
     builder
-      .addCase(logout.pending, () => {})
+      .addCase(logout.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(logout.fulfilled, () => initialState)
-      .addCase(logout.rejected, () => {});
+      .addCase(logout.rejected, (state) => {
+        state.isLoading = false;
+      });
   },
 });
 

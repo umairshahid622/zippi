@@ -1,6 +1,6 @@
 
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { logout } from "../../store/slices/authSlice";
+import { logout, selectAuthLoading } from "../../store/slices/authSlice";
 import AppLogo from "../../components/common/AppLogo";
 import AppButton from "../../components/common/AppButton";
 
@@ -15,14 +15,16 @@ export default function WorkSpace() {
 
 const SideBar = () => {
   const { user } = useAppSelector((state) => state.auth);
+  const isLoading = useAppSelector(selectAuthLoading)
   const dispatch = useAppDispatch()
+
   const logOut = async () => {
     await dispatch(logout());
   }
   return (
     <aside className="w-64 h-screen p-4 flex flex-col gap-6 border bg-black-pearl">
       <AppLogo title={user?.fullName || ""} />
-      <AppButton label={"Logout"} onCallBack={logOut} />
+      <AppButton label={"Logout"} onCallBack={logOut} isLoading={isLoading} isDisabled={isLoading} />
     </aside>
   )
 }

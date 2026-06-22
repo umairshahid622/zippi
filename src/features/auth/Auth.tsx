@@ -284,6 +284,7 @@ const OAuthContent = ({ isLoading, loadingProvider }: OAuthContentProps) => {
     dispatch(setLoadingProvider(provider))
     const link = `${import.meta.env.VITE_API_URL}/auth/${provider}`
     window.open(link, '_blank');
+    // window.location.href = link
   }
   return (
 
