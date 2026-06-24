@@ -282,9 +282,17 @@ const OAuthContent = ({ isLoading, loadingProvider }: OAuthContentProps) => {
   const handleOAuthLogin = (provider: 'google' | 'github') => {
     if (isAnyLoading) return
     dispatch(setLoadingProvider(provider))
-    const link = `${import.meta.env.VITE_API_URL}/auth/${provider}`
-    window.open(link, '_blank');
-    // window.location.href = link
+    const width = Math.min(900, window.screen.width * 0.8);
+    const height = Math.min(500, window.screen.height * 0.8);
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+    const url = `${import.meta.env.VITE_API_URL}/auth/${provider}`
+    const features = `width=${width},height=${height},top=${top},left=${left},toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes`;
+    const popup = window.open(url, 'OAuthLogin', features);
+    if (popup) {
+      popup.focus();
+      dispatch(setLoadingProvider(null))
+    }
   }
   return (
 

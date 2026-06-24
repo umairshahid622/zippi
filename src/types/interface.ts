@@ -122,3 +122,9 @@ export interface VerifyOTPResponse {
 export interface UpdateProfileResponse {
   user: User;
 }
+
+export interface Credentials {
+  user: User;
+  token: string;
+  refreshToken: string;
+}
