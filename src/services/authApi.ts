@@ -30,20 +30,4 @@ export const authAPI = {
     const refreshToken = store.getState().auth.refreshToken
     await api.post(API_ENDPOINTS.AUTH.LOGOUT,{ refreshToken });
   },
-
-  // Called after Google/GitHub OAuth redirect
-  // Backend exchanges the code for a JWT
-  // oauthCallback: async (token: string): Promise<VerifyOTPResponse> => {
-  //   const res = await api.post("/auth/oauth/callback", { token });
-  //   return res.data;
-  // },
-
-  googleAuthCallBack:async (): Promise<void> => {
-    const res = await api.get(API_ENDPOINTS.AUTH.GOOGLE_CALLBACK,)
-  },
-
-  gitHubCallBack: async (): Promise<void> => {
-    const res = await api.get(API_ENDPOINTS.AUTH.GITHUB_CALLBACK,)
-  }
-
 };

@@ -46,15 +46,12 @@ export const AnimatedBackground = memo(() => {
 
       <div
         className="blob size-125 bg-blue-primary opacity-25 -top-24 -left-36"
-
       />
-
       <div
         className="blob size-96 bg-cyan-pop opacity-20 -bottom-20 -right-24"
       />
-
       <div
-        className="blob size-80 bg-purple-primary opacity-20 top-1/2 left-1/2"
+        className="blob size-80 bg-purple-primary opacity-20 top-1/2 left-1/2 -translate-1/2"
       />
     </motion.div>
   )

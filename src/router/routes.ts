@@ -33,7 +33,10 @@ const routes: RouteObject[] = [
         lazy: async () => {
           const { default: OAuthCallback } =
             await import("../features/auth/OAuthCallback.tsx");
-          return { Component: OAuthCallback };
+          return {
+            Component: () =>
+              createElement(PublicOnlyRoute, null, createElement(OAuthCallback)),
+          };
         },
       },
     ],

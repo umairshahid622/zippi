@@ -366,12 +366,12 @@ export const buttonVariants: Variants = {
 export const buttonGhostVariants: Variants = {
   idle: {
     scale: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.10)",
+    backgroundColor: "rgba(255, 255, 255, 0.075)",
     borderColor: "rgba(255, 255, 255, 0.10)",
   },
   hover: {
-    scale: 1.02,
-    backgroundColor: "rgba(255, 255, 255, 0.14)",
+    scale: 1.015,
+    backgroundColor: "rgba(255, 255, 255, 0.10)",
     borderColor: "rgba(255, 255, 255, 0.20)",
     transition: { ...springs.soft },
   },

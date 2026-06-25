@@ -108,7 +108,7 @@ function Auth() {
       <AuthHeader />
 
       <section className="flex items-center justify-center flex-1 px-6">
-        <div className="glass-card w-full max-w-md mx-auto flex flex-col items-center justify-center gap-6">
+        <div className="glass-card py-16 px-8 w-full max-w-md mx-auto flex flex-col items-center justify-center gap-6">
 
           {/* ── Header — always visible ── */}
           <div className="w-full flex flex-col items-center gap-2">
@@ -282,17 +282,19 @@ const OAuthContent = ({ isLoading, loadingProvider }: OAuthContentProps) => {
   const handleOAuthLogin = (provider: 'google' | 'github') => {
     if (isAnyLoading) return
     dispatch(setLoadingProvider(provider))
-    const width = Math.min(900, window.screen.width * 0.8);
-    const height = Math.min(500, window.screen.height * 0.8);
-    const left = window.screen.width / 2 - width / 2;
-    const top = window.screen.height / 2 - height / 2;
+    // const width = Math.min(900, window.screen.width * 0.8);
+    // const height = Math.min(500, window.screen.height * 0.8);
+    // const left = window.screen.width / 2 - width / 2;
+    // const top = window.screen.height / 2 - height / 2;
     const url = `${import.meta.env.VITE_API_URL}/auth/${provider}`
-    const features = `width=${width},height=${height},top=${top},left=${left},toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes`;
-    const popup = window.open(url, 'OAuthLogin', features);
-    if (popup) {
-      popup.focus();
-      dispatch(setLoadingProvider(null))
-    }
+    // const features = `width=${width},height=${height},top=${top},left=${left},toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes`;
+
+    window.location.href = url
+    // const popup = window.open(url, 'OAuthLogin', features);
+    // if (popup) {
+    //   popup.focus();
+    //   dispatch(setLoadingProvider(null))
+    // }
   }
   return (
 
