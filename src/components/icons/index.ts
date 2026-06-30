@@ -1,8 +1,13 @@
-export { default as MessageIcon } from "./MessageIcon";
+export { default as ArrowRight } from "./ArrowRight";
+export { default as BubbleIcon } from "./BubbleIcon";
+export { default as GearIcon } from "./GearIcon";
+export { default as GitHubIcon } from "./GitHubIcon";
+export { default as GoogleIcon } from "./GoogleIcon";
 export { default as HandIcon } from "./HandIcon";
+export { default as MailIcon } from "./MailIcon";
+export { default as MessageIcon } from "./MessageIcon";
 export { default as NeutronIcon } from "./NeutronIcon";
 export { default as RocketIcon } from "./RocketIcon";
-export { default as BubbleIcon } from "./BubbleIcon";
-export { default as GoogleIcon } from "./GoogleIcon";
-export { default as GitHubIcon } from "./GitHubIcon";
+export { default as SearchIcon } from "./SearchIcon";
 export { default as SendIcon } from "./SendIcon";
+export { default as TickIcon } from "./TickIcon";

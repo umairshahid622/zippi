@@ -8,6 +8,7 @@ import {
 } from "../../lib/variants";
 import { inputIconSize } from "../../constants/constants";
 import type { InputProps } from "../../types/interface";
+import { cn } from "../../utils/functions";
 
 
 export const AppInput = forwardRef<HTMLInputElement, InputProps>(
@@ -23,6 +24,7 @@ export const AppInput = forwardRef<HTMLInputElement, InputProps>(
       disabled = false,
       iconSize = inputIconSize,
       maxLength,
+      className,
       onChange,
       onFocus,
       onBlur,
@@ -94,11 +96,13 @@ export const AppInput = forwardRef<HTMLInputElement, InputProps>(
             animate={currentState}
             variants={inputVariants}
             initial="idle"
-            className={`
-            w-full rounded-(--border-radius) app-border py-3 pr-4 text-(--text-color) font-(--weight-bold)
-            font-heading outline-none placeholder:text-muted cursor-auto text-sm caret-(--text-color)
-            ${icon ? "pl-11" : "pl-4"}
-          `}
+            className={
+              cn(
+                'w-full rounded-(--border-radius) app-border py-3 pr-4 text-(--text-color) font-(--weight-bold) font-heading outline-none placeholder:text-muted cursor-auto text-sm caret-(--text-color)',
+                icon ? 'pl-11' : 'pl-4',
+                className
+              )
+            }
           />
         </div>
 

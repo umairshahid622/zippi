@@ -25,6 +25,7 @@ export interface InputProps {
   maxLength?: number;
   iconSize?: number;
   disabled?: boolean;
+  className?:String;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus?: () => void;
   onBlur?: () => void;

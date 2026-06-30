@@ -26,7 +26,7 @@ export const AnimatedBackground = memo(() => {
 
     stars.forEach(star => {
       const el = document.createElement('div')
-      el.className = 'absolute rounded-full bg-white'
+      el.className = 'absolute rounded-full bg-bubble'
       el.style.width = `${star.width}px`
       el.style.height = `${star.height}px`
       el.style.left = `${star.left}%`

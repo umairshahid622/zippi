@@ -4,7 +4,7 @@ import { MessageIcon } from '../icons'
 const AppLogo = () => {
     return (
         <div className='flex items-center gap-3'>
-            <div className='inline-flex items-center justify-between bg-blue-gradient p-2 rounded-(--border-radius) shadow-blue-glow'>
+            <div className='inline-flex items-center justify-between bg-blue-gradient shadow-blue-glow p-2 rounded-(--border-radius)'>
                 <MessageIcon color='var(--text-color)' className='size-6' />
             </div>
             <div className='relative box-border'>
