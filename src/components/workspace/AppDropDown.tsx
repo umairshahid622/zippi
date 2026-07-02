@@ -22,10 +22,11 @@ const AppDropDown = () => {
             {
                 channels.map((channel) => (
                     <div key={channel.id} className={cn(
-                        "flex items-center gap-2 pl-6 py-1.5 my-1",
-                        'bg-cyan-light/10 border-l-2 border-l-cyan-pop inset-shadow-2xs'
+                        "relative overflow-hidden flex items-center gap-2 pl-6 py-1.5 my-1 group",
+                        'bg-white/10 border-l-2 border-l-cyan-pop'
                     )}>
-                        <HashTagIcon className="hover:bg-cyan-pop!"/>
+                        <span className="pointer-events-none absolute left-0 top-0 h-full w-1 bg-cyan-pop/60 blur-sm" />
+                        <HashTagIcon className="text-white group-hover:text-cyan-pop!"/>
                         <p>{channel.name}</p>
                     </div>
                 ))
