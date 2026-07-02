@@ -9,14 +9,17 @@ const routes: RouteObject[] = [
   {
     index: true,
     async loader() {
-      const isAuthenticated = !!store.getState().auth.token;
+      const accessToken = store.getState().auth.token;
+      console.log("accessToken", accessToken);
+
+      const isAuthenticated = !!accessToken;
       return redirect(isAuthenticated ? "/workspace" : "/auth");
     },
   },
   {
     path: "auth",
     errorElement: createElement(SmartErrorBoundary),
-
+    HydrateFallback: () => null,
     children: [
       {
         index: true,
@@ -35,7 +38,11 @@ const routes: RouteObject[] = [
             await import("../features/auth/OAuthCallback.tsx");
           return {
             Component: () =>
-              createElement(PublicOnlyRoute, null, createElement(OAuthCallback)),
+              createElement(
+                PublicOnlyRoute,
+                null,
+                createElement(OAuthCallback),
+              ),
           };
         },
       },

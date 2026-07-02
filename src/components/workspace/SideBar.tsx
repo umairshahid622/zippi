@@ -1,3 +1,4 @@
+import { LayoutGroup, motion } from "motion/react"
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks"
 import { logout, selectAuthLoading } from "../../store/slices/authSlice"
 import AppButton from "../common/AppButton"
@@ -8,11 +9,14 @@ import GearIcon from "../icons/GearIcon"
 import AppDropDown from "./AppDropDown"
 import NotificationToggle from "./NotificationToggle"
 import ProfileAvatar from "./ProfileAvatar"
+import React from "react"
+import type { AppDropDownContent } from "../../types/interface"
 
 const SideBar = () => {
-
+    console.log("Side bar Rendered");
+    
     return (
-        <aside className="w-64 m-2 p-0 flex flex-col">
+        <aside className="w-64 m-2 p-0 flex flex-col overflow-hidden">
             <div className="flex flex-col flex-1 glass-card backdrop-saturate-100">
                 <SideBarHeader />
                 <div className="app-divider"></div>
@@ -47,9 +51,32 @@ function SideBarContent() {
                 <AppInput placeholder="Search Channels" className='py-2' icon={<SearchIcon />} />
                 <NotificationToggle />
             </div>
-            <AppDropDown />
+            <SideBarChats />
             {/* <AppButton label={"Logout"} onCallBack={logOut} isLoading={isLoading} isDisabled={isLoading} /> */}
         </div>
+    )
+}
+
+const SideBarChats = () => {
+    const channels = [
+        { id: 1, name: "general" },
+        { id: 2, name: "random" },
+        { id: 3, name: "development" },
+        { id: 4, name: "design" },
+    ];
+
+    const directMessages = [
+        { id: 5, name: "John Doe" },
+        { id: 6, name: "Jane Smith" },
+        { id: 7, name: "Alice Johnson" },
+        { id: 8, name: "Bob Brown" },
+    ];
+    const [activeId, setActiveId] = React.useState<AppDropDownContent | null>(null);
+    return (
+        <LayoutGroup>
+            <AppDropDown title={"channels"} content={channels} selectedChannel={activeId ?? undefined} onSelectChannel={setActiveId} />
+            <AppDropDown title={"direct messages"} content={directMessages} selectedChannel={activeId ?? undefined} onSelectChannel={setActiveId} />
+        </LayoutGroup>
     )
 }
 

@@ -25,7 +25,7 @@ export interface InputProps {
   maxLength?: number;
   iconSize?: number;
   disabled?: boolean;
-  className?:String;
+  className?: String;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus?: () => void;
   onBlur?: () => void;
@@ -128,4 +128,16 @@ export interface Credentials {
   user: User;
   token: string;
   refreshToken: string;
+}
+
+export interface AppDropDownProps {
+  title: string;
+  content: AppDropDownContent[];
+  selectedChannel?: AppDropDownContent;
+  onSelectChannel?: (channel: AppDropDownContent) => void;
+}
+
+export interface AppDropDownContent {
+  id: number;
+  name: string;
 }
