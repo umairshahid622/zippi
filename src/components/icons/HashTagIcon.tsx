@@ -1,9 +1,10 @@
 import {  smallIconSize } from "../../constants/constants";
 import type { IconProps } from "../../types/interface";
+import { cn } from "../../utils/functions";
 
-const HashTagIcon = ({ size = smallIconSize, color = "var(--color-bubble)" }: IconProps) => {
+const HashTagIcon = ({ size = smallIconSize, color = "var(--color-bubble)" ,className}: IconProps) => {
   return (
-    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill={color} width={size} height={size}>
+    <svg className={cn(className)} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill={color} width={size} height={size}>
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
