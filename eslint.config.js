@@ -19,4 +19,15 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    files: ['**/*.{js,jsx}'],
+    rules:{
+      'no-restricted-imports':['error',{
+        'patterns':[{
+          'group':['**/components/icons/*'],
+          'message':'Please use the index.ts file to import icons instead of importing directly from the AlertIcon file.'
+        }]
+      }]
+    }
+  }
 ])

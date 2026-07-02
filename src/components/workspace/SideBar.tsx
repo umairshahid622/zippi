@@ -5,6 +5,8 @@ import { AppInput } from "../common/AppInput"
 import AppLogo from "../common/AppLogo"
 import { SearchIcon } from "../icons"
 import GearIcon from "../icons/GearIcon"
+import AppDropDown from "./AppDropDown"
+import NotificationToggle from "./NotificationToggle"
 import ProfileAvatar from "./ProfileAvatar"
 
 const SideBar = () => {
@@ -40,8 +42,12 @@ function SideBarContent() {
         await dispatch(logout());
     }
     return (
-        <div className="flex-1 p-3">
-            <AppInput  placeholder="Search Channels" className='py-2' icon = {<SearchIcon/>}/>
+        <div className="flex-1 space-y-3">
+            <div className="p-3 space-y-3">
+                <AppInput placeholder="Search Channels" className='py-2' icon={<SearchIcon />} />
+                <NotificationToggle />
+            </div>
+            <AppDropDown />
             {/* <AppButton label={"Logout"} onCallBack={logOut} isLoading={isLoading} isDisabled={isLoading} /> */}
         </div>
     )

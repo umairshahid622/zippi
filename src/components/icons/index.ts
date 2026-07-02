@@ -11,3 +11,6 @@ export { default as RocketIcon } from "./RocketIcon";
 export { default as SearchIcon } from "./SearchIcon";
 export { default as SendIcon } from "./SendIcon";
 export { default as TickIcon } from "./TickIcon";
+export { default as AlertIcon } from "./AlertIcon";
+export { default as Cheveron } from "./Cheveron";
+export { default as PlusIcon } from "./PlusIcon";
