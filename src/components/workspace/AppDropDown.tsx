@@ -25,16 +25,16 @@ const AppDropDown = ({ title, content, selectedChannel, onSelectChannel }: AppDr
             <div className="flex items-center justify-between gap-2 px-3 py-1">
                 <div onClick={() => setIsOpen(!isOpen)} className="flex items-center gap-2 cursor-pointer w-full">
                     <motion.div animate={{ rotate: isOpen ? 180 : 0 }}>
-                        <Cheveron />
+                        <Cheveron className="text-muted"/>
                     </motion.div>
-                    <h4 className="uppercase font-semibold">{title}</h4>
+                    <h4 className="uppercase font-semibold text-muted">{title}</h4>
                 </div>
-                <PlusIcon />
+                <PlusIcon className="text-muted" />
             </div>
 
-            <AnimatePresence initial={false} mode="popLayout">
+            <AnimatePresence initial={true} mode="popLayout">
                 {isOpen && (
-                    <motion.div layout = "position" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
+                    <motion.div  layout = "position" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
                         {content.map((channel) => {
                             const isSelected =  selectedChannel?.id === channel.id;
                             return (
@@ -44,7 +44,6 @@ const AppDropDown = ({ title, content, selectedChannel, onSelectChannel }: AppDr
                                     onClick={() => onSelectChannel?.(channel)}
                                     className="relative flex items-center gap-2 pl-6 py-1.5 group cursor-pointer"
                                 >
-                                    {/* The active indicator animation */}
                                     {isSelected && (
                                         <motion.div
                                             layoutId="active-channel"

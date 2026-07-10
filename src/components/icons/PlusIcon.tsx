@@ -1,9 +1,12 @@
 import { smallIconSize } from "../../constants/constants";
 import type { IconProps } from "../../types/interface";
+import { cn } from "../../utils/functions";
 
-const PlusIcon = ({ size = smallIconSize, color = "var(--color-bubble)" }: IconProps) => {
+const PlusIcon = ({ size = smallIconSize, color = "currentColor", className }: IconProps) => {
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            className={cn('fill-current', className)}
+            width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
             <g
                 id="SVGRepo_tracerCarrier"

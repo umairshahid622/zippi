@@ -1,11 +1,17 @@
 import { smallIconSize } from "../../constants/constants";
 import type { IconProps } from "../../types/interface";
+import { cn } from "../../utils/functions";
 
-const Cheveron = ({ size = smallIconSize, color = "var(--color-bubble)" }: IconProps) => {
+const Cheveron = ({ size = smallIconSize, color = "currentColor", className }: IconProps) => {
     return (
         <svg
+            className={
+                cn(
+                    'fill-current', className
+                )
+            }
             width={size} height={size}
-            fill={color} viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            fill={color ?? "var(--color-bubble)"} viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
             <g
                 id="SVGRepo_tracerCarrier"
