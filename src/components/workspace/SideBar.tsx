@@ -14,10 +14,10 @@ import type { AppDropDownContent } from "../../types/interface"
 
 const SideBar = () => {
     console.log("Side bar Rendered");
-    
+
     return (
-        <aside className="w-64 m-2 p-0 flex flex-col overflow-hidden">
-            <div className="flex flex-col flex-1 glass-card backdrop-saturate-100">
+        <aside className="w-64 h-screen box-border p-0 flex">
+            <div className="flex flex-col grow m-2 min-h-0 glass-card backdrop-saturate-100">
                 <SideBarHeader />
                 <div className="app-divider"></div>
                 <SideBarContent />
@@ -46,13 +46,14 @@ function SideBarContent() {
         await dispatch(logout());
     }
     return (
-        <div className="flex-1 space-y-3">
-            <div className="p-3 space-y-3">
-                <AppInput placeholder="Search Channels" className='py-2' icon={<SearchIcon />} />
-                <NotificationToggle />
-            </div>
-            <SideBarChats />
-            {/* <AppButton label={"Logout"} onCallBack={logOut} isLoading={isLoading} isDisabled={isLoading} /> */}
+        <div className="flex relative grow overflow-hidden ">
+            <motion.div layoutScroll className="grow overflow-y-auto scrollbar-none scroll-smooth space-y-3">
+                <div className="space-y-3 p-3">
+                    <AppInput placeholder="Search Channels" className='py-2' icon={<SearchIcon />} />
+                    <NotificationToggle />
+                </div>
+                <SideBarChats />
+            </motion.div>
         </div>
     )
 }
@@ -70,6 +71,13 @@ const SideBarChats = () => {
         { id: 6, name: "Jane Smith" },
         { id: 7, name: "Alice Johnson" },
         { id: 8, name: "Bob Brown" },
+        { id: 9, name: "Bob Brown" },
+        { id: 10, name: "Bob Brown" },
+        { id: 11, name: "Bob Brown" },
+        { id: 12, name: "Bob Brown" },
+        { id: 13, name: "Bob Brown" },
+        { id: 14, name: "Bob Brown" },
+        { id: 15, name: "Bob Brown" },
     ];
     const [activeId, setActiveId] = React.useState<AppDropDownContent | null>(null);
     return (

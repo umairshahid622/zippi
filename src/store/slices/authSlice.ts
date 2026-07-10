@@ -7,15 +7,9 @@ import { authAPI } from "../../services/authApi";
 import type { RootState } from "..";
 import type { AuthLoadingProvider, InputStatus } from "../../types/types";
 import { API_ENDPOINTS } from "../../constants/api";
+import type { User } from "../../types/interface";
 
 // ── Types ─────────────────────────────────────
-interface User {
-  id: string;
-  email: string;
-  fullName: string | null;
-  avatarUrl: string | null;
-  createdAt: string;
-}
 
 interface AuthState {
   user: User | null;

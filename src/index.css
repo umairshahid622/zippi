@@ -225,7 +225,7 @@
   }
   /* Muted / secondary text */
   .text-muted {
-    @apply opacity-45;
+    @apply opacity-70;
     color: var(--text-color);
   }
 }

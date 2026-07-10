@@ -10,8 +10,6 @@ const routes: RouteObject[] = [
     index: true,
     async loader() {
       const accessToken = store.getState().auth.token;
-      console.log("accessToken", accessToken);
-
       const isAuthenticated = !!accessToken;
       return redirect(isAuthenticated ? "/workspace" : "/auth");
     },
@@ -19,7 +17,7 @@ const routes: RouteObject[] = [
   {
     path: "auth",
     errorElement: createElement(SmartErrorBoundary),
-    HydrateFallback: () => null,
+    hydrateFallbackElement: createElement(() => null),
     children: [
       {
         index: true,
@@ -51,6 +49,7 @@ const routes: RouteObject[] = [
   {
     path: "workspace",
     errorElement: createElement(SmartErrorBoundary),
+    hydrateFallbackElement: createElement(() => null),
     lazy: async () => {
       const { default: WorkSpace } =
         await import("../features/workspace/Workspace.tsx");
@@ -59,6 +58,9 @@ const routes: RouteObject[] = [
           createElement(ProtectedRoute, null, createElement(WorkSpace)),
       };
     },
+    children:[
+      
+    ]
   },
 
   {

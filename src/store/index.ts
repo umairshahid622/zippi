@@ -12,7 +12,7 @@ import {
 
 import uiReducer from "./slices/uiSlice";
 import authReducer from "./slices/authSlice";
-// import workspaceReducer     from './slices/workspaceSlice'
+import workspaceReducer     from './slices/workspaceSlice'
 // import chatReducer          from './slices/chatSlice'
 // import tasksReducer         from './slices/tasksSlice'
 // import notificationsReducer from './slices/notificationsSlice'
@@ -21,26 +21,25 @@ import authReducer from "./slices/authSlice";
 const rootReducer = combineReducers({
   ui: uiReducer,
   auth: authReducer,
-  //   workspace:     workspaceReducer,
+  workspace: workspaceReducer,
   //   chat:          chatReducer,
   //   tasks:         tasksReducer,
   //   notifications: notificationsReducer,
 });
 
-
 const storage = {
   getItem: (key: string): Promise<string | null> => {
-    return Promise.resolve(localStorage.getItem(key))
+    return Promise.resolve(localStorage.getItem(key));
   },
   setItem: (key: string, value: string): Promise<void> => {
-    localStorage.setItem(key, value)
-    return Promise.resolve()
+    localStorage.setItem(key, value);
+    return Promise.resolve();
   },
   removeItem: (key: string): Promise<void> => {
-    localStorage.removeItem(key)
-    return Promise.resolve()
+    localStorage.removeItem(key);
+    return Promise.resolve();
   },
-}
+};
 
 // ── Persist config ────────────────────────────
 // Only persist auth — everything else reloads from API
