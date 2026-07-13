@@ -1,9 +1,9 @@
 import { LayoutGroup, motion } from "motion/react"
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks"
 import { logout, selectAuthLoading } from "../../store/slices/authSlice"
-import AppButton from "../common/AppButton"
-import { AppInput } from "../common/AppInput"
-import AppLogo from "../common/AppLogo"
+import AppButton from "../shared/AppButton"
+import { AppInput } from "../shared/AppInput"
+import AppLogo from "../shared/AppLogo"
 import { SearchIcon } from "../icons"
 import GearIcon from "../icons/GearIcon"
 import AppDropDown from "./AppDropDown"
@@ -59,26 +59,9 @@ function SideBarContent() {
 }
 
 const SideBarChats = () => {
-    const channels = [
-        { id: 1, name: "general" },
-        { id: 2, name: "random" },
-        { id: 3, name: "development" },
-        { id: 4, name: "design" },
-    ];
+    const channels: any = [];
 
-    const directMessages = [
-        { id: 5, name: "John Doe" },
-        { id: 6, name: "Jane Smith" },
-        { id: 7, name: "Alice Johnson" },
-        { id: 8, name: "Bob Brown" },
-        { id: 9, name: "Bob Brown" },
-        { id: 10, name: "Bob Brown" },
-        { id: 11, name: "Bob Brown" },
-        { id: 12, name: "Bob Brown" },
-        { id: 13, name: "Bob Brown" },
-        { id: 14, name: "Bob Brown" },
-        { id: 15, name: "Bob Brown" },
-    ];
+    const directMessages: any = [];
     const [activeId, setActiveId] = React.useState<AppDropDownContent | null>(null);
     return (
         <LayoutGroup>

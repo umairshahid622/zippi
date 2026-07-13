@@ -1,12 +1,15 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '..'
+import type { ModalType } from '../../types/types'
+
+
 
 interface UIState {
   sidebarOpen:     boolean
   activePanel:     'chat' | 'tasks' | 'files' | null
   focusMode:       boolean
   theme:           'dark' | 'light'
-  activeModal:     string | null
+  activeModal:     ModalType | null
 }
 
 const initialState: UIState = {
@@ -32,7 +35,7 @@ const uiSlice = createSlice({
     setTheme:       (state, action: PayloadAction<UIState['theme']>) => {
       state.theme = action.payload
     },
-    openModal:      (state, action: PayloadAction<string>) => {
+    openModal:      (state, action: PayloadAction<ModalType>) => {
       state.activeModal = action.payload
     },
     closeModal:     (state) => { state.activeModal = null },

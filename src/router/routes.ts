@@ -1,5 +1,5 @@
 import { redirect, type RouteObject } from "react-router";
-import SmartErrorBoundary from "../components/common/ErrorBoundary.tsx";
+import SmartErrorBoundary from "../components/shared/ErrorBoundary.tsx";
 import { createElement } from "react";
 import { store } from "../store/index.ts";
 import { PublicOnlyRoute } from "../components/auth/PublicOnlyRoute.tsx";

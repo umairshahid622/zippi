@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "../../utils/functions";
 import { AlertIcon } from "../icons";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { toggleFocusMode } from "../../store/slices/uiSlice";
 
 // --- Framer Motion Variants ---
 const containerVariants = {
@@ -10,7 +12,7 @@ const containerVariants = {
 };
 
 const slashVariants = {
-    off: { width: 0, opacity: 0, rotate: 45 },
+    off: { width: 0, opacity: 0, rotate: 20 },
     on: { width: 22, opacity: 1, rotate: 45 }
 };
 
@@ -20,11 +22,15 @@ const textVariants = {
 };
 
 const NotificationToggle = () => {
-    const [focusMode, setFocusMode] = useState(true);
+    const focusMode = useAppSelector((state) => state.ui.focusMode);
+    const dispatch = useAppDispatch();
+    const onToggleFocusMode = () => {
+        dispatch(toggleFocusMode());
+    }
 
     return (
         <motion.div
-            onClick={() => setFocusMode((prev) => !prev)}
+            onClick={onToggleFocusMode}
             variants={containerVariants}
             initial="idle"
             whileHover="hover"
@@ -36,13 +42,18 @@ const NotificationToggle = () => {
         >
             <div className="relative flex items-center justify-center">
                 <AlertIcon color={focusMode ? "var(--color-cyan-pop)" : "var(--color-bubble)"} />
-                
-                <motion.div
-                    variants={slashVariants}
-                    animate={focusMode ? "on" : "off"}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="absolute bg-cyan-pop h-px origin-center"
-                />
+                <AnimatePresence mode="wait">
+                    {focusMode && (
+                        <motion.div
+                            variants={slashVariants}
+                            animate="on"
+                            exit="off"                      
+                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                            className="absolute bg-cyan-pop h-px origin-center"
+                        />
+                    )}
+
+                </AnimatePresence>
             </div>
 
             <motion.p

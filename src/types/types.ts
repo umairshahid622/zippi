@@ -1,7 +1,11 @@
 export type ButtonType = "button" | "submit" | "reset";
-export type LoaderVariant = 'spinner' | 'dots' | 'pulse'
-export type LoaderSize = 'sm' | 'md' | 'lg'
+export type LoaderVariant = "spinner" | "dots" | "pulse";
+export type LoaderSize = "sm" | "md" | "lg";
 
 export type InputStatus = "idle" | "focus" | "error" | "success";
 
-export type AuthLoadingProvider =  "google" | "github" | "magic-link" | null
+export type AuthLoadingProvider = "google" | "github" | "magic-link" | null;
+
+
+
+export type ModalType = "CREATE_WORKSPACE_MODAL" | null;

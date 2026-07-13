@@ -131,8 +131,8 @@ export interface Credentials {
 }
 
 export interface AppDropDownProps {
-  title: string;
-  content: AppDropDownContent[];
+  title?: string;
+  content?: AppDropDownContent[];
   selectedChannel?: AppDropDownContent;
   onSelectChannel?: (channel: AppDropDownContent) => void;
 }

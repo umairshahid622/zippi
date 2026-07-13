@@ -1,4 +1,4 @@
-import AppLogo from '../common/AppLogo';
+import AppLogo from '../shared/AppLogo';
 
 function AuthHeader() {
   return (

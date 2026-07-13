@@ -3,10 +3,10 @@ import { GoogleIcon, HandIcon, GitHubIcon, RocketIcon } from '../../components/i
 import { projectName } from '../../constants/constants'
 import { AnimatedBackground } from '../../components/auth/AnimatedBackground'
 import { FloatingIcons } from '../../components/auth/FloatingIcons'
-import AppButton from '../../components/common/AppButton'
-import { AppInput } from '../../components/common/AppInput'
+import AppButton from '../../components/shared/AppButton'
+import { AppInput } from '../../components/shared/AppInput'
 import MailIcon from '../../components/icons/MailIcon'
-import ArrowExpandButton from '../../components/common/ArrowExpandButton'
+import ArrowExpandButton from '../../components/shared/ArrowExpandButton'
 import { OTPInput } from '../../components/auth/OTPInput'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import {
@@ -54,7 +54,7 @@ import {
   authScreenSlideVariants,
   authItemVariants,
 } from '../../lib/variants'
-import AppTextButton from '../../components/common/AppTextButton'
+import AppTextButton from '../../components/shared/AppTextButton'
 import type { MagicLinkContentProps, OAuthContentProps, OTPContentProps } from '../../types/interface'
 
 const MAGIC_LINK_COOLDOWN_MS = 60 * 1000

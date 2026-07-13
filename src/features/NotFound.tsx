@@ -1,10 +1,11 @@
-import { Navigate } from "react-router";
-import AppTextButton from "../components/common/AppTextButton";
+import { useNavigate } from "react-router";
+import AppTextButton from "../components/shared/AppTextButton";
 
 export default function NotFound() {
+  const navigate = useNavigate();
 
   const navigateToWorkSpace = () => {    
-    return <Navigate to="/workspace" replace />;
+    navigate('/workspace', { replace: true }); 
   }
   return (
     <section className="flex flex-col items-center justify-center flex-1 px-6 h-screen gap-3">

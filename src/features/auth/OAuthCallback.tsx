@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router";
-import Loader from "../../components/common/Loader";
+import Loader from "../../components/shared/Loader";
 import { setCredentials } from "../../store/slices/authSlice";
 import type { Credentials, User } from "../../types/interface";
 

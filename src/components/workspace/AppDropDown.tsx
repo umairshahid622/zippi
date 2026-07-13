@@ -20,12 +20,16 @@ const itemVariants = {
 const AppDropDown = ({ title, content, selectedChannel, onSelectChannel }: AppDropDownProps) => {
     const [isOpen, setIsOpen] = React.useState(true);
 
+    if (!content || content.length === 0 || !title) {
+        return null;
+    }
+
     return (
-        <motion.div layout = "position">
+        <motion.div layout="position">
             <div className="flex items-center justify-between gap-2 px-3 py-1">
                 <div onClick={() => setIsOpen(!isOpen)} className="flex items-center gap-2 cursor-pointer w-full">
                     <motion.div animate={{ rotate: isOpen ? 180 : 0 }}>
-                        <Cheveron className="text-muted"/>
+                        <Cheveron className="text-muted" />
                     </motion.div>
                     <h4 className="uppercase font-semibold text-muted">{title}</h4>
                 </div>
@@ -34,9 +38,9 @@ const AppDropDown = ({ title, content, selectedChannel, onSelectChannel }: AppDr
 
             <AnimatePresence initial={true} mode="popLayout">
                 {isOpen && (
-                    <motion.div  layout = "position" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
+                    <motion.div layout="position" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
                         {content.map((channel) => {
-                            const isSelected =  selectedChannel?.id === channel.id;
+                            const isSelected = selectedChannel?.id === channel.id;
                             return (
                                 <motion.div
                                     key={channel.id}

@@ -4,7 +4,7 @@ import {
   type PayloadAction,
 } from '@reduxjs/toolkit'
 import type { RootState } from '..'
-import { workspaceAPI } from '../../services/workSpaceApi'
+import { workspaceAPI } from '../../services/workspaceApi'
 
 // ── Types ─────────────────────────────────────
 interface Member {
