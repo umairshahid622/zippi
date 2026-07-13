@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "../../utils/functions";
-import { AlertIcon } from "../icons";
+import { AlertIcon } from "../icon";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { toggleFocusMode } from "../../store/slices/uiSlice";
 

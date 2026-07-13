@@ -1,4 +1,4 @@
-import type { IconProps } from "../../types/interface";
+import type { IconProps } from "../../../types/interface";
 
 function GoogleIcon({className = "size-5" }:IconProps) {
   return (

@@ -1,5 +1,5 @@
-import { defaultIconSize } from "../../constants/constants";
-import type { IconProps } from "../../types/interface";
+import { defaultIconSize } from "../../../constants/constants";
+import type { IconProps } from "../../../types/interface";
 
 function NeutronIcon({
   className,

@@ -1,6 +1,12 @@
+import { useAppSelector } from "../../../hooks/hooks"
+import { selectWorkspaceList } from "../../../store/slices/workspaceSlice"
+
 const CreateWorkspaceModal = () => {
+  const worspacelist = useAppSelector(selectWorkspaceList)
   return (
-    <div>CreateWorkspaceModal</div>
+    <>
+        <h2>{`Create ${worspacelist.length > 0 ? 'Another' : 'Your first'} workspace`}</h2>
+    </>
   )
 }
 

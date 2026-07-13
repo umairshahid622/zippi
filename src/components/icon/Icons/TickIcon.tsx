@@ -1,10 +1,13 @@
-import type { IconProps } from "../../types/interface";
+import { defaultIconSize } from "../../../constants/constants";
+import type { IconProps } from "../../../types/interface";
 
-
-const ArrowRight = ({size = 14, color = 'var(--color-bubble)'}:IconProps) => {
+const TickIcon = ({
+  color = "var(--color-success)",
+  size = defaultIconSize,
+}: IconProps) => {
   return (
     <svg height={size} width={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g id="SVGRepo_bgCarrier" strokeWidth="5"></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
         strokeLinecap="round"
@@ -13,9 +16,9 @@ const ArrowRight = ({size = 14, color = 'var(--color-bubble)'}:IconProps) => {
       <g id="SVGRepo_iconCarrier">
         {" "}
         <path
-          d="M5 12H19M19 12L13 6M19 12L13 18"
+          d="M4.89163 13.2687L9.16582 17.5427L18.7085 8"
           stroke={color}
-          strokeWidth="2"
+          strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         ></path>{" "}
@@ -24,4 +27,4 @@ const ArrowRight = ({size = 14, color = 'var(--color-bubble)'}:IconProps) => {
   );
 };
 
-export default ArrowRight;
+export default TickIcon;

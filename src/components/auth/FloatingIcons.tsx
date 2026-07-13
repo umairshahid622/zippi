@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { floatingIconVariants } from '../../lib/variants'
-import { MessageIcon, RocketIcon, BubbleIcon, NeutronIcon } from '../icons'
+import { MessageIcon, RocketIcon, BubbleIcon, NeutronIcon } from '../icon'
 import { floatingAnimation } from '../../lib/animations'
 import { memo } from 'react'
 import type { FloatingItem } from '../../types/interface'

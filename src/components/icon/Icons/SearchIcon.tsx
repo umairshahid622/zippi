@@ -1,12 +1,9 @@
-import { smallIconSize } from "../../constants/constants";
-import type { IconProps } from "../../types/interface";
-import { cn } from "../../utils/functions";
+import { defaultIconSize } from "../../../constants/constants";
+import type { IconProps } from "../../../types/interface";
 
-const PlusIcon = ({ size = smallIconSize, color = "currentColor", className }: IconProps) => {
+const SearchIcon = ({ color = 'var(--color-bubble)', size = defaultIconSize }: IconProps) => {
     return (
-        <svg
-            className={cn('fill-current', className)}
-            width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg height={size} width={size}  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
             <g
                 id="SVGRepo_tracerCarrier"
@@ -16,7 +13,7 @@ const PlusIcon = ({ size = smallIconSize, color = "currentColor", className }: I
             <g id="SVGRepo_iconCarrier">
                 {" "}
                 <path
-                    d="M4 12H20M12 4V20"
+                    d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
                     stroke={color}
                     strokeWidth="2"
                     strokeLinecap="round"
@@ -27,4 +24,4 @@ const PlusIcon = ({ size = smallIconSize, color = "currentColor", className }: I
     );
 };
 
-export default PlusIcon;
+export default SearchIcon;

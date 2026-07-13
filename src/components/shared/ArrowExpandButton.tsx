@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
-import { SendIcon } from '../icons'
+import { SendIcon } from '../icon'
 import Loader from './Loader';
 import type { AppArrowExpandButtonProps } from '../../types/interface';
 

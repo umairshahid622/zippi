@@ -1,5 +1,5 @@
 import { projectName } from '../../constants/constants'
-import { MessageIcon } from '../icons'
+import { MessageIcon } from '../icon'
 
 const AppLogo = () => {
     return (

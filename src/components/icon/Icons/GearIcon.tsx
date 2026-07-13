@@ -1,4 +1,5 @@
-import type { IconProps } from "../../types/interface";
+import type { IconProps } from "../../../types/interface";
+
 
 const GearIcon = ({
   className,

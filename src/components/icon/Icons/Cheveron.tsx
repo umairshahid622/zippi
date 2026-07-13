@@ -1,6 +1,6 @@
-import { smallIconSize } from "../../constants/constants";
-import type { IconProps } from "../../types/interface";
-import { cn } from "../../utils/functions";
+import { smallIconSize } from "../../../constants/constants";
+import type { IconProps } from "../../../types/interface";
+import { cn } from "../../../utils/functions";
 
 const Cheveron = ({ size = smallIconSize, color = "currentColor", className }: IconProps) => {
     return (

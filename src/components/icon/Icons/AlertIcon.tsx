@@ -1,4 +1,4 @@
-import type { IconProps } from "../../types/interface";
+import type { IconProps } from "../../../types/interface";
 
 const AlertIcon = ({ color , size = 15 }: IconProps) => {
     return (
