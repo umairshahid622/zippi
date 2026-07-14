@@ -16,7 +16,7 @@ export interface IconProps {
 
 export interface InputProps {
   label?: string;
-  name?:string;
+  name?: string;
   placeholder?: string;
   type?: string;
   value?: string;
@@ -143,3 +143,37 @@ export interface AppDropDownContent {
   name: string;
 }
 
+export interface WorkspaceListItem {
+  id: string;
+  name: string;
+  slug: string;
+  logoUrl: string | null;
+  role: "owner" | "admin" | "member" | "guest";
+  memberCount: number;
+  channelCount: number;
+}
+
+interface Member {
+  id: string;
+  fullName: string | null;
+  avatarUrl: string | null;
+  handle: string | null;
+  isOnline: boolean;
+}
+
+export interface Channel {
+  id: string;
+  name: string | null;
+  description: string | null;
+  isPrivate: boolean;
+  isDm: boolean;
+  isArchived: boolean;
+}
+export interface WorkspaceDetail {
+  id: string;
+  name: string;
+  slug: string;
+  logoUrl: string | null;
+  members: Array<{ role: string; user: Member }>;
+  channels: Channel[];
+}

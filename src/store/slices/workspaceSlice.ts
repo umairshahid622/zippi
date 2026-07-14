@@ -5,43 +5,10 @@ import {
 } from "@reduxjs/toolkit";
 import type { RootState } from "..";
 import { workspaceAPI } from "../../services/workspaceApi";
+import type { Channel, WorkspaceDetail, WorkspaceListItem } from "../../types/interface";
 
 // ── Types ─────────────────────────────────────
-interface Member {
-  id: string;
-  fullName: string | null;
-  avatarUrl: string | null;
-  handle: string | null;
-  isOnline: boolean;
-}
 
-interface Channel {
-  id: string;
-  name: string | null;
-  description: string | null;
-  isPrivate: boolean;
-  isDm: boolean;
-  isArchived: boolean;
-}
-
-interface WorkspaceListItem {
-  id: string;
-  name: string;
-  slug: string;
-  logoUrl: string | null;
-  role: "owner" | "admin" | "member" | "guest";
-  memberCount: number;
-  channelCount: number;
-}
-
-interface WorkspaceDetail {
-  id: string;
-  name: string;
-  slug: string;
-  logoUrl: string | null;
-  members: Array<{ role: string; user: Member }>;
-  channels: Channel[];
-}
 
 interface WorkspaceState {
   // List of all workspaces the user belongs to (for the switcher)

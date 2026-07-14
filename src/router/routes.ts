@@ -58,9 +58,32 @@ const routes: RouteObject[] = [
           createElement(ProtectedRoute, null, createElement(WorkSpace)),
       };
     },
-    children:[
-      
-    ]
+    children: [
+      {
+        index: true,
+        lazy: async () => {
+          const { default: WorkspaceIndex } =
+            await import("../features/workspace/WorkspaceIndex.tsx");
+          return { Component: WorkspaceIndex };
+        },
+      },
+      {
+        path: ":workspaceId",
+        lazy: async () => {
+          const { default: WorkspaceRedirect } =
+            await import("../features/workspace/WorkspaceRedirect.tsx");
+          return { Component: WorkspaceRedirect };
+        },
+      },
+      {        
+        path: ":workspaceId/channel/:channelId",
+        lazy: async () => {
+          const { default: ChannelView } =
+            await import("../features/workspace/ChannelView.tsx");
+          return { Component: ChannelView };
+        },
+      },
+    ],
   },
 
   {

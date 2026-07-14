@@ -41,12 +41,12 @@ export default function WorkspaceRail() {
           <motion.button
             key={ws.id}
             onClick={() => handleSwitch(ws.id)}
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: !isActive ? 1.08: 1.0 }}
+            whileTap={{ scale: !isActive ? 0.95: 1.0 }}
             className={
               cn(
-                "size-11 flex items-center justify-center font-bold text-white border-none relative",
-                isActive ? 'rounded-2xl bg-linear-to-br from-(--color-primary) to-(--color-cyan)' : "rounded-full bg-white/10",
+                "size-11 flex items-center justify-center font-bold text-white relative",
+                isActive ? 'rounded-2xl bg-linear-to-br from-(--color-primary) to-(--color-cyan)' : "rounded-full bg-white/10 border-transparent",
               )
             }
             style={{
@@ -68,7 +68,7 @@ export default function WorkspaceRail() {
             {isActive && (
               <motion.div
                 layoutId="active-workspace-indicator"
-                className='absolute -left-3 w-1 h-6 rounded-sm bg-white'
+                className='absolute -left-3 w-0.5 h-6 rounded-sm bg-white'
               />
             )}
           </motion.button>

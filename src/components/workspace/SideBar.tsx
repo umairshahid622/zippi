@@ -10,11 +10,16 @@ import AppDropDown from "./AppDropDown"
 import NotificationToggle from "./NotificationToggle"
 import ProfileAvatar from "./ProfileAvatar"
 import React from "react"
-import type { AppDropDownContent } from "../../types/interface"
+import type { AppDropDownContent, WorkspaceListItem } from "../../types/interface"
+import { selectWorkspaceList } from "../../store/slices/workspaceSlice"
 
 const SideBar = () => {
-    console.log("Side bar Rendered");
+    const workspaceList: WorkspaceListItem[] = useAppSelector(selectWorkspaceList)
 
+    workspaceList.map((wsl) => {
+        console.log(wsl);
+
+    })
     return (
         <aside className="w-64 h-screen box-border p-0 flex">
             <div className="flex flex-col grow m-2 min-h-0 glass-card backdrop-saturate-100">
@@ -82,7 +87,11 @@ function ProfileSection() {
                     {user?.fullName}
                 </p>
             </div>
-            <GearIcon className="cursor-pointer" />
+            <button
+                title="settings"
+                className="border-none">
+                <GearIcon className="cursor-pointer" />
+            </button>
         </section>
     )
 }
