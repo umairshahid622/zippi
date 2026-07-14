@@ -25,6 +25,7 @@ export const AppInput = forwardRef<HTMLInputElement, InputProps>(
       iconSize = inputIconSize,
       maxLength,
       className,
+      name,
       onChange,
       onFocus,
       onBlur,
@@ -78,6 +79,7 @@ export const AppInput = forwardRef<HTMLInputElement, InputProps>(
 
           {/* Input */}
           <motion.input
+            name={name}
             ref={ref}
             type={type}
             value={value}

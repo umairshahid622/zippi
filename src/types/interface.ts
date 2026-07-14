@@ -16,6 +16,7 @@ export interface IconProps {
 
 export interface InputProps {
   label?: string;
+  name?:string;
   placeholder?: string;
   type?: string;
   value?: string;
