@@ -5,6 +5,7 @@ import {
 } from '@reduxjs/toolkit'
 import type { RootState } from '..'
 import { workspaceAPI } from '../../services/workspaceApi'
+import type { InputStatus } from '../../types/types'
 
 // ── Types ─────────────────────────────────────
 interface Member {
@@ -54,7 +55,7 @@ interface WorkspaceState {
   isLoadingActive:   boolean
 
   // Currently active channel within the workspace
-  activeChannelId:   string | null
+  activeChannelId:   string | null;
 
   error: string | null
 }

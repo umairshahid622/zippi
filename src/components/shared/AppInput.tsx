@@ -47,7 +47,7 @@ export const AppInput = forwardRef<HTMLInputElement, InputProps>(
         {/* Label */}
         {label && (
           <motion.label
-            className="text-label"
+            className="text-label pl-2"
             animate={currentState}
             variants={inputLabelVariants}
           >

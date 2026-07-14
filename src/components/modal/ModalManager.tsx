@@ -2,7 +2,7 @@
 import { useDispatch } from 'react-redux'
 import { motion, AnimatePresence, type Variants } from 'motion/react'
 import CreateWorkspaceModal from './modals/CreateWorkspaceModal'
-import { closeModal, selectActiveModal } from '../../store/slices/uiSlice'
+import { closeModal, selectActiveModal, selectActiveModalHeading } from '../../store/slices/uiSlice'
 import { useAppSelector } from '../../hooks/hooks'
 import { CrossIcon } from '../icon'
 
@@ -30,8 +30,7 @@ const cardVariants: Variants = {
             damping: 20,
             mass: 0.9,
             when: 'beforeChildren',
-            staggerChildren: 0.06,
-            delayChildren: 0.08,
+            staggerChildren: 0.04,
         },
     },
     exit: {
@@ -67,6 +66,7 @@ const glowVariants: Variants = {
 
 export const ModalManager = () => {
     const activeModal = useAppSelector(selectActiveModal)
+    const activeModalHeading = useAppSelector(selectActiveModalHeading)
     const dispatch = useDispatch()
 
     const SpecificModal = activeModal ? MODAL_COMPONENTS[activeModal] : null
@@ -82,7 +82,7 @@ export const ModalManager = () => {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    onClick={() => dispatch(closeModal())}
+                    // onClick={() => dispatch(closeModal())}
                 >
                     <motion.div
                         key="modal-card"
@@ -102,9 +102,10 @@ export const ModalManager = () => {
                             }}
                         />
 
-                        <div className="glass-card p-6 flex flex-col items-center">
-                            <motion.div variants={childVariants} className='flex items-center justify-center-safe w-full'>
-                                <h2 className='grow'>Modal Heading</h2>
+                        <div className="glass-card p-6 flex flex-col gap-6 items-center">
+                            
+                            <motion.div variants={childVariants} className='flex items-center justify-center w-full relative'>
+                                <h2>{activeModalHeading}</h2>
                                 <motion.span
                                     role="button"
                                     tabIndex={0}
@@ -112,7 +113,7 @@ export const ModalManager = () => {
                                     whileHover={{ scale: 1.15, rotate: 90 }}
                                     whileTap={{ scale: 0.85, rotate: 90 }}
                                     transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-                                    className="inline-flex items-center justify-center size-9 rounded-full text-gray-400 hover:text-white hover:bg-white/10 cursor-pointer shrink-0"
+                                    className="absolute right-0 inline-flex items-center justify-center size-9 rounded-full text-gray-400 hover:text-white hover:bg-white/10 cursor-pointer shrink-0"
                                     style={{ transformOrigin: '50% 50%' }}
                                 >
                                     <CrossIcon />

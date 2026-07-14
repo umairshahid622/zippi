@@ -1,8 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../utils/functions";
-import { Cheveron, PlusIcon } from "../icon";
-import HashTagIcon from "../icon/HashTagIcon";
+import { Cheveron, HashTagIcon, PlusIcon } from "../icon";
 import type { AppDropDownProps } from "../../types/interface";
 
 const containerVariants = {

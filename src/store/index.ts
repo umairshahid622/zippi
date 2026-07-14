@@ -48,8 +48,8 @@ const persistConfig = {
   key: "zippi-root",
   version: 1,
   storage,
-  whitelist: ["auth"], // ← only auth survives page refresh
-  blacklist: ["ui"], // ← ui state always resets
+  whitelist: ["auth","ui"],
+  blacklist: [], 
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
