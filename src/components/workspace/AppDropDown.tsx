@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../utils/functions";
 import { Cheveron, HashTagIcon, PlusIcon } from "../icon";
 import type { AppDropDownProps } from "../../types/interface";
+import { useNavigate, useParams } from "react-router";
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -16,8 +17,11 @@ const itemVariants = {
     exit: { opacity: 0, y: "-100%" }
 };
 
-const AppDropDown = ({ title, content, selectedChannel, onSelectChannel }: AppDropDownProps) => {
+const AppDropDown = ({ title, content, selectedChannel, workspaceId }: AppDropDownProps) => {
     const [isOpen, setIsOpen] = React.useState(true);
+    const navigate = useNavigate()
+    const { workspaceId: routeWorkspaceId } = useParams()
+    const resolvedWorkspaceId = workspaceId ?? routeWorkspaceId
 
     if (!content || content.length === 0 || !title) {
         return null;
@@ -39,12 +43,15 @@ const AppDropDown = ({ title, content, selectedChannel, onSelectChannel }: AppDr
                 {isOpen && (
                     <motion.div layout="position" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
                         {content.map((channel) => {
-                            const isSelected = selectedChannel?.id === channel.id;
+                            const isSelected = selectedChannel === channel.id;
                             return (
                                 <motion.div
                                     key={channel.id}
                                     variants={itemVariants}
-                                    onClick={() => onSelectChannel?.(channel)}
+                                    onClick={() => {
+                                        if (!resolvedWorkspaceId) return;
+                                        navigate(`/workspace/${resolvedWorkspaceId}/channel/${channel.id}`)
+                                    }}
                                     className="relative flex items-center gap-2 pl-6 py-1.5 group cursor-pointer"
                                 >
                                     {isSelected && (

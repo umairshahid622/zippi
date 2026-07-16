@@ -133,14 +133,10 @@ export interface Credentials {
 
 export interface AppDropDownProps {
   title?: string;
-  content?: AppDropDownContent[];
-  selectedChannel?: AppDropDownContent;
-  onSelectChannel?: (channel: AppDropDownContent) => void;
-}
-
-export interface AppDropDownContent {
-  id: number;
-  name: string;
+  content?: Channel[];
+  selectedChannel?: string;
+  workspaceId?: string;
+  onSelectChannel?: (channel: Channel) => void;
 }
 
 export interface WorkspaceListItem {
@@ -161,6 +157,25 @@ interface Member {
   isOnline: boolean;
 }
 
+export interface ChannelDisplayInfo {
+  displayName: string;
+  isDm: boolean;
+  avatarUrl: string | null;
+  initial: string;
+  isOnline: boolean;
+  icon: "hash" | "lock" | "dm";
+}
+
+interface ChannelMember {
+  userId: string;
+  user: {
+    id: string;
+    fullName: string | null;
+    avatarUrl: string | null;
+    handle: string | null;
+    isOnline: boolean;
+  };
+}
 export interface Channel {
   id: string;
   name: string | null;
@@ -168,6 +183,7 @@ export interface Channel {
   isPrivate: boolean;
   isDm: boolean;
   isArchived: boolean;
+  members: ChannelMember[];
 }
 export interface WorkspaceDetail {
   id: string;

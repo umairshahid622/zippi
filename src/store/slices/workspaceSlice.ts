@@ -5,10 +5,13 @@ import {
 } from "@reduxjs/toolkit";
 import type { RootState } from "..";
 import { workspaceAPI } from "../../services/workspaceApi";
-import type { Channel, WorkspaceDetail, WorkspaceListItem } from "../../types/interface";
+import type {
+  Channel,
+  WorkspaceDetail,
+  WorkspaceListItem,
+} from "../../types/interface";
 
 // ── Types ─────────────────────────────────────
-
 
 interface WorkspaceState {
   // List of all workspaces the user belongs to (for the switcher)
@@ -40,7 +43,6 @@ const initialState: WorkspaceState = {
 };
 
 // ── Async thunks ──────────────────────────────
-
 // Fetch all workspaces user belongs to (for the switcher)
 export const fetchWorkspaces = createAsyncThunk(
   "workspace/fetchWorkspaces",
@@ -60,7 +62,8 @@ export const fetchWorkspace = createAsyncThunk(
   "workspace/fetchWorkspace",
   async (workspaceId: string, { rejectWithValue }) => {
     try {
-      return await workspaceAPI.getOne(workspaceId);
+      const result = await workspaceAPI.getOne(workspaceId);
+      return { workspace: result.workspace, fromCache: false };
     } catch (err: any) {
       return rejectWithValue(
         err.response?.data?.message ?? "Failed to load workspace",
@@ -129,16 +132,24 @@ const workspaceSlice = createSlice({
       })
       .addCase(fetchWorkspace.fulfilled, (state, action) => {
         state.isLoadingActive = false;
+        state.activeWorkspaceId = action.payload.workspace.id;
         state.activeWorkspace = action.payload.workspace;
 
-        // Auto-select "general" channel if none active yet
-        if (!state.activeChannelId) {
-          const general = action.payload.workspace.channels.find(
+        // if (!action.payload.fromCache) {
+        //   state.workspaceCache[action.payload.workspace.id] = {
+        //     data: action.payload.workspace,
+        //     fetchedAt: Date.now(),
+        //   };
+        // }
+
+        const preferredChannel =
+          action.payload.workspace.channels.find(
             (c: Channel) => c.name === "general",
-          );
-          state.activeChannelId =
-            general?.id ?? action.payload.workspace.channels[0]?.id ?? null;
-        }
+          ) ??
+          action.payload.workspace.channels[0] ??
+          null;
+
+        state.activeChannelId = preferredChannel?.id ?? null;
       })
       .addCase(fetchWorkspace.rejected, (state, action) => {
         state.isLoadingActive = false;
@@ -195,7 +206,7 @@ export const selectIsLoadingActive = (state: RootState) =>
 export const selectActiveChannelId = (state: RootState) =>
   state.workspace.activeChannelId;
 export const selectWorkspaceError = (state: RootState) => state.workspace.error;
-export const selectIsSubmitting = (state: RootState) => state.workspace.isSubmitting;
-
+export const selectIsSubmitting = (state: RootState) =>
+  state.workspace.isSubmitting;
 export const selectHasNoWorkspaces = (state: RootState) =>
   !state.workspace.isLoadingList && state.workspace.list.length === 0;

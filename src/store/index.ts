@@ -13,6 +13,7 @@ import {
 import uiReducer from "./slices/uiSlice";
 import authReducer from "./slices/authSlice";
 import workspaceReducer     from './slices/workspaceSlice'
+import channelReducer     from './slices/channelSlice'
 // import chatReducer          from './slices/chatSlice'
 // import tasksReducer         from './slices/tasksSlice'
 // import notificationsReducer from './slices/notificationsSlice'
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   ui: uiReducer,
   auth: authReducer,
   workspace: workspaceReducer,
+  channel: channelReducer
   //   chat:          chatReducer,
   //   tasks:         tasksReducer,
   //   notifications: notificationsReducer,

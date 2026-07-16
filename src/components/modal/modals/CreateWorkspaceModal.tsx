@@ -60,7 +60,7 @@ const CreateWorkspaceModal = () => {
           }
         }}
       />
-      {error && <span className="text-error">{error}</span>}
+      {error && <span className="text-error text-sm">{error}</span>}      
       <div className="space-y-3">
         <ArrowExpandButton label={"Create Workspace"} type="submit" isLoading={isSubmitting} />
         <div className="flex justify-center">

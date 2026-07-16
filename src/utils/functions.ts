@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { Channel, ChannelDisplayInfo } from "../types/interface";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -37,3 +38,35 @@ export function getAvatarDetails(fullName: string) {
     backgroundColor: backGroundColor,
   };
 }
+
+export const getChannelDisplayInfo = (
+  channel: Channel,
+  currentUserId: string,
+): ChannelDisplayInfo => {
+  if (channel.isDm) {
+    // Find the OTHER person — not myself
+    const otherMember = channel.members.find((m) => m.userId !== currentUserId);
+
+    const name =
+      otherMember?.user.fullName ?? otherMember?.user.handle ?? "Unknown user";
+
+    return {
+      displayName: name,
+      isDm: true,
+      avatarUrl: otherMember?.user.avatarUrl ?? null,
+      initial: name.charAt(0).toUpperCase(),
+      isOnline: otherMember?.user.isOnline ?? false,
+      icon: "dm",
+    };
+  }
+
+  // Regular channel
+  return {
+    displayName: channel.name ?? "unnamed-channel",
+    isDm: false,
+    avatarUrl: null,
+    initial: "",
+    isOnline: false,
+    icon: channel.isPrivate ? "lock" : "hash",
+  };
+};

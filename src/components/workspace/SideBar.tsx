@@ -1,7 +1,5 @@
 import { LayoutGroup, motion } from "motion/react"
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks"
-import { logout, selectAuthLoading } from "../../store/slices/authSlice"
-import AppButton from "../shared/AppButton"
+import { useAppSelector } from "../../hooks/hooks"
 import { AppInput } from "../shared/AppInput"
 import AppLogo from "../shared/AppLogo"
 import { SearchIcon } from "../icon"
@@ -9,9 +7,8 @@ import GearIcon from "../icon/Icons/GearIcon"
 import AppDropDown from "./AppDropDown"
 import NotificationToggle from "./NotificationToggle"
 import ProfileAvatar from "./ProfileAvatar"
-import React from "react"
-import type { AppDropDownContent, WorkspaceListItem } from "../../types/interface"
-import { selectWorkspaceList } from "../../store/slices/workspaceSlice"
+import type { Channel, WorkspaceListItem } from "../../types/interface"
+import { selectActiveChannelId, selectActiveWorkspace, selectWorkspaceList } from "../../store/slices/workspaceSlice"
 
 const SideBar = () => {
     const workspaceList: WorkspaceListItem[] = useAppSelector(selectWorkspaceList)
@@ -22,7 +19,7 @@ const SideBar = () => {
     })
     return (
         <aside className="w-64 h-screen box-border p-0 flex">
-            <div className="flex flex-col grow m-2 min-h-0 glass-card backdrop-saturate-100">
+            <div className="flex flex-col grow ml-2 my-2 min-h-0 glass-card backdrop-saturate-100">
                 <SideBarHeader />
                 <div className="app-divider"></div>
                 <SideBarContent />
@@ -45,11 +42,6 @@ function SideBarHeader() {
 }
 
 function SideBarContent() {
-    const isLoading = useAppSelector(selectAuthLoading)
-    const dispatch = useAppDispatch()
-    const logOut = async () => {
-        await dispatch(logout());
-    }
     return (
         <div className="flex relative grow overflow-hidden ">
             <motion.div layoutScroll className="grow overflow-y-auto scrollbar-none scroll-smooth space-y-3">
@@ -64,14 +56,16 @@ function SideBarContent() {
 }
 
 const SideBarChats = () => {
-    const channels: any = [];
-
+    // const channels: any = [];
     const directMessages: any = [];
-    const [activeId, setActiveId] = React.useState<AppDropDownContent | null>(null);
+    const activeWorkSpace = useAppSelector(selectActiveWorkspace)
+    const channels: Channel[] | undefined = activeWorkSpace?.channels;
+    // const [activeId, setActiveId] = React.useState<Channel | null>(null);
+    const activeChannel = useAppSelector(selectActiveChannelId)
     return (
         <LayoutGroup>
-            <AppDropDown title={"channels"} content={channels} selectedChannel={activeId ?? undefined} onSelectChannel={setActiveId} />
-            <AppDropDown title={"direct messages"} content={directMessages} selectedChannel={activeId ?? undefined} onSelectChannel={setActiveId} />
+            <AppDropDown title={"channels"} content={channels} selectedChannel={activeChannel ?? undefined} workspaceId={activeWorkSpace?.id} />
+            <AppDropDown title={"direct messages"} content={directMessages} selectedChannel={activeChannel ?? undefined} workspaceId={activeWorkSpace?.id} />
         </LayoutGroup>
     )
 }

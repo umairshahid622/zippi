@@ -18,7 +18,7 @@ export default function WorkspaceRail() {
 
   return (
     <aside
-      className="flex flex-col items-center gap-3 py-4 w-16 glass-card backdrop-saturate-100 ml-2 mt-2 mb-2 mr-0"
+      className="flex flex-col items-center gap-3 py-4 w-16 glass-card backdrop-saturate-100 ml-2 my-2 mr-0"
       style={{ background: 'var(--color-dark-navy)' }}
     >
       {/* Add workspace button */}
@@ -41,12 +41,13 @@ export default function WorkspaceRail() {
           <motion.button
             key={ws.id}
             onClick={() => handleSwitch(ws.id)}
-            whileHover={{ scale: !isActive ? 1.08: 1.0 }}
-            whileTap={{ scale: !isActive ? 0.95: 1.0 }}
+            whileHover={{ scale: !isActive ? 1.08 : 1.0 }}
+            whileTap={{ scale: !isActive ? 0.95 : 1.0 }}
+            animate={{ borderRadius: isActive? 16: 100 }}
             className={
               cn(
-                "size-11 flex items-center justify-center font-bold text-white relative",
-                isActive ? 'rounded-2xl bg-linear-to-br from-(--color-primary) to-(--color-cyan)' : "rounded-full bg-white/10 border-transparent",
+                "size-11 flex items-center justify-center font-bold text-white relative border-none",
+                isActive ? 'bg-linear-to-br from-deep-blue to-black-pearl' : "bg-white/10",
               )
             }
             style={{
@@ -68,7 +69,7 @@ export default function WorkspaceRail() {
             {isActive && (
               <motion.div
                 layoutId="active-workspace-indicator"
-                className='absolute -left-3 w-0.5 h-6 rounded-sm bg-white'
+                className='absolute left-[-0.54rem] w-[0.15rem] h-7 rounded-r-2xl bg-white/50'
               />
             )}
           </motion.button>

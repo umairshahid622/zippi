@@ -23,10 +23,9 @@ const ChannelView = () => {
     if (!channel) return null
     return (
         <div className="flex flex-col h-full">
-            <div className="p-4 border-b">
+            <div className="p-4 glass-card m-2 h-full">
                 <h2># {channel.name}</h2>
             </div>
-            {/* Message list + input go here — next thing we build */}
         </div>
     )
 }

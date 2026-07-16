@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "../../utils/functions";
 import { AlertIcon } from "../icon";
