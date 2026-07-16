@@ -11,7 +11,7 @@ export const AnimatedBackground = memo(() => {
     const container = starsRef.current
     if (!container) return
 
-    const stars: Star[] = Array.from({ length: 60 }, (_, i) => {
+    const stars: Star[] = Array.from({ length: 50 }, (_, i) => {
       const size = Math.random() * 2 + 2
       return {
         id: i,

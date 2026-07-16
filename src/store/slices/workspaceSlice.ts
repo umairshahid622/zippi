@@ -135,13 +135,6 @@ const workspaceSlice = createSlice({
         state.activeWorkspaceId = action.payload.workspace.id;
         state.activeWorkspace = action.payload.workspace;
 
-        // if (!action.payload.fromCache) {
-        //   state.workspaceCache[action.payload.workspace.id] = {
-        //     data: action.payload.workspace,
-        //     fetchedAt: Date.now(),
-        //   };
-        // }
-
         const preferredChannel =
           action.payload.workspace.channels.find(
             (c: Channel) => c.name === "general",

@@ -62,7 +62,7 @@ export const fetchChannels = createAsyncThunk(
   'channel/fetchChannels',
   async (workspaceId: string, { rejectWithValue }) => {
     try {
-      return await channelAPI.getAll(workspaceId)   // { channels: [...] }
+      return await channelAPI.getAll(workspaceId)
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message ?? 'Failed to load channels')
     }

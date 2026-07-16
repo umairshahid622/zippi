@@ -5,14 +5,13 @@ export const API_ENDPOINTS = {
     VERIFY_OTP: "auth/verify",
 
     //O AUTH
-    GOOGLE_CALLBACK:"auth/google/callback",
-    GITHUB_CALLBACK:"auth/github/callback",
+    GOOGLE_CALLBACK: "auth/google/callback",
+    GITHUB_CALLBACK: "auth/github/callback",
 
     //OTHERS
-    REFRESH_TOKEN:"auth/refresh",
+    REFRESH_TOKEN: "auth/refresh",
     LOGOUT: "auth/logout",
-  },
-  WORK_SPACE: {
     UPDATE_PROFILE: "auth/profile",
   },
+  WORK_SPACE: {},
 };

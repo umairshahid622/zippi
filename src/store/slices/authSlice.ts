@@ -86,7 +86,7 @@ export const verifyOTP = createAsyncThunk(
 );
 
 export const updateProfile = createAsyncThunk(
-  API_ENDPOINTS.WORK_SPACE.UPDATE_PROFILE,
+  API_ENDPOINTS.AUTH.UPDATE_PROFILE,
   async (
     payload: { fullName: string; avatarUrl?: string },
     { rejectWithValue },

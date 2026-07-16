@@ -5,6 +5,7 @@ import CreateWorkspaceModal from './modals/CreateWorkspaceModal'
 import { closeModal, selectActiveModal, selectActiveModalHeading } from '../../store/slices/uiSlice'
 import { useAppSelector } from '../../hooks/hooks'
 import { CrossIcon } from '../icon'
+import { clearWorkspaceError } from '../../store/slices/workspaceSlice'
 
 const MODAL_COMPONENTS: { [key: string]: React.ComponentType<any> } = {
     CREATE_WORKSPACE_MODAL: CreateWorkspaceModal,
@@ -70,6 +71,10 @@ export const ModalManager = () => {
     const dispatch = useDispatch()
 
     const SpecificModal = activeModal ? MODAL_COMPONENTS[activeModal] : null
+    const handleClose = () => {
+        dispatch(closeModal())
+        dispatch(clearWorkspaceError())
+    }
 
     return (
         <AnimatePresence>
@@ -82,7 +87,7 @@ export const ModalManager = () => {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    // onClick={() => dispatch(closeModal())}
+                // onClick={() => dispatch(closeModal())}
                 >
                     <motion.div
                         key="modal-card"
@@ -103,13 +108,13 @@ export const ModalManager = () => {
                         />
 
                         <div className="glass-card p-6 flex flex-col gap-6 items-center">
-                            
+
                             <motion.div variants={childVariants} className='flex items-center justify-center w-full relative'>
                                 <h2>{activeModalHeading}</h2>
                                 <motion.span
                                     role="button"
                                     tabIndex={0}
-                                    onClick={() => dispatch(closeModal())}
+                                    onClick={handleClose}
                                     whileHover={{ scale: 1.15, rotate: 90 }}
                                     whileTap={{ scale: 0.85, rotate: 90 }}
                                     transition={{ type: 'spring', stiffness: 500, damping: 20 }}
@@ -124,8 +129,8 @@ export const ModalManager = () => {
                             </motion.div>
                         </div>
                     </motion.div>
-                </motion.div>
+                </motion.div >
             )}
-        </AnimatePresence>
+        </AnimatePresence >
     )
 }

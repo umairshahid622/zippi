@@ -7,8 +7,10 @@ import GearIcon from "../icon/Icons/GearIcon"
 import AppDropDown from "./AppDropDown"
 import NotificationToggle from "./NotificationToggle"
 import ProfileAvatar from "./ProfileAvatar"
-import type { Channel, WorkspaceListItem } from "../../types/interface"
+import type { WorkspaceListItem } from "../../types/interface"
 import { selectActiveChannelId, selectActiveWorkspace, selectWorkspaceList } from "../../store/slices/workspaceSlice"
+import { selectChannelsForWorkspace } from "../../store/slices/channelSlice"
+import { useParams } from "react-router"
 
 const SideBar = () => {
     const workspaceList: WorkspaceListItem[] = useAppSelector(selectWorkspaceList)
@@ -56,16 +58,17 @@ function SideBarContent() {
 }
 
 const SideBarChats = () => {
-    // const channels: any = [];
-    const directMessages: any = [];
-    const activeWorkSpace = useAppSelector(selectActiveWorkspace)
-    const channels: Channel[] | undefined = activeWorkSpace?.channels;
-    // const [activeId, setActiveId] = React.useState<Channel | null>(null);
+    const { workspaceId } = useParams()
+    const activeWorkspace = useAppSelector(selectActiveWorkspace)
+    const allChannels = useAppSelector(selectChannelsForWorkspace(workspaceId ?? null))
     const activeChannel = useAppSelector(selectActiveChannelId)
+
+    const channels = allChannels.filter((c) => !c.isDm)
+    const directMessages = allChannels.filter((c) => c.isDm)
     return (
         <LayoutGroup>
-            <AppDropDown title={"channels"} content={channels} selectedChannel={activeChannel ?? undefined} workspaceId={activeWorkSpace?.id} />
-            <AppDropDown title={"direct messages"} content={directMessages} selectedChannel={activeChannel ?? undefined} workspaceId={activeWorkSpace?.id} />
+            <AppDropDown title={"channels"} content={channels} selectedChannel={activeChannel ?? undefined} workspaceId={activeWorkspace?.id} />
+            <AppDropDown title={"direct messages"} content={directMessages} selectedChannel={activeChannel ?? undefined} workspaceId={activeWorkspace?.id} />
         </LayoutGroup>
     )
 }

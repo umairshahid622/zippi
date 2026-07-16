@@ -1,41 +1,23 @@
-import { useEffect } from "react"
+
 import { Navigate, useParams } from "react-router"
-import { fetchWorkspace, selectActiveWorkspace, selectIsLoadingActive } from "../../store/slices/workspaceSlice"
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks"
+import { useAppSelector } from "../../hooks/hooks"
 import Loader from "../../components/shared/Loader"
-import type { WorkspaceDetail } from "../../types/interface"
+import { selectChannelsForWorkspace, selectChannelsLoading } from "../../store/slices/channelSlice"
 
 const WorkspaceRedirect = () => {
     const { workspaceId } = useParams()
-    const dispatch = useAppDispatch()
-    const activeWorkspace: WorkspaceDetail | null = useAppSelector(selectActiveWorkspace)
-    const isLoadingActive = useAppSelector(selectIsLoadingActive)
-    useEffect(() => {
-        console.log("Fetch WorkSpace Called");
+    const channels = useAppSelector(selectChannelsForWorkspace(workspaceId ?? null))
+    const isLoading = useAppSelector(selectChannelsLoading)
 
-        if (workspaceId) dispatch(fetchWorkspace(workspaceId))
-    }, [workspaceId, dispatch])
-
-    if (isLoadingActive || !activeWorkspace || activeWorkspace.id !== workspaceId) {
-        return <div className="flex items-center justify-center h-screen"><Loader variant="dots" size="lg" /> </div>
+    if (isLoading && channels.length === 0) {
+        return <Loader variant="spinner" size="lg" />
     }
 
-    const preferredChannel =
-        activeWorkspace.channels.find(c => c.name === 'general') ??
-        activeWorkspace.channels[0]
+    const general = channels.find(c => c.name === 'general') ?? channels[0]
 
-    if (!preferredChannel) {
-        return <div className="flex items-center justify-center">
-            <h3>No channels in this workspace yet.</h3>
-        </div>
-    }
+    if (!general) return <div>No channels in this workspace yet.</div>
 
-    return (
-        <Navigate
-            to={`/workspace/${workspaceId}/channel/${preferredChannel.id}`}
-            replace
-        />
-    )
+    return <Navigate to={`/workspace/${workspaceId}/channel/${general.id}`} replace />
 }
 
 export default WorkspaceRedirect

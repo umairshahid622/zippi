@@ -41,7 +41,7 @@ const AppDropDown = ({ title, content, selectedChannel, workspaceId }: AppDropDo
 
             <AnimatePresence initial={true} mode="popLayout">
                 {isOpen && (
-                    <motion.div layout="position" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
+                    <motion.div className="overflow-hidden" layout="position" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
                         {content.map((channel) => {
                             const isSelected = selectedChannel === channel.id;
                             return (

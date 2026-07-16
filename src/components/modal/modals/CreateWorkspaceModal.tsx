@@ -38,6 +38,7 @@ const CreateWorkspaceModal = () => {
       return
     }
     setInputStatus('focus')
+
     const result = await dispatch(createWorkspace(workspaceName))
 
     if (createWorkspace.fulfilled.match(result)) {
@@ -46,7 +47,7 @@ const CreateWorkspaceModal = () => {
   }
 
   return (
-    <form className="space-y-6" onSubmit={handleCreateWorkspace}>
+    <form className="space-y-3" onSubmit={handleCreateWorkspace}>
       <AppInput
         name="workspaceName"
         placeholder="Eg. UI/UX workspace"
@@ -60,13 +61,12 @@ const CreateWorkspaceModal = () => {
           }
         }}
       />
-      {error && <span className="text-error text-sm">{error}</span>}      
-      <div className="space-y-3">
-        <ArrowExpandButton label={"Create Workspace"} type="submit" isLoading={isSubmitting} />
-        <div className="flex justify-center">
-          <AppTextButton label={"Cancel"} iconDirection="left" type="reset" onCallBack={() => dispatch(closeModal())} />
-        </div>
+      {error && <span className="text-error text-sm block">{error}</span>}
+      <ArrowExpandButton label={"Create Workspace"} type="submit" isLoading={isSubmitting} />
+      <div className="flex justify-center">
+        <AppTextButton label={"Cancel"} iconDirection="left" type="reset" onCallBack={() => dispatch(closeModal())} />
       </div>
+
     </form>
   )
 }

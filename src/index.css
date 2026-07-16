@@ -33,6 +33,7 @@
   --color-purple-primary: #7b5ea7;
   --color-error: #ef4444;
   --color-black-pearl: #071020;
+  --color-text-muted:rgba(255, 255, 255, 0.5);
   --color-success: #2ddc8a;
   --color-border-color: rgba(255, 255, 255, 0.25);
 
@@ -55,6 +56,12 @@
     to right,
     var(--color-blue-primary),
     var(--color-purple-primary)
+  );
+
+  --background-image-gradient-dark: linear-gradient(
+    to right,
+    var(--color-deep-blue),
+    var(--color-dark-navy)
   );
 
   /* border radius */
