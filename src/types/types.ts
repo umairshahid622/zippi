@@ -8,4 +8,4 @@ export type AuthLoadingProvider = "google" | "github" | "magic-link" | null;
 
 
 
-export type ModalType = "CREATE_WORKSPACE_MODAL" | null;
+export type ModalType = "CREATE_WORKSPACE_MODAL" | "CREATE_CHANNEL_MODAL" | null;

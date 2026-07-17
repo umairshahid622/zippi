@@ -40,22 +40,22 @@ export interface LoaderProps {
   className?: string;
 }
 
-interface ButtonProps {
+export interface ButtonProps {
   label: string;
   type?: ButtonType;
   isLoading?: boolean;
   isDisabled?: boolean;
   onCallBack?: () => void;
+  iconDirection?: "left" | "right";
 }
 
 export interface AppButtonProps extends ButtonProps {
   icon?: JSX.Element;
 }
 
-export interface AppArrowExpandButtonProps extends ButtonProps {}
-
-export interface TextButtonProps extends ButtonProps {
-  iconDirection?: "left" | "right";
+export interface AppArrowExpandButtonProps extends ButtonProps {
+  color?: "btn-secondary" | "btn-primary";
+  icon?: JSX.Element;
 }
 
 export interface Star {
@@ -137,6 +137,7 @@ export interface AppDropDownProps {
   selectedChannel?: string;
   workspaceId?: string;
   onSelectChannel?: (channel: Channel) => void;
+  onAddCallback?: () => void;
 }
 
 export interface WorkspaceListItem {

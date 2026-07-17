@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../utils/functions";
 import { Cheveron, HashTagIcon, PlusIcon } from "../icon";
@@ -17,7 +17,7 @@ const itemVariants = {
     exit: { opacity: 0, y: "-100%" }
 };
 
-const AppDropDown = ({ title, content, selectedChannel, workspaceId }: AppDropDownProps) => {
+const AppDropDown = memo(({ title, content, selectedChannel, workspaceId, onAddCallback }: AppDropDownProps) => {
     const [isOpen, setIsOpen] = React.useState(true);
     const navigate = useNavigate()
     const { workspaceId: routeWorkspaceId } = useParams()
@@ -36,7 +36,9 @@ const AppDropDown = ({ title, content, selectedChannel, workspaceId }: AppDropDo
                     </motion.div>
                     <h4 className="uppercase font-semibold text-muted">{title}</h4>
                 </div>
-                <PlusIcon className="text-muted" />
+                <div className="cursor-pointer" onClick={onAddCallback}>
+                    <PlusIcon className="text-muted" />
+                </div>
             </div>
 
             <AnimatePresence initial={true} mode="popLayout">
@@ -74,6 +76,7 @@ const AppDropDown = ({ title, content, selectedChannel, workspaceId }: AppDropDo
             </AnimatePresence>
         </motion.div>
     );
-};
+});
 
+AppDropDown.displayName = 'AppDropDown'
 export default AppDropDown;

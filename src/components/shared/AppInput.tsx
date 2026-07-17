@@ -101,7 +101,7 @@ export const AppInput = forwardRef<HTMLInputElement, InputProps>(
             className={
               cn(
                 'w-full rounded-(--border-radius) app-border py-3 pr-4 text-(--text-color) font-(--weight-bold) font-heading outline-none placeholder:text-muted cursor-auto text-sm caret-(--text-color)',
-                icon ? 'pl-11' : 'pl-4',
+                icon ? 'pl-9' : 'pl-4',
                 className
               )
             }

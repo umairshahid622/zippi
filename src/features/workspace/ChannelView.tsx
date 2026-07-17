@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks"
 import { useParams } from "react-router"
 import { selectChannelsForWorkspace } from "../../store/slices/channelSlice"
 import { AppInput } from "../../components/shared/AppInput"
-import { MessageIcon } from "../../components/icon"
+import { HashTagIcon, MessageIcon } from "../../components/icon"
 
 const ChannelView = () => {
     const { workspaceId, channelId } = useParams()
@@ -27,8 +27,8 @@ const ChannelView = () => {
                         <MessageIcon color='var(--color-text-muted)' className='size-6' />
                     </div>
                     <div >
-                        <h2># {channel.name}</h2>
-                        <h2>{channel.description}</h2>
+                        <div className="flex items-center gap-1"><HashTagIcon className="text-white" size={18}/> <h2 className="inline-flex">{channel.name}</h2></div>
+                        <p className="text-muted">{channel.description}</p>
                     </div>
 
                 </div>

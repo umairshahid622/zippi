@@ -47,10 +47,10 @@ const CreateWorkspaceModal = () => {
   }
 
   return (
-    <form className="space-y-3" onSubmit={handleCreateWorkspace}>
+    <form className="space-y-4" onSubmit={handleCreateWorkspace}>
       <AppInput
         name="workspaceName"
-        placeholder="Eg. UI/UX workspace"
+        placeholder="New-Workspace"
         label="Workspace Name"
         message={inputMessage}
         status={inputStatus}

@@ -1,5 +1,5 @@
 import { LayoutGroup, motion } from "motion/react"
-import { useAppSelector } from "../../hooks/hooks"
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks"
 import { AppInput } from "../shared/AppInput"
 import AppLogo from "../shared/AppLogo"
 import { SearchIcon } from "../icon"
@@ -11,6 +11,8 @@ import type { WorkspaceListItem } from "../../types/interface"
 import { selectActiveChannelId, selectActiveWorkspace, selectWorkspaceList } from "../../store/slices/workspaceSlice"
 import { selectChannelsForWorkspace } from "../../store/slices/channelSlice"
 import { useParams } from "react-router"
+import { useCallback, useMemo } from "react"
+import { openModal } from "../../store/slices/uiSlice"
 
 const SideBar = () => {
     const workspaceList: WorkspaceListItem[] = useAppSelector(selectWorkspaceList)
@@ -62,12 +64,25 @@ const SideBarChats = () => {
     const activeWorkspace = useAppSelector(selectActiveWorkspace)
     const allChannels = useAppSelector(selectChannelsForWorkspace(workspaceId ?? null))
     const activeChannel = useAppSelector(selectActiveChannelId)
+    const dispatch = useAppDispatch()
 
-    const channels = allChannels.filter((c) => !c.isDm)
-    const directMessages = allChannels.filter((c) => c.isDm)
+    const channels = useMemo(
+        () => allChannels.filter((c) => !c.isDm),
+        [allChannels]
+    )
+    const directMessages = useMemo(
+        () => allChannels.filter((c) => c.isDm),
+        [allChannels]
+    )
+
+    const onAddCallBack = useCallback(() => {
+        dispatch(openModal("CREATE_CHANNEL_MODAL"))
+    }, [dispatch])
+
+
     return (
         <LayoutGroup>
-            <AppDropDown title={"channels"} content={channels} selectedChannel={activeChannel ?? undefined} workspaceId={activeWorkspace?.id} />
+            <AppDropDown title={"channels"} content={channels} selectedChannel={activeChannel ?? undefined} workspaceId={activeWorkspace?.id} onAddCallback={onAddCallBack} />
             <AppDropDown title={"direct messages"} content={directMessages} selectedChannel={activeChannel ?? undefined} workspaceId={activeWorkspace?.id} />
         </LayoutGroup>
     )
@@ -92,5 +107,6 @@ function ProfileSection() {
         </section>
     )
 }
+SideBar.displayName = 'SideBar'
 
 export default SideBar;

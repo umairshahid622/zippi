@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from "motion/react"
 import { useState } from "react"
-import type { TextButtonProps } from "../../types/interface"
+import type { ButtonProps } from "../../types/interface"
 
-const AppTextButton = ({ label, onCallBack, iconDirection = "right", isDisabled }: TextButtonProps) => {
+const AppTextButton = ({ label, onCallBack, iconDirection = "right", isDisabled }: ButtonProps) => {
     const [hovered, setHovered] = useState(false)
     return (
         <motion.button

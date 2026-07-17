@@ -6,9 +6,11 @@ import { closeModal, selectActiveModal, selectActiveModalHeading } from '../../s
 import { useAppSelector } from '../../hooks/hooks'
 import { CrossIcon } from '../icon'
 import { clearWorkspaceError } from '../../store/slices/workspaceSlice'
+import CreateChannelModal from './modals/CreateChannelModal'
 
 const MODAL_COMPONENTS: { [key: string]: React.ComponentType<any> } = {
     CREATE_WORKSPACE_MODAL: CreateWorkspaceModal,
+    CREATE_CHANNEL_MODAL: CreateChannelModal
 }
 
 const cardVariants: Variants = {
@@ -91,7 +93,7 @@ export const ModalManager = () => {
                 >
                     <motion.div
                         key="modal-card"
-                        className="relative w-full max-w-2xl"
+                        className="relative w-full max-w-xl"
                         variants={cardVariants}
                         initial="hidden"
                         animate="visible"
@@ -118,7 +120,7 @@ export const ModalManager = () => {
                                     whileHover={{ scale: 1.15, rotate: 90 }}
                                     whileTap={{ scale: 0.85, rotate: 90 }}
                                     transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-                                    className="absolute right-0 inline-flex items-center justify-center size-9 rounded-full text-gray-400 hover:text-white hover:bg-white/10 cursor-pointer shrink-0"
+                                    className="absolute right-0 inline-flex items-center justify-center size-8 rounded-full text-gray-400 hover:text-white hover:bg-white/10 cursor-pointer shrink-0"
                                     style={{ transformOrigin: '50% 50%' }}
                                 >
                                     <CrossIcon />
