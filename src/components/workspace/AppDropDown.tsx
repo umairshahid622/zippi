@@ -32,12 +32,12 @@ const AppDropDown = memo(({ title, content, selectedChannel, workspaceId, onAddC
             <div className="flex items-center justify-between gap-2 px-3 py-1">
                 <div onClick={() => setIsOpen(!isOpen)} className="flex items-center gap-2 cursor-pointer w-full">
                     <motion.div animate={{ rotate: isOpen ? 180 : 0 }}>
-                        <Cheveron className="text-muted" />
+                        <Cheveron className="text-(--text-body-color)" />
                     </motion.div>
-                    <h4 className="uppercase font-semibold text-muted">{title}</h4>
+                    <h4 className="uppercase font-semibold text-(--text-body-color)">{title}</h4>
                 </div>
                 <div className="cursor-pointer" onClick={onAddCallback}>
-                    <PlusIcon className="text-muted" />
+                    <PlusIcon className="text-(--text-body-color)" />
                 </div>
             </div>
 

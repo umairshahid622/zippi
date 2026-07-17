@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks"
 import { closeModal, setActiveModalHeading } from "../../../store/slices/uiSlice"
 import { createWorkspace, selectHasNoWorkspaces, selectIsSubmitting, selectWorkspaceError } from "../../../store/slices/workspaceSlice"
@@ -46,6 +46,10 @@ const CreateWorkspaceModal = () => {
     }
   }
 
+  const handleSubmit = useCallback(() => {
+    dispatch(closeModal())
+  }, [dispatch])
+
   return (
     <form className="space-y-4" onSubmit={handleCreateWorkspace}>
       <AppInput
@@ -64,7 +68,7 @@ const CreateWorkspaceModal = () => {
       {error && <span className="text-error text-sm block">{error}</span>}
       <ArrowExpandButton label={"Create Workspace"} type="submit" isLoading={isSubmitting} />
       <div className="flex justify-center">
-        <AppTextButton label={"Cancel"} iconDirection="left" type="reset" onCallBack={() => dispatch(closeModal())} />
+        <AppTextButton label={"Cancel"} iconDirection="left" type="reset" onCallBack={handleSubmit} />
       </div>
 
     </form>

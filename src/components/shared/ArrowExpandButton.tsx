@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { SendIcon } from '../icon'
 import Loader from './Loader';
 import type { AppArrowExpandButtonProps } from '../../types/interface';
@@ -7,7 +7,7 @@ import { cn } from '../../utils/functions';
 
 
 
-function ArrowExpandButton({ label, type, isLoading = false, isDisabled = false, onCallBack, icon = <SendIcon />, iconDirection = "right", color = "btn-primary" }: AppArrowExpandButtonProps) {
+const ArrowExpandButton = memo(({ label, type, isLoading = false, isDisabled = false, onCallBack, icon = <SendIcon className='size-4' />, iconDirection = "right", color = "btn-primary" }: AppArrowExpandButtonProps) => {
     const [hovered, setHovered] = useState(false)
     return (
         <motion.button
@@ -16,16 +16,12 @@ function ArrowExpandButton({ label, type, isLoading = false, isDisabled = false,
             onClick={isLoading || isDisabled ? undefined : onCallBack}
             type={type ?? 'button'}
             className={cn(
-                'inline-flex relative items-center justify-center w-full overflow-hidden border-none whitespace-nowrap h-12 p-1  ring-purple-primary',
-                color
+                'inline-flex relative items-center justify-center w-full overflow-hidden border-none whitespace-nowrap h-12 p-1 ring-purple-primary',
+                isLoading || isDisabled && "cursor-not-allowed opacity-85",
+                color,
+                isLoading && color === "btn-primary" && "shadow-[0_6px_20px_rgba(59,158,255,0.35)]",
+                isLoading && color !== "btn-primary" && "shadow-[0_4px_14px_rgba(59,158,255,0.2)]"
             )}
-            style={{
-                boxShadow: isLoading
-                    ? '0 4px 14px rgba(59, 158, 255, 0.2)'
-                        ? color === "btn-primary" && '0 6px 20px rgba(59, 158, 255, 0.35)',
-                cursor: isLoading || isDisabled ? 'not-allowed' : 'pointer',
-                opacity: isLoading || isDisabled ? 0.85 : 1,
-            }}
             disabled={isLoading || isDisabled}
         >
             <AnimatePresence mode='wait'>
@@ -101,6 +97,6 @@ function ArrowExpandButton({ label, type, isLoading = false, isDisabled = false,
             </AnimatePresence>
         </motion.button>
     )
-}
+})
 
 export default ArrowExpandButton

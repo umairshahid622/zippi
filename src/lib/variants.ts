@@ -424,7 +424,7 @@ export const inputVariants: Variants = {
 };
 
 export const inputIconVariants: Variants = {
-  idle: { scale: 1, opacity: 0.45, color: "var(--text-color)" },
+  idle: { scale: 1, color: "var(--text-body-color)" },
   focus: {
     color: "var(--color-bubble)",
     transition: { ...springs.bubbly },
@@ -436,7 +436,7 @@ export const inputIconVariants: Variants = {
 
 export const inputLabelVariants: Variants = {
   idle: {
-    color: "var(--text-color)",
+    color: "var(--text-heading-color)",
   },
   focus: {
     color: "var(--color-bubble)",
@@ -602,5 +602,22 @@ export const authItemVariants: Variants = {
     opacity: 0,
     y: -8,
     transition: { duration: 0.15 },
+  },
+};
+
+export const switchVariants: Variants = {
+  rest: {
+    boxShadow: "0 0 0 0px rgba(59, 158, 255, 0)",
+    
+  },
+  onHover: {
+    borderColor: "var(--border-color)",
+    boxShadow: "0 0 0 4px var(--color-box-shadow-bubble)",
+    transition: { duration: 0.2 },
+  },
+  isEnabled: {
+    borderColor: "var(--color-bubble)",
+    boxShadow: "0 0 0 4px var(--color-box-shadow-bubble)",
+    transition: { ...springs.soft },
   },
 };

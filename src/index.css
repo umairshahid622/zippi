@@ -33,7 +33,7 @@
   --color-purple-primary: #7b5ea7;
   --color-error: #ef4444;
   --color-black-pearl: #071020;
-  --color-text-muted: rgba(255, 255, 255, 0.5);
+  --color-text-muted: rgba(255, 255, 255, 0.7);
   --color-success: #2ddc8a;
   --color-border-color: rgba(255, 255, 255, 0.25);
 
@@ -124,11 +124,11 @@
 @layer base {
   :root {
     --background-color: var(--color-dark-navy);
-    --text-color: var(--color-white);
+    --text-heading-color: var(--color-white);
+    --text-body-color: var(--color-text-muted);
     --border-color: var(--color-border-color);
   }
 
-  /* style html elements here */
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -141,35 +141,33 @@
   h3,
   h4 {
     font-family: var(--font-heading);
-    font-weight: var(--weight-bold); /* 700 — Quicksand's max */
+    font-weight: var(--weight-bold);
     line-height: var(--leading-tight);
     letter-spacing: var(--tracking-tight);
-    color: var(--text-color);
+    color: var(--text-heading-color);
   }
 
   h1 {
-    font-size: var(--text-h1); /* 24px */
+    font-size: var(--text-h1);
   }
   h2 {
-    font-size: var(--text-h2); /* 18px */
+    font-size: var(--text-h2);
   }
   h3 {
     font-size: var(--text-h3);
   }
   h4 {
-    font-size: var(--text-h4); /* 13px */
-    font-weight: var(--weight-semibold); /* 600 for small headings */
+    font-size: var(--text-h4);
+    font-weight: var(--weight-semibold);
   }
 
   p,
   pre {
     font-family: var(--font-body);
-    font-size: var(--text-body); /* 14px */
-    font-weight: var(
-      --weight-medium
-    ); /* 500 — Inter 500 reads better on dark bg */
-    line-height: var(--leading-normal); /* 1.6 */
-    color: var(--text-color);
+    font-size: var(--text-body);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-normal);
+    color: var(--text-body-color);
   }
 
   a:hover {
@@ -180,130 +178,34 @@
   button {
     cursor: pointer;
     font-family: var(--font-body);
-    font-size: var(--text-body); /* 14px */
+    font-size: var(--text-body);
     font-weight: var(--weight-bold);
     border-radius: var(--border-radius);
-    color: var(--text-color);
+    color: var(--text-heading-color);
     border: 2px solid var(--border-color);
   }
 
   input:-webkit-autofill,
   textarea:-webkit-autofill,
   select:-webkit-autofill {
-    /* Stops the browser color from ever flashing or turning solid */
     transition: background-color 5000s ease-in-out 0s;
 
-    /* Sets your desired text color over the transparent background */
-    -webkit-text-fill-color: var(--text-color) !important;
+    -webkit-text-fill-color: var(--text-heading-color) !important;
     font-family: var(--font-heading);
     font-weight: var(--weight-medium);
   }
+}
 
-  /* Button labels */
-  .text-btn {
-    font-family: var(--font-heading); /* Quicksand on buttons */
-    font-size: var(--text-btn); /* 14px */
-    font-weight: var(--weight-bold); /* 700 */
-    line-height: 1;
-    letter-spacing: 0.1px;
-  }
-  /* Timestamps, hints */
-  .text-caption {
-    font-family: var(--font-body);
-    font-weight: var(--font-weight-medium);
-    line-height: var(--leading-snug);
-    color: var(--text-color);
-    opacity: 35%;
-  }
-
-  /* Sidebar section labels — CHANNELS, DIRECT etc */
-  .text-label {
-    @apply uppercase leading-snug;
-    font-family: var(--font-heading);
-    font-weight: var(--weight-bold);
-    letter-spacing: var(--tracking-wide);
-  }
-
-  /* Message text */
-  .text-message {
-    @apply text-(length:--text-body) font-medium leading-normal opacity-[0.88];
-    font-family: var(--font-body);
-    color: var(--text-color);
-  }
-  /* Muted / secondary text */
-  .text-muted {
-    @apply opacity-70;
-    color: var(--text-color);
-  }
-
+@layer components {
   .btn-primary {
-    background: linear-gradient(135deg, #3b9eff 0%, #00d4e8 100%);
-    box-shadow: 0 4px 14px rgba(59, 158, 255, 0.35);
+    background: linear-gradient(135deg, rgba(59, 158, 255, 0.75) 0%, rgba(0, 212, 232, 0.75) 100%);
+    box-shadow: 0 4px 12px rgba(59, 158, 255, 0.3);
   }
 
   .btn-secondary {
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.12);
   }
-}
-
-@layer components {
-  /* Reusable primary component */
-  /* .glass-card {
-    padding: 2rem;
-    border: 2px solid var(--border-color);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(24px);
-    border-radius: var(--border-radius);
-    -webkit-backdrop-filter: blur(24px);
-  } */
-
-  /* .glass-card {
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.5),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.1),
-      inset 0 0 0px 0px rgba(255, 255, 255, 0);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .glass-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.1),
-      transparent
-    );
-  }
-
-  .glass-card::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1px;
-    height: 100%;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.25),
-      transparent,
-      rgba(255, 255, 255, 0.3)
-    );
-  } */
 
   .glass-card {
     background: rgba(255, 255, 255, 0.05);
@@ -316,39 +218,6 @@
       0 8px 32px rgba(0, 0, 0, 0.3);
   }
 
-  /* .liquid-glass-card {
-    position: relative;
-    border-radius: 28px;
-    isolation: isolate;
-    box-shadow: 0px 0px 21px -8px rgba(255, 255, 255, 0.3);
-  }
-
-  .liquid-glass-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    border-radius: 28px;
-    box-shadow: inset 0 0 6px 0px rgba(255, 255, 255, 0.5);
-    background-color: rgba(255, 255, 255, 0.01);
-    pointer-events: none;
-  }
-
-
-  .liquid-glass-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: 28px;
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
-    filter: url(#glass-distortion);
-    -webkit-filter: url(#glass-distortion);
-    isolation: isolate;
-    pointer-events: none;
-  } */
-
   .blob {
     position: absolute;
     border-radius: 50%;
@@ -359,6 +228,38 @@
     border-top-width: 1px;
     border-top-style: solid;
     border-top-color: var(--border-color);
+  }
+
+  .text-btn {
+    font-family: var(--font-heading);
+    font-size: var(--text-btn);
+    font-weight: var(--weight-bold);
+    line-height: 1;
+    letter-spacing: 0.1px;
+  }
+  .text-caption {
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--leading-snug);
+    color: var(--text-body-color);
+  }
+
+  
+  .text-label {
+    @apply uppercase leading-snug;
+    font-family: var(--font-heading);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-heading-color);
+  }
+
+  .text-message {
+    @apply text-(length:--text-body) font-medium leading-normal opacity-[0.88];
+    font-family: var(--font-body);
+    color: var(--text-body-color);
+  }
+  .text-muted {    
+    color: var(--text-body-color);
   }
 }
 

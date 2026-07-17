@@ -1,9 +1,15 @@
 import type { IconProps } from "../../../types/interface";
+import { cn } from "../../../utils/functions";
 
 
-const ArrowRight = ({size = 14, color = 'var(--color-bubble)'}:IconProps) => {
+const ArrowRight = ({ className, strokeWidth = 3 }: IconProps) => {
   return (
-    <svg height={size} width={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className={
+      cn(
+        "fill-current size-4",
+        className
+      )
+    } viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g id="SVGRepo_bgCarrier" strokeWidth="5"></g>
       <g
         id="SVGRepo_tracerCarrier"
@@ -14,8 +20,8 @@ const ArrowRight = ({size = 14, color = 'var(--color-bubble)'}:IconProps) => {
         {" "}
         <path
           d="M5 12H19M19 12L13 6M19 12L13 18"
-          stroke={color}
-          strokeWidth="2"
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeLinejoin="round"
         ></path>{" "}

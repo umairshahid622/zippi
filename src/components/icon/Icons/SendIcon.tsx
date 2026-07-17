@@ -1,12 +1,15 @@
 import type { IconProps } from "../../../types/interface";
+import { cn } from "../../../utils/functions";
 
 const SendIcon = ({
   color = "currentColor",
-  size = 18,
   strokeWidth = 1,
+  className
 }: IconProps) => {
   return (
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" height={size} width={size} strokeWidth={strokeWidth} stroke={color}>
+    <svg
+    className={cn("fill-current", className)}
+    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" strokeWidth={strokeWidth} stroke={color}>
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"

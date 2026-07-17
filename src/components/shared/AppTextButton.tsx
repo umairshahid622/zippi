@@ -1,8 +1,10 @@
 import { AnimatePresence, motion } from "motion/react"
-import { useState } from "react"
+import { memo, useState } from "react"
 import type { ButtonProps } from "../../types/interface"
+import ArrowLeft from "../icon/Icons/ArrowLeft"
+import { ArrowRight } from "../icon"
 
-const AppTextButton = ({ label, onCallBack, iconDirection = "right", isDisabled }: ButtonProps) => {
+const AppTextButton = memo(({ label, onCallBack, iconDirection = "right", isDisabled }: ButtonProps) => {
     const [hovered, setHovered] = useState(false)
     return (
         <motion.button
@@ -22,7 +24,7 @@ const AppTextButton = ({ label, onCallBack, iconDirection = "right", isDisabled 
                         transition={{ type: 'spring', stiffness: 400, damping: 28 }}
                         className={"inline-flex items-center justify-center overflow-hidden"}
                     >
-                        ←
+                        <ArrowLeft />
                     </motion.span>
                 }
             </AnimatePresence>
@@ -38,12 +40,12 @@ const AppTextButton = ({ label, onCallBack, iconDirection = "right", isDisabled 
                         transition={{ type: 'spring', stiffness: 400, damping: 28 }}
                         className="inline-flex items-center justify-center overflow-hidden"
                     >
-                        →
+                        <ArrowRight />
                     </motion.span>
                 }
             </AnimatePresence>
         </motion.button>
     )
-}
+})
 
 export default AppTextButton
