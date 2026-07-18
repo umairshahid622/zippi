@@ -1,194 +1,249 @@
 // src/store/slices/channelSlice.ts
 import {
+  createSelector,
   createSlice,
   createAsyncThunk,
   type PayloadAction,
-} from '@reduxjs/toolkit'
-import { channelAPI } from '../../services/channelApi'
-import type { RootState } from '..'
+} from "@reduxjs/toolkit";
+import { channelAPI } from "../../services/channelApi";
+import type { RootState } from "..";
 
 // ── Types ─────────────────────────────────────
 interface ChannelMemberUser {
-  id:        string
-  fullName:  string | null
-  avatarUrl: string | null
-  handle:    string | null
-  isOnline:  boolean
-  lastSeenAt: string | null
+  id: string;
+  fullName: string | null;
+  avatarUrl: string | null;
+  handle: string | null;
+  isOnline: boolean;
+  lastSeenAt: string | null;
 }
 
 interface ChannelMember {
-  id:        string
-  userId:    string
-  channelId: string
-  lastReadAt: string | null
-  isMuted:   boolean
-  user:      ChannelMemberUser
+  id: string;
+  userId: string;
+  channelId: string;
+  lastReadAt: string | null;
+  isMuted: boolean;
+  user: ChannelMemberUser;
 }
 
 export interface Channel {
-  id:          string
-  workspaceId: string
-  name:        string | null
-  description: string | null
-  isPrivate:   boolean
-  isDm:        boolean
-  isArchived:  boolean
-  createdAt:   string
-  members:     ChannelMember[]
+  id: string;
+  workspaceId: string;
+  name: string | null;
+  description: string | null;
+  isPrivate: boolean;
+  isDm: boolean;
+  isArchived: boolean;
+  createdAt: string;
+  members: ChannelMember[];
 }
 
 interface ChannelState {
   // Keyed by workspaceId — so switching workspaces doesn't wipe
   // other workspaces' already-fetched channel lists
-  byWorkspace: Record<string, { channels: Channel[]; fetchedAt: number }>
+  byWorkspace: Record<string, { channels: Channel[]; fetchedAt: number }>;
 
-  activeChannelId: string | null
-  isLoading:       boolean
-  error:           string | null
+  activeChannelId: string | null;
+  isLoading: boolean;
+  createChannelLoading: boolean;
+  creatingChannelError: string | null;
+  error: string | null;
 }
 
-const CACHE_TTL = 30 * 1000
+const CACHE_TTL = 30 * 1000;
 
 const initialState: ChannelState = {
-  byWorkspace:     {},
+  byWorkspace: {},
   activeChannelId: null,
-  isLoading:       false,
-  error:           null,
-}
+  isLoading: false,
+  createChannelLoading: false,
+  creatingChannelError: null,
+  error: null,
+};
 
 // ── Thunks ────────────────────────────────────
 export const fetchChannels = createAsyncThunk(
-  'channel/fetchChannels',
+  "channel/fetchChannels",
   async (workspaceId: string, { rejectWithValue }) => {
     try {
-      return await channelAPI.getAll(workspaceId)
+      return await channelAPI.getAll(workspaceId);
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message ?? 'Failed to load channels')
+      return rejectWithValue(
+        err.response?.data?.message ?? "Failed to load channels",
+      );
     }
   },
   {
     condition: (workspaceId, { getState }) => {
-      const state  = getState() as RootState
-      const cached = state.channel.byWorkspace[workspaceId]
+      const state = getState() as RootState;
+      const cached = state.channel.byWorkspace[workspaceId];
 
-      if (cached && Date.now() - cached.fetchedAt < CACHE_TTL) return false
-      if (state.channel.isLoading) return false
-      return true
+      if (cached && Date.now() - cached.fetchedAt < CACHE_TTL) return false;
+      if (state.channel.isLoading) return false;
+      return true;
     },
-  }
-)
+  },
+);
 
 export const createChannel = createAsyncThunk(
-  'channel/createChannel',
+  "channel/createChannel",
   async (
-    payload: { workspaceId: string; name: string; description?: string; isPrivate?: boolean },
-    { rejectWithValue }
+    payload: {
+      workspaceId: string;
+      name: string;
+      description?: string;
+      isPrivate?: boolean;
+    },
+    { rejectWithValue },
   ) => {
     try {
       const result = await channelAPI.create(payload.workspaceId, {
-        name:        payload.name,
+        name: payload.name,
         description: payload.description,
-        isPrivate:   payload.isPrivate,
-      })
-      return { workspaceId: payload.workspaceId, channel: result.channel }
+        isPrivate: payload.isPrivate,
+      });
+      return { workspaceId: payload.workspaceId, channel: result.channel };
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message ?? 'Failed to create channel')
+      return rejectWithValue(
+        err.response?.data?.message ?? "Failed to create channel",
+      );
     }
-  }
-)
+  },
+);
 
 export const getOrCreateDm = createAsyncThunk(
-  'channel/getOrCreateDm',
+  "channel/getOrCreateDm",
   async (
     payload: { workspaceId: string; targetUserId: string },
-    { rejectWithValue }
+    { rejectWithValue },
   ) => {
     try {
-      const result = await channelAPI.createDm(payload.workspaceId, payload.targetUserId)
-      return { workspaceId: payload.workspaceId, channel: result.channel }
+      const result = await channelAPI.createDm(
+        payload.workspaceId,
+        payload.targetUserId,
+      );
+      return { workspaceId: payload.workspaceId, channel: result.channel };
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message ?? 'Failed to open DM')
+      return rejectWithValue(
+        err.response?.data?.message ?? "Failed to open DM",
+      );
     }
-  }
-)
+  },
+);
 
 // ── Slice ─────────────────────────────────────
 const channelSlice = createSlice({
-  name: 'channel',
+  name: "channel",
   initialState,
   reducers: {
     setActiveChannelId: (state, action: PayloadAction<string>) => {
-      state.activeChannelId = action.payload
+      state.activeChannelId = action.payload;
     },
     invalidateChannelsCache: (state, action: PayloadAction<string>) => {
-      delete state.byWorkspace[action.payload]
+      delete state.byWorkspace[action.payload];
+    },
+    removeCreatingChannelError: (state) => {
+      state.creatingChannelError = null;
     },
     resetChannelState: () => initialState,
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchChannels.pending, (state) => {
-        state.isLoading = true
+        state.isLoading = true;
       })
       .addCase(fetchChannels.fulfilled, (state, action) => {
-        state.isLoading = false
+        state.isLoading = false;
         // Note: workspaceId is the thunk arg — action.meta.arg gives it to us
         state.byWorkspace[action.meta.arg] = {
-          channels:  action.payload.channels,
+          channels: action.payload.channels,
           fetchedAt: Date.now(),
-        }
+        };
 
         // Auto-select "general" if nothing active yet
         if (!state.activeChannelId) {
-          const general = action.payload.channels.find((c: Channel) => c.name === 'general')
-          state.activeChannelId = general?.id ?? action.payload.channels[0]?.id ?? null
+          const general = action.payload.channels.find(
+            (c: Channel) => c.name === "general",
+          );
+          state.activeChannelId =
+            general?.id ?? action.payload.channels[0]?.id ?? null;
         }
       })
       .addCase(fetchChannels.rejected, (state, action) => {
-        state.isLoading = false
-        if (action.payload) state.error = action.payload as string
-      })
+        state.isLoading = false;
+        if (action.payload) state.error = action.payload as string;
+      });
 
     builder
+      .addCase(createChannel.pending, (state) => {
+        state.createChannelLoading = true;
+      })
       .addCase(createChannel.fulfilled, (state, action) => {
-        const { workspaceId, channel } = action.payload
+        const { workspaceId, channel } = action.payload;
         if (!state.byWorkspace[workspaceId]) {
-          state.byWorkspace[workspaceId] = { channels: [], fetchedAt: Date.now() }
+          state.byWorkspace[workspaceId] = {
+            channels: [],
+            fetchedAt: Date.now(),
+          };
         }
-        state.byWorkspace[workspaceId].channels.push(channel)
-        state.activeChannelId = channel.id   // jump straight into the new channel
+        state.byWorkspace[workspaceId].channels.push(channel);
+        state.activeChannelId = channel.id;
+        state.createChannelLoading = false;
       })
+      .addCase(createChannel.rejected, (state, action) => {
+        state.createChannelLoading = false;
+        state.creatingChannelError = action.payload as string;
+      });
 
-    builder
-      .addCase(getOrCreateDm.fulfilled, (state, action) => {
-        const { workspaceId, channel } = action.payload
-        const existing = state.byWorkspace[workspaceId]?.channels.find(c => c.id === channel.id)
-        if (!existing && state.byWorkspace[workspaceId]) {
-          state.byWorkspace[workspaceId].channels.push(channel)
-        }
-        state.activeChannelId = channel.id
-      })
+    builder.addCase(getOrCreateDm.fulfilled, (state, action) => {
+      const { workspaceId, channel } = action.payload;
+      const existing = state.byWorkspace[workspaceId]?.channels.find(
+        (c) => c.id === channel.id,
+      );
+      if (!existing && state.byWorkspace[workspaceId]) {
+        state.byWorkspace[workspaceId].channels.push(channel);
+      }
+      state.activeChannelId = channel.id;
+    });
   },
-})
+});
 
 export const {
   setActiveChannelId,
   invalidateChannelsCache,
   resetChannelState,
-} = channelSlice.actions
+} = channelSlice.actions;
 
-export default channelSlice.reducer
+export default channelSlice.reducer;
 
 // ── Selectors ─────────────────────────────────
-export const selectChannelsForWorkspace = (workspaceId: string | null) => (state: RootState): Channel[] =>
-  workspaceId ? state.channel.byWorkspace[workspaceId]?.channels ?? [] : []
+const EMPTY_CHANNELS: Channel[] = [];
 
-export const selectActiveChannelId = (state: RootState) => state.channel.activeChannelId
-export const selectChannelsLoading = (state: RootState) => state.channel.isLoading
-export const selectChannelError    = (state: RootState) => state.channel.error
+export const selectChannelsForWorkspace = (workspaceId: string | null) =>
+  createSelector(
+    [
+      () => workspaceId ?? "",
+      (state: RootState) =>
+        state.channel.byWorkspace[workspaceId ?? ""]?.channels ??
+        EMPTY_CHANNELS,
+    ],
+    (_workspaceId, channels) => channels,
+  );
 
-export const selectActiveChannel = (workspaceId: string | null) => (state: RootState): Channel | null => {
-  const channels = selectChannelsForWorkspace(workspaceId)(state)
-  return channels.find(c => c.id === state.channel.activeChannelId) ?? null
-}
+export const selectActiveChannelId = (state: RootState) =>
+  state.channel.activeChannelId;
+export const selectChannelsLoading = (state: RootState) =>state.channel.isLoading;
+export const selectCreateChanneLoading = (state: RootState) =>state.channel.createChannelLoading;
+export const selectChannelError = (state: RootState) => state.channel.error;
+export const selectCreateChannelError = (state: RootState) => state.channel.creatingChannelError;
+
+export const selectActiveChannel = (workspaceId: string | null) =>
+  createSelector(
+    [
+      (state: RootState) => state.channel.activeChannelId,
+      selectChannelsForWorkspace(workspaceId),
+    ],
+    (activeChannelId, channels) =>
+      channels.find((c) => c.id === activeChannelId) ?? null,
+  );

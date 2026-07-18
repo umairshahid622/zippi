@@ -4,13 +4,13 @@ import { cn } from "../../../utils/functions";
 const LockIcon = ({ className, strokeWidth = 2 }: IconProps) => {
   return (
     <svg
-    className={cn("size-6 text-white shrink-0", className)}
+    className={cn("size-5 text-white shrink-0", className)}
     viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></g>
       <g id="SVGRepo_iconCarrier">
         {" "}

@@ -22,7 +22,7 @@ export const authAPI = {
     fullName: string;
     avatarUrl?: string;
   }): Promise<UpdateProfileResponse> => {
-    const res = await api.patch(API_ENDPOINTS.WORK_SPACE.UPDATE_PROFILE, payload);
+    const res = await api.patch(API_ENDPOINTS.AUTH.UPDATE_PROFILE, payload);
     return res.data;
   },
 

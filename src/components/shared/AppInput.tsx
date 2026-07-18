@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, memo } from "react";
 import {
   inputIconVariants,
   inputLabelVariants,
@@ -11,7 +11,7 @@ import type { InputProps } from "../../types/interface";
 import { cn } from "../../utils/functions";
 
 
-export const AppInput = forwardRef<HTMLInputElement, InputProps>(
+export const AppInput = memo(forwardRef<HTMLInputElement, InputProps>(
   (
     {
       label,
@@ -134,6 +134,6 @@ export const AppInput = forwardRef<HTMLInputElement, InputProps>(
       </motion.div>
     );
   },
-);
+));
 
 AppInput.displayName = "Input";

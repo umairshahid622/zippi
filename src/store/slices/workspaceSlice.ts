@@ -135,11 +135,10 @@ const workspaceSlice = createSlice({
         state.activeWorkspaceId = action.payload.workspace.id;
         state.activeWorkspace = action.payload.workspace;
 
+        const workspaceChannels = action.payload.workspace.channels ?? [];
         const preferredChannel =
-          action.payload.workspace.channels.find(
-            (c: Channel) => c.name === "general",
-          ) ??
-          action.payload.workspace.channels[0] ??
+          workspaceChannels.find((c: Channel) => c.name === "general") ??
+          workspaceChannels[0] ??
           null;
 
         state.activeChannelId = preferredChannel?.id ?? null;
