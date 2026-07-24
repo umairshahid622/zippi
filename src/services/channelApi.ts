@@ -18,6 +18,8 @@ export const channelAPI = {
   },
 
   create: async (workspaceId: string, data: { name: string; description?: string; isPrivate?: boolean }) => {
+    console.log(data);
+    
     const res = await api.post(`/workspaces/${workspaceId}/channels`, data)
     return res.data
   },

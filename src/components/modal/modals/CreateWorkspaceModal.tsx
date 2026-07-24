@@ -24,7 +24,7 @@ const CreateWorkspaceModal = () => {
   }, [dispatch, hasNoWorkspace])
 
 
-  const handleCreateWorkspace = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateWorkspace = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
     const workspaceName = (data.get('workspaceName') as string)?.trim() ?? ''

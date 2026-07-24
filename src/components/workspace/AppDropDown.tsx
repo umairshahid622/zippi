@@ -27,6 +27,9 @@ const AppDropDown = memo(({ title, content, selectedChannel, workspaceId, onAddC
         return null;
     }
 
+    console.log(selectedChannel);
+    
+
     return (
         <motion.div layout="position">
             <div className="flex items-center justify-between gap-2 px-3 py-1">

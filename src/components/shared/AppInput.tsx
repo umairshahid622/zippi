@@ -11,6 +11,7 @@ import type { InputProps } from "../../types/interface";
 import { cn } from "../../utils/functions";
 
 
+
 export const AppInput = memo(forwardRef<HTMLInputElement, InputProps>(
   (
     {
@@ -26,6 +27,7 @@ export const AppInput = memo(forwardRef<HTMLInputElement, InputProps>(
       maxLength,
       className,
       name,
+      actionButtons,
       onChange,
       onFocus,
       onBlur,
@@ -36,6 +38,7 @@ export const AppInput = memo(forwardRef<HTMLInputElement, InputProps>(
 
     const currentState =
       status !== "idle" ? status : isFocused ? "focus" : "idle";
+    
 
     return (
       <motion.div
@@ -58,7 +61,6 @@ export const AppInput = memo(forwardRef<HTMLInputElement, InputProps>(
 
         {/* Input wrapper */}
         <div className="relative">
-          {/* Icon */}
           {icon && (
             <motion.span
               className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
@@ -77,7 +79,24 @@ export const AppInput = memo(forwardRef<HTMLInputElement, InputProps>(
             </motion.span>
           )}
 
-          {/* Input */}
+          {actionButtons && (
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-2 items-center">
+              {actionButtons.map((actionBtn, idx) => {
+                const { icon, label, iconClassName, ...restProps } = actionBtn;
+                return (
+                  <button key={idx}
+                    aria-label={label}
+                    className={cn(
+                      "border-none",
+                      iconClassName
+                    )}
+                    {...restProps}>
+                    {icon}
+                  </button>
+                )
+              })}
+            </div>
+          )}
           <motion.input
             name={name}
             ref={ref}
@@ -100,8 +119,9 @@ export const AppInput = memo(forwardRef<HTMLInputElement, InputProps>(
             initial="idle"
             className={
               cn(
-                'w-full rounded-(--border-radius) app-border py-3 pr-4 text-(--text-body-color) font-(--weight-bold) font-heading outline-none placeholder:text-(--text-body-color) cursor-auto text-sm caret-(--text-color)',
+                'w-full rounded-(--border-radius) app-border py-3 text-(--text-body-color) font-(--weight-bold) font-heading outline-none placeholder:text-(--text-body-color) cursor-auto text-sm caret-white',
                 icon ? 'pl-9' : 'pl-4',
+                actionButtons ? "pr-22" : "pr-4",
                 className
               )
             }

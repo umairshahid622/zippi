@@ -14,6 +14,11 @@ export interface IconProps {
   strokeWidth?: number;
 }
 
+export interface ActionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  icon: React.ReactNode;
+  iconClassName?: string;
+  label: string;
+}
 export interface InputProps {
   label?: string;
   name?: string;
@@ -27,6 +32,7 @@ export interface InputProps {
   iconSize?: number;
   disabled?: boolean;
   className?: String;
+  actionButtons?: ActionButtonProps[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus?: () => void;
   onBlur?: () => void;

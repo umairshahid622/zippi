@@ -16,3 +16,4 @@ export { default as PlusIcon } from "../icon/Icons/PlusIcon";
 export { default as CrossIcon } from "../icon/Icons/CrossIcon";
 export { default as HashTagIcon } from "../icon/Icons/HashTagIcon";
 export { default as MailIcon } from "../icon/Icons/MailIcon";
+export { default as ClipIcon } from "../icon/Icons/ClipIcon";

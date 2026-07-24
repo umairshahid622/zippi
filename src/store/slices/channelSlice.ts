@@ -212,6 +212,7 @@ const channelSlice = createSlice({
 export const {
   setActiveChannelId,
   invalidateChannelsCache,
+  removeCreatingChannelError,
   resetChannelState,
 } = channelSlice.actions;
 

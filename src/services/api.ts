@@ -9,7 +9,8 @@ import { API_ENDPOINTS } from "../constants/api";
 
 // ── Create instance ───────────────────────────
 const api: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, // http://localhost:5000/api
+  baseURL: import.meta.env.VITE_API_URL,
+
   timeout: 10000, // 10 seconds
   headers: {
     "Content-Type": "application/json",

@@ -7,6 +7,7 @@ import { useAppSelector } from '../../hooks/hooks'
 import { CrossIcon } from '../icon'
 import { clearWorkspaceError } from '../../store/slices/workspaceSlice'
 import CreateChannelModal from './modals/CreateChannelModal'
+import { removeCreatingChannelError } from '../../store/slices/channelSlice'
 
 const MODAL_COMPONENTS: { [key: string]: React.ComponentType<any> } = {
     CREATE_WORKSPACE_MODAL: CreateWorkspaceModal,
@@ -75,6 +76,7 @@ export const ModalManager = () => {
     const SpecificModal = activeModal ? MODAL_COMPONENTS[activeModal] : null
     const handleClose = () => {
         dispatch(closeModal())
+        dispatch(removeCreatingChannelError())
         dispatch(clearWorkspaceError())
     }
 
