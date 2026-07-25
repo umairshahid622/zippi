@@ -1,8 +1,7 @@
 import { AnimatePresence, motion } from "motion/react"
 import { memo, useState } from "react"
 import type { ButtonProps } from "../../types/interface"
-import ArrowLeft from "../icon/Icons/ArrowLeft"
-import { ArrowRight } from "../icon"
+import { ArrowLeft, ArrowRight } from "../icon"
 
 const AppTextButton = memo(({ label, onCallBack, iconDirection = "right", isDisabled }: ButtonProps) => {
     const [hovered, setHovered] = useState(false)

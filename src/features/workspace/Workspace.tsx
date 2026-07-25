@@ -8,7 +8,7 @@ import Loader from "../../components/shared/Loader";
 import WorkspaceRail from "../../components/workspace/WorkspaceRail";
 import { ModalManager } from "../../components/modal/ModalManager";
 import { fetchChannels } from "../../store/slices/channelSlice";
-import { connectSocket, disconnectSocket } from "../../lib/socket";
+import { getSocket } from "../../lib/socket";
 import { messageDeleted, messageUpdated, receiveMessage } from "../../store/slices/messageSlice";
 
 export default function WorkSpace() {
@@ -17,14 +17,16 @@ export default function WorkSpace() {
   const isLoadingList = useAppSelector(selectIsLoadingList)
 
   useEffect(() => {
-    const socket = connectSocket()
+    const socket = getSocket()
 
     socket.on('message:new', (msg) => dispatch(receiveMessage(msg)))
     socket.on('message:updated', (msg) => dispatch(messageUpdated(msg)))
     socket.on('message:deleted', (data) => dispatch(messageDeleted(data)))
 
     return () => {
-      disconnectSocket()
+      socket.off('message:new')
+      socket.off('message:updated')
+      socket.off('message:deleted')
     }
   }, [dispatch])
 
@@ -47,7 +49,7 @@ export default function WorkSpace() {
     <main className="flex h-screen relative mx-auto overflow-hidden">
       <WorkspaceRail />
       <SideBar />
-      <section className="flex-1 flex-col border m-2 glass-card">
+      <section className="flex-1 flex-col border m-2 glass-card overflow-hidden">
         <Outlet />
       </section>
       <AnimatedBackground />

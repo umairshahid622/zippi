@@ -1,4 +1,5 @@
 export { default as ArrowRight } from "../icon/Icons/ArrowRight";
+export { default as ArrowLeft } from "../icon/Icons/ArrowLeft";
 export { default as BubbleIcon } from "../icon/Icons/BubbleIcon";
 export { default as GearIcon } from "../icon/Icons/GearIcon";
 export { default as GitHubIcon } from "../icon/Icons/GitHubIcon";
@@ -17,3 +18,4 @@ export { default as CrossIcon } from "../icon/Icons/CrossIcon";
 export { default as HashTagIcon } from "../icon/Icons/HashTagIcon";
 export { default as MailIcon } from "../icon/Icons/MailIcon";
 export { default as ClipIcon } from "../icon/Icons/ClipIcon";
+export { default as LockIcon } from "../icon/Icons/LockIcon";

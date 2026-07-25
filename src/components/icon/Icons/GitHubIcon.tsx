@@ -1,12 +1,15 @@
 import type { IconProps } from "../../../types/interface";
+import { cn } from "../../../utils/functions";
 
-function GitHubIcon({ className = "size-5", color = "var(--text-color)"}:IconProps) {
+function GitHubIcon({ className = "size-5", color = "var(--text-color)" }: IconProps) {
   return (
     <svg
       viewBox="0 0 20 20"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={cn(
+        className
+      )}
       fill={color}
     >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>

@@ -5,7 +5,10 @@ import { clearWorkspaceError, createWorkspace, selectHasNoWorkspaces, selectIsSu
 import { AppInput } from "../../shared/AppInput"
 import ArrowExpandButton from "../../shared/ArrowExpandButton"
 import type { InputStatus } from "../../../types/types"
-import ArrowLeft from "../../icon/Icons/ArrowLeft"
+import { ArrowLeft } from "../../icon"
+
+
+const ARROW_LEFT_ICON = <ArrowLeft className="size-4" />
 
 const CreateWorkspaceModal = () => {
   const hasNoWorkspace = useAppSelector(selectHasNoWorkspaces)
@@ -73,7 +76,7 @@ const CreateWorkspaceModal = () => {
       />
       {error && <span className="text-error text-sm block">{error}</span>}
       <div className="flex gap-2">
-        <ArrowExpandButton label={"Cancel"} iconDirection="left" color="btn-secondary" onCallBack={handleClose} icon={<ArrowLeft className="size-4" />} />
+        <ArrowExpandButton label={"Cancel"} iconDirection="left" color="btn-secondary" onCallBack={handleClose} icon={ARROW_LEFT_ICON} />
         <ArrowExpandButton label={"Create Workspace"} type="submit" isLoading={isSubmitting} />
       </div>
     </form>

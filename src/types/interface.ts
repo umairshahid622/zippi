@@ -61,6 +61,7 @@ export interface AppButtonProps extends ButtonProps {
 
 export interface AppArrowExpandButtonProps extends ButtonProps {
   color?: "btn-secondary" | "btn-primary";
+  className?:string;
   icon?: JSX.Element;
 }
 
@@ -199,4 +200,23 @@ export interface WorkspaceDetail {
   logoUrl: string | null;
   members: Array<{ role: string; user: Member }>;
   channels: Channel[];
+}
+
+
+
+export interface Message {
+  id: string;
+  channelId: string;
+  senderId: string;
+  content: string | null;
+  createdAt: string;
+  sender: { id: string; fullName: string | null; avatarUrl: string | null };
+  reactions: Array<{ id: string; emoji: string; userId: string }>;
+  files: any[];
+}
+
+export interface MessageState {
+  byChannel: Record<string, Message[]>;
+  isLoading: boolean;
+  error: string | null;
 }

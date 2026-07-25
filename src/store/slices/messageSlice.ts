@@ -6,23 +6,8 @@ import {
 } from "@reduxjs/toolkit";
 import type { RootState } from "..";
 import { messageAPI } from "../../services/messageApi";
+import type { Message, MessageState } from "../../types/interface";
 
-interface Message {
-  id: string;
-  channelId: string;
-  senderId: string;
-  content: string | null;
-  createdAt: string;
-  sender: { id: string; fullName: string | null; avatarUrl: string | null };
-  reactions: Array<{ id: string; emoji: string; userId: string }>;
-  files: any[];
-}
-
-interface MessageState {
-  byChannel: Record<string, Message[]>;
-  isLoading: boolean;
-  error: string | null;
-}
 
 const initialState: MessageState = {
   byChannel: {},

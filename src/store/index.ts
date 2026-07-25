@@ -15,6 +15,7 @@ import authReducer from "./slices/authSlice";
 import workspaceReducer from "./slices/workspaceSlice";
 import channelReducer from "./slices/channelSlice";
 import chatReducer from "./slices/messageSlice";
+import { connectSocket, disconnectSocket } from "../lib/socket";
 // import tasksReducer         from './slices/tasksSlice'
 // import notificationsReducer from './slices/notificationsSlice'
 
@@ -67,6 +68,20 @@ export const store = configureStore({
       },
     }),
   devTools: import.meta.env.DEV, // ← only enable in development
+});
+let wasAuthenticated = false;
+store.subscribe(() => {
+  const isAuthenticated = store.getState().auth.token !== null;
+
+  if (isAuthenticated && !wasAuthenticated) {
+    connectSocket();
+  }
+
+  if (!isAuthenticated && wasAuthenticated) {
+    disconnectSocket();
+  }
+
+  wasAuthenticated = isAuthenticated;
 });
 
 export const persistor = persistStore(store);

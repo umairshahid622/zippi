@@ -18,7 +18,7 @@ const PlusIcon = ({ size = smallIconSize, color = "currentColor", className }: I
                 <path
                     d="M4 12H20M12 4V20"
                     stroke={color}
-                    strokeWidth="2"
+                    strokeWidth="3"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                 ></path>{" "}
