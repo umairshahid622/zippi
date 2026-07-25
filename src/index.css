@@ -125,7 +125,7 @@
   :root {
     --background-color: var(--color-dark-navy);
     --text-heading-color: var(--color-white);
-    --text-body-color: var(--color-text-muted);
+    --text-body-color: var(--color-bubble);
     --border-color: var(--color-border-color);
   }
 
@@ -197,13 +197,13 @@
 }
 
 @layer components {
-  .btn-primary {
-    background: linear-gradient(135deg, rgba(59, 158, 255, 0.75) 0%, rgba(0, 212, 232, 0.75) 100%);
+  .primary-gradient {
+    background: linear-gradient(135deg, rgba(59, 158, 255, 0.70) 0%, rgba(0, 212, 232, 0.70) 100%);
     box-shadow: 0 4px 12px rgba(59, 158, 255, 0.3);
   }
 
-  .btn-secondary {
-    background: rgba(255, 255, 255, 0.06);
+  .secondary-gradient {
+    background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.12);
   }
 

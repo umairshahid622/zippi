@@ -76,7 +76,7 @@ const CreateWorkspaceModal = () => {
       />
       {error && <span className="text-error text-sm block">{error}</span>}
       <div className="flex gap-2">
-        <ArrowExpandButton label={"Cancel"} iconDirection="left" color="btn-secondary" onCallBack={handleClose} icon={ARROW_LEFT_ICON} />
+        <ArrowExpandButton label={"Cancel"} iconDirection="left" color="secondary-gradient" onCallBack={handleClose} icon={ARROW_LEFT_ICON} />
         <ArrowExpandButton label={"Create Workspace"} type="submit" isLoading={isSubmitting} />
       </div>
     </form>

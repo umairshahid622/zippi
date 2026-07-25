@@ -120,7 +120,7 @@ const CreateChannelModal = () => {
       </motion.div>
       {error && <span className="text-error text-sm block">{error}</span>}
       <div className="flex gap-2">
-        <ArrowExpandButton onCallBack={handleCloseModal} label={"Cancel"} iconDirection="left" color="btn-secondary" icon={CANCEL_ICON} />
+        <ArrowExpandButton onCallBack={handleCloseModal} label={"Cancel"} iconDirection="left" color="secondary-gradient" icon={CANCEL_ICON} />
         <ArrowExpandButton label={"Create Channel"} iconDirection="right" isLoading={createChannelLoading} type="submit" />
       </div>
     </form>

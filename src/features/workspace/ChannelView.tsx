@@ -11,6 +11,8 @@ import { selectUser } from "../../store/slices/authSlice"
 import type { Message } from "../../types/interface"
 import { AnimatePresence, motion, type Variants } from "motion/react"
 import ProfileAvatar from "../../components/workspace/ProfileAvatar"
+import type { AppGradients } from "../../types/types"
+import { cn } from "../../utils/functions"
 
 
 interface Props {
@@ -62,7 +64,7 @@ const ChannelView = () => {
         socket.emit(
             'message:send',
             { workspaceId, channelId, content: message },
-            (response: { success: boolean; message?: any; error?: string }) => {
+            (response: { success: boolean; message?: Message; error?: string }) => {
                 if (!response.success) {
                     console.error('Failed to send message:', response.error)
                 }
@@ -138,40 +140,39 @@ function MessageList({ workspaceId, channelId }: Props) {
     }
 
     return (
-        <div className="flex-1 flex flex-col gap-3 px-4 py-3 overflow-y-auto overflow-x-hidden">
+        <div className="flex-1 flex flex-col gap-3 px-5 py-3 overflow-y-auto overflow-x-hidden">
             <AnimatePresence initial={false}>
                 {messages.map((msg) => {
                     const isOwn = msg.senderId === currentUser?.id
-
+                    const gradient: AppGradients = isOwn ? "primary-gradient" : "secondary-gradient"
                     return (
                         <motion.div
                             key={msg.id}
                             variants={messageVariants}
                             initial="hidden"
                             animate="visible"
-                            className={`flex gap-2 items-end ${isOwn ? 'flex-row-reverse' : ''}`}
+                            className={`flex gap-2 items-end min-w-0 ${isOwn ? 'flex-row-reverse' : ''}`}
                         >
-                            <ProfileAvatar fullName={msg.sender.fullName} profilePictureUrl={msg.sender.avatarUrl}/>
-                            <div className="border flex">
-                                <h3>akjdhjksadajkhsadhjakdsaalkdjaksdjlsakdjklsadjsakldjlsakdjklasdjklsadjklsadjklsadjklasdjakjdhjksadajkhsadhjakdsaalkdjaksdjlsakdjklsadjsakldjlsakdjklasdjklsadjklsadjklsadjklasdj</h3>
-                            </div>
-                            <span className="text-[10px] text-muted mt-0.5 px-1">
-                                    {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                </span>
-                            {/*                             
-                            <div className={`flex flex-col ${isOwn ? 'items-end' : 'items-start'} max-w-[70%]`}>
-                                {!isOwn && (
-                                    <span className="text-caption text-muted mb-0.5 px-1">
-                                        {msg.sender.fullName ?? 'Unknown'}
-                                    </span>
-                                )}
+                            <ProfileAvatar fullName={msg.sender.fullName} profilePictureUrl={msg.sender.avatarUrl} />
+                            <div className={`flex flex-col min-w-0 ${isOwn ? 'items-end' : 'items-start'} max-w-[70%]`}>
+
+                                <p className="text-caption text-muted px-1 mb-1">
+                                    {(!isOwn ? msg.sender.fullName : "Me") ?? "Unknown"}
+                                </p>
                                 <div
-                                    className={`px-4 py-2 rounded-2xl text-sm ${isOwn
-                                        ? 'bg-linear-to-br from-[#3B9EFF] to-[#00D4E8] text-white rounded-br-sm'
-                                        : 'bg-white/8 text-white rounded-bl-sm'
-                                        }`}
+                                    className={cn(
+                                        "px-4 py-2 rounded-2xl text-sm max-w-full min-w-0 wrap-break-word text-white",
+                                        isOwn ? "rounded-br-sm" : "rounded-bl-sm",
+                                        gradient
+                                    )}
+
                                 >
-                                    {msg.content}
+                                    <p>
+                                        {msg.content}
+                                    </p>
+                                    <p className="text-[10px] text-end">
+                                        {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    </p>
                                 </div>
 
                                 {msg.reactions.length > 0 && (
@@ -189,10 +190,8 @@ function MessageList({ workspaceId, channelId }: Props) {
                                     </div>
                                 )}
 
-                                <span className="text-[10px] text-muted mt-0.5 px-1">
-                                    {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                </span>
-                            </div> */}
+
+                            </div>
                         </motion.div>
                     )
                 })}

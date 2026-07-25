@@ -1,5 +1,6 @@
 import type { JSX } from "react/jsx-runtime";
 import type {
+  AppGradients,
   AuthLoadingProvider,
   ButtonType,
   InputStatus,
@@ -59,9 +60,10 @@ export interface AppButtonProps extends ButtonProps {
   icon?: JSX.Element;
 }
 
+
 export interface AppArrowExpandButtonProps extends ButtonProps {
-  color?: "btn-secondary" | "btn-primary";
-  className?:string;
+  color?: AppGradients;
+  className?: string;
   icon?: JSX.Element;
 }
 
@@ -201,8 +203,6 @@ export interface WorkspaceDetail {
   members: Array<{ role: string; user: Member }>;
   channels: Channel[];
 }
-
-
 
 export interface Message {
   id: string;

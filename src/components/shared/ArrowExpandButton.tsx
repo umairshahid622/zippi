@@ -24,7 +24,7 @@ const iconVariantsRight: Variants = {
 const ArrowExpandButton = memo(({
     label, type, isLoading = false, isDisabled = false, onCallBack,
     className,
-    icon = <SendIcon className="size-4" />, iconDirection = "right", color = "btn-primary",
+    icon = <SendIcon className="size-4" />, iconDirection = "right", color = "primary-gradient",
 }: AppArrowExpandButtonProps) => {
 
     console.log("Arrow Expand Button Rendered")   // now only fires on real prop changes
@@ -40,8 +40,8 @@ const ArrowExpandButton = memo(({
                 className,
                 (isLoading || isDisabled) && "cursor-not-allowed opacity-85",
                 color,
-                isLoading && color === "btn-primary" && "shadow-[0_6px_20px_rgba(59,158,255,0.35)]",
-                isLoading && color !== "btn-primary" && "shadow-[0_4px_14px_rgba(59,158,255,0.2)]"
+                isLoading && color === "primary-gradient" && "shadow-[0_6px_20px_rgba(59,158,255,0.35)]",
+                isLoading && color === "secondary-gradient" && "shadow-[0_4px_14px_rgba(59,158,255,0.2)]"
             )}
             disabled={isLoading || isDisabled}
         >
