@@ -24,25 +24,25 @@ const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
-    toggleSidebar: (state) => {
+    toggleSidebar: (state:UIState) => {
       state.sidebarOpen = !state.sidebarOpen;
     },
-    setSidebarOpen: (state, action: PayloadAction<boolean>) => {
+    setSidebarOpen: (state:UIState, action: PayloadAction<boolean>) => {
       state.sidebarOpen = action.payload;
     },
-    setActivePanel: (state, action: PayloadAction<UIState["activePanel"]>) => {
+    setActivePanel: (state:UIState, action: PayloadAction<UIState["activePanel"]>) => {
       state.activePanel = action.payload;
     },
-    toggleFocusMode: (state) => {
+    toggleFocusMode: (state:UIState) => {
       state.focusMode = !state.focusMode;
     },
-    setTheme: (state, action: PayloadAction<UIState["theme"]>) => {
+    setTheme: (state:UIState, action: PayloadAction<UIState["theme"]>) => {
       state.theme = action.payload;
     },
-    openModal: (state, action: PayloadAction<ModalType>) => {
+    openModal: (state:UIState, action: PayloadAction<ModalType>) => {
       state.activeModal = action.payload;
     },
-    setActiveModalHeading: (state, action: PayloadAction<UIState['activeModalHeading']>) => {
+    setActiveModalHeading: (state:UIState, action: PayloadAction<UIState['activeModalHeading']>) => {
       state.activeModalHeading = action.payload;
     },
     closeModal: (state) => {

@@ -12,9 +12,9 @@ import {
 
 import uiReducer from "./slices/uiSlice";
 import authReducer from "./slices/authSlice";
-import workspaceReducer     from './slices/workspaceSlice'
-import channelReducer     from './slices/channelSlice'
-// import chatReducer          from './slices/chatSlice'
+import workspaceReducer from "./slices/workspaceSlice";
+import channelReducer from "./slices/channelSlice";
+import chatReducer from "./slices/messageSlice";
 // import tasksReducer         from './slices/tasksSlice'
 // import notificationsReducer from './slices/notificationsSlice'
 
@@ -23,8 +23,8 @@ const rootReducer = combineReducers({
   ui: uiReducer,
   auth: authReducer,
   workspace: workspaceReducer,
-  channel: channelReducer
-  //   chat:          chatReducer,
+  channel: channelReducer,
+  message: chatReducer,
   //   tasks:         tasksReducer,
   //   notifications: notificationsReducer,
 });
@@ -50,8 +50,8 @@ const persistConfig = {
   key: "zippi-root",
   version: 1,
   storage,
-  whitelist: ["auth","ui"],
-  blacklist: [], 
+  whitelist: ["auth", "ui"],
+  blacklist: [],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

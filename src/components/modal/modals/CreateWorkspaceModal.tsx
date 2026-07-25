@@ -23,7 +23,8 @@ const CreateWorkspaceModal = () => {
     )
   }, [dispatch, hasNoWorkspace])
 
-
+  console.log("WorkSpace Modal");
+  
   const handleCreateWorkspace = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)

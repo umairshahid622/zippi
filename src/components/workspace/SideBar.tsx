@@ -7,20 +7,13 @@ import GearIcon from "../icon/Icons/GearIcon"
 import AppDropDown from "./AppDropDown"
 import NotificationToggle from "./NotificationToggle"
 import ProfileAvatar from "./ProfileAvatar"
-import type { WorkspaceListItem } from "../../types/interface"
-import { selectActiveChannelId, selectActiveWorkspace, selectWorkspaceList } from "../../store/slices/workspaceSlice"
+import { selectActiveChannelId, selectActiveWorkspace, } from "../../store/slices/workspaceSlice"
 import { selectChannelsForWorkspace } from "../../store/slices/channelSlice"
 import { useParams } from "react-router"
 import { useCallback, useMemo } from "react"
 import { openModal } from "../../store/slices/uiSlice"
 
 const SideBar = () => {
-    const workspaceList: WorkspaceListItem[] = useAppSelector(selectWorkspaceList)
-
-    workspaceList.map((wsl) => {
-        console.log(wsl);
-
-    })
     return (
         <aside className="w-64 h-screen box-border p-0 flex">
             <div className="flex flex-col grow ml-2 my-2 min-h-0 glass-card backdrop-saturate-100">

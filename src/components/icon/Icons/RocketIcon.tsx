@@ -1,7 +1,7 @@
 import { defaultIconSize } from "../../../constants/constants";
 import type { IconProps } from "../../../types/interface";
 
-function RocketIcon({ className, size = defaultIconSize, color = "var(--text-color)" }: IconProps) {
+function RocketIcon({ className, color = "var(--text-color)" }: IconProps) {
   return (
     <svg
       viewBox="0 0 64 64"
@@ -11,8 +11,6 @@ function RocketIcon({ className, size = defaultIconSize, color = "var(--text-col
       className={`iconify iconify--emojione ${className}`}
       preserveAspectRatio="xMidYMid meet"
       fill={color}
-      width={size}
-      height={size}
     >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
