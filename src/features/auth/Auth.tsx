@@ -58,6 +58,8 @@ import AppTextButton from '../../components/shared/AppTextButton'
 import type { MagicLinkContentProps, OAuthContentProps, OTPContentProps } from '../../types/interface'
 
 const MAGIC_LINK_COOLDOWN_MS = 60 * 1000
+const GOOGLE_ICON = <GoogleIcon />
+const GITHUB_ICON = <GitHubIcon />
 
 function Auth() {
   const dispatch = useAppDispatch()
@@ -196,7 +198,6 @@ const OTPContent = ({ emailRef, handleResendingTimer }: OTPContentProps) => {
   }
 
   const setUserCredentials = () => {
-    // This function can be used to set user credentials in the Redux store after successful OTP verification
     if (!pendingCredentials) return;
     dispatch(
       setCredentials(pendingCredentials)
@@ -315,7 +316,7 @@ const OAuthContent = ({ isLoading, loadingProvider }: OAuthContentProps) => {
       >
         <AppButton
           isLoading={loadingProvider === 'google'}
-          icon={<GoogleIcon />}
+          icon={GOOGLE_ICON}
           label="Continue With Google"
           isDisabled={isAnyLoading}
           onCallBack={() => handleOAuthLogin('google')}
@@ -331,7 +332,7 @@ const OAuthContent = ({ isLoading, loadingProvider }: OAuthContentProps) => {
       >
         <AppButton
           isLoading={loadingProvider === 'github'}
-          icon={<GitHubIcon />}
+          icon={GITHUB_ICON}
           label="Continue With GitHub"
           isDisabled={isAnyLoading}
           onCallBack={() => handleOAuthLogin('github')}

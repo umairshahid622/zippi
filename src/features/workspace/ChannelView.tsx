@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks"
 import { useParams } from "react-router"
 import { selectChannelsForWorkspace } from "../../store/slices/channelSlice"
 import { AppInput } from "../../components/shared/AppInput"
-import { ClipIcon, HashTagIcon, MessageIcon, SendIcon } from "../../components/icon"
+import { ClipIcon, HandIcon, HashTagIcon, MessageIcon, SendIcon } from "../../components/icon"
 import { getSocket } from "../../lib/socket"
 import { fetchMessages, selectMessagesForChannel } from "../../store/slices/messageSlice"
 import { selectUser } from "../../store/slices/authSlice"
@@ -79,9 +79,9 @@ const ChannelView = () => {
     return (
         <div className="flex flex-col h-full">
             <div className="p-2 flex items-center gap-2">
-                <div className='inline-flex items-center justify-between bg-gradient-dark p-2 rounded-(--border-radius)'>
+                {/* <div className='inline-flex items-center justify-between bg-gradient-dark p-2 rounded-(--border-radius)'>
                     <MessageIcon color='var(--color-text-muted)' className='size-6' />
-                </div>
+                </div> */}
                 <div >
                     <div className="flex items-center gap-1"><HashTagIcon className="text-white" size={18} /> <h2 className="inline-flex">{channel?.name}</h2></div>
                     <p className="text-muted">{channel?.description}</p>
@@ -134,7 +134,7 @@ function MessageList({ workspaceId, channelId }: Props) {
     if (messages.length === 0) {
         return (
             <div className="flex-1 flex items-center justify-center text-muted text-sm">
-                <p>No messages yet — say hey! 👋</p>
+                <p className="flex gap-2 items-center">No messages yet — say hey! <span className="mb-1"> <HandIcon size={30} /></span></p>
             </div>
         )
     }
@@ -156,7 +156,7 @@ function MessageList({ workspaceId, channelId }: Props) {
                             <ProfileAvatar fullName={msg.sender.fullName} profilePictureUrl={msg.sender.avatarUrl} />
                             <div className={`flex flex-col min-w-0 ${isOwn ? 'items-end' : 'items-start'} max-w-[70%]`}>
 
-                                <p className="text-caption text-muted px-1 mb-1">
+                                <p className={cn(" text-xs font-semibold px-1 mb-1")}>
                                     {(!isOwn ? msg.sender.fullName : "Me") ?? "Unknown"}
                                 </p>
                                 <div

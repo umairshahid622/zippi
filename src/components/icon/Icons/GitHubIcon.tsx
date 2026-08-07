@@ -1,13 +1,14 @@
 import type { IconProps } from "../../../types/interface";
 import { cn } from "../../../utils/functions";
 
-function GitHubIcon({ className = "size-5", color = "var(--text-color)" }: IconProps) {
+function GitHubIcon({ className = "size-5", color = "currentColor" }: IconProps) {
   return (
     <svg
       viewBox="0 0 20 20"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
+        'fill-current',
         className
       )}
       fill={color}
@@ -19,9 +20,6 @@ function GitHubIcon({ className = "size-5", color = "var(--text-color)" }: IconP
         strokeLinejoin="round"
       ></g>
       <g id="SVGRepo_iconCarrier">
-        {" "}
-        <title>github [#142]</title> <desc>Created with Sketch.</desc>{" "}
-        <defs> </defs>{" "}
         <g
           id="Page-1"
           stroke="none"
