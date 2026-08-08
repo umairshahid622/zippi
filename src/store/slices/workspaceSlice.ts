@@ -5,11 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import type { RootState } from "..";
 import { workspaceAPI } from "../../services/workspaceApi";
-import type {
-  Channel,
-  WorkspaceDetail,
-  WorkspaceListItem,
-} from "../../types/interface";
+import type { WorkspaceDetail, WorkspaceListItem } from "../../types/interface";
 
 // ── Types ─────────────────────────────────────
 
@@ -134,14 +130,6 @@ const workspaceSlice = createSlice({
         state.isLoadingActive = false;
         state.activeWorkspaceId = action.payload.workspace.id;
         state.activeWorkspace = action.payload.workspace;
-
-        const workspaceChannels = action.payload.workspace.channels ?? [];
-        const preferredChannel =
-          workspaceChannels.find((c: Channel) => c.name === "general") ??
-          workspaceChannels[0] ??
-          null;
-
-        state.activeChannelId = preferredChannel?.id ?? null;
       })
       .addCase(fetchWorkspace.rejected, (state, action) => {
         state.isLoadingActive = false;
