@@ -15,6 +15,7 @@ import authReducer from "./slices/authSlice";
 import workspaceReducer from "./slices/workspaceSlice";
 import channelReducer from "./slices/channelSlice";
 import chatReducer from "./slices/messageSlice";
+import connectionReducer from "./slices/connectionSlice";
 import { connectSocket, disconnectSocket } from "../lib/socket";
 // import tasksReducer         from './slices/tasksSlice'
 // import notificationsReducer from './slices/notificationsSlice'
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   workspace: workspaceReducer,
   channel: channelReducer,
   message: chatReducer,
+  connection: connectionReducer,
   //   tasks:         tasksReducer,
   //   notifications: notificationsReducer,
 });

@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import Loader from "../../components/shared/Loader";
 import WorkspaceRail from "../../components/workspace/WorkspaceRail";
 import { ModalManager } from "../../components/modal/ModalManager";
+import ConnectionBanner from "../../components/shared/ConnectionBanner";
 import { fetchChannels } from "../../store/slices/channelSlice";
 import { getSocket } from "../../lib/socket";
 import { messageDeleted, messageUpdated, receiveMessage } from "../../store/slices/messageSlice";
@@ -54,6 +55,7 @@ export default function WorkSpace() {
       </section>
       <AnimatedBackground />
       <ModalManager />
+      <ConnectionBanner />
     </main>
   );
 }

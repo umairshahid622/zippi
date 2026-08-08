@@ -5,6 +5,8 @@ import axios, {
 } from "axios";
 import { store } from "../store/index";
 import { resetAuth, setCredentials } from "../store/slices/authSlice";
+import { setConnectionStatus } from "../store/slices/connectionSlice";
+import { isSocketConnected } from "../lib/socket";
 import { API_ENDPOINTS } from "../constants/api";
 
 // ── Create instance ───────────────────────────
@@ -53,6 +55,18 @@ api.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error) => {
     const originalRequest = error.config;
+
+    // No response received — backend unreachable (server down, network drop, timeout).
+    // Only trust this over the socket: a stale request from before the backend came
+    // back up can still be rejecting after the socket already reconnected, so don't
+    // let it override a connection that's demonstrably live.
+    if (!error.response) {
+      if (!isSocketConnected()) {
+        store.dispatch(setConnectionStatus("offline"));
+      }
+      return Promise.reject(error);
+    }
+
     if (error.response?.status !== 401 || originalRequest._retry) {
       return Promise.reject(error);
     }

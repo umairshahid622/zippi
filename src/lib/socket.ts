@@ -1,5 +1,6 @@
 import { io, type Socket } from "socket.io-client";
 import { store } from "../store";
+import { setConnectionStatus } from "../store/slices/connectionSlice";
 
 let socket: Socket | null = null;
 
@@ -11,7 +12,20 @@ export const connectSocket = (): Socket => {
     autoConnect: true,
   });
 
+  socket.on("connect", () => {
+    store.dispatch(setConnectionStatus("online"));
+  });
+
+  socket.on("disconnect", () => {
+    store.dispatch(setConnectionStatus("offline"));
+  });
+
+  socket.on("reconnect_attempt", () => {
+    store.dispatch(setConnectionStatus("connecting"));
+  });
+
   socket.on("connect_error", (err) => {
+    store.dispatch(setConnectionStatus("offline"));
     console.error("Socket connection error:", err.message);
   });
 
@@ -23,6 +37,8 @@ export const getSocket = (): Socket => {
     throw new Error("Socket not connected — call connectSocket() first");
   return socket;
 };
+
+export const isSocketConnected = (): boolean => socket?.connected ?? false;
 
 export const disconnectSocket = (): void => {
   socket?.disconnect();
